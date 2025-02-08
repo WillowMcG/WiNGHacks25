@@ -4,10 +4,23 @@
 #include <iostream>
 #include <SFML/Graphics.hpp>
 
+
+void drawForest(sf::RenderWindow& window, int width, int height) {
+
+}
+
 int main() {
-    sf::RenderWindow window(sf::VideoMode(200, 200), "SFML Works!");
-    sf::CircleShape shape(100.f);
-    shape.setFillColor(sf::Color::Red);
+    int width = 1920;
+    int height = 1080;
+    sf::RenderWindow window(sf::VideoMode(width, height), "Plant Game");
+    sf::RectangleShape background(sf::Vector2f(width, height));
+    background.setFillColor(sf::Color::Red);
+
+    // sf::RectangleShape menu(sf::Vector2f(1200, 880));
+    // menu.setPosition(100, 100);
+
+    sf::Text start;
+    start.setString("- Press E To Start -");
 
     while(window.isOpen()) {
         sf::Event event;
@@ -18,7 +31,8 @@ int main() {
         }
 
         window.clear();
-        window.draw(shape);
+        window.draw(background);
+        window.draw(menu);
         window.display();
     }
     return 0;

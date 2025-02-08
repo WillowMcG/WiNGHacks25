@@ -7,21 +7,7 @@ CMake Deprecation Warning at CMakeLists.txt:1 (cmake_minimum_required):
   CMake that the project does not need compatibility with older versions.
 
 
-CMake Error at CMakeLists.txt:13 (find_package):
-  By not providing "FindSFML.cmake" in CMAKE_MODULE_PATH this project has
-  asked CMake to find a package configuration file provided by "SFML", but
-  CMake did not find one.
-
-  Could not find a package configuration file provided by "SFML" (requested
-  version 2.5.1) with any of the following names:
-
-    SFMLConfig.cmake
-    sfml-config.cmake
-
-  Add the installation prefix of "SFML" to CMAKE_PREFIX_PATH or set
-  "SFML_DIR" to a directory containing one of the above files.  If "SFML"
-  provides a separate development package or SDK, be sure it has been
-  installed.
-
-
--- Configuring incomplete, errors occurred!
+-- Found SFML 2.5.1 in C:/SFML/lib/cmake/SFML
+-- Configuring done (0.4s)
+-- Generating done (0.1s)
+-- Build files have been written to: C:/Users/Jules/Documents/Projects/WiNGHacks25/cmake-build-debug
