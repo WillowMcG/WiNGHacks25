@@ -4,6 +4,7 @@
 #include <iostream>
 #include "Textures.h"
 #include "Animation.h"
+#include "Textbox.h"
 #include "StatsManager.h"
 #include "InventoryManager.h"
 #include "Item.h"
@@ -15,10 +16,24 @@
 #include "Potion.h"
 #include "Cooking.h"
 #include <SFML/Graphics.hpp>
+#include <chrono>
 #include <memory>
 #include <random>
-#include <ctime>
 #include <tuple>
+
+struct Time {
+    chrono::steady_clock::time_point start;
+    chrono::system_clock::time_point startDate;
+    struct tm datetime;
+public:
+    Time();
+    int getHours();
+    int getMinutes();
+    int getSeconds();
+    int getTotalSeconds();
+    int getDate();
+    void resetTime();
+};
 
 void setText(sf::Text &text, float x, float y) {
     sf::FloatRect textRect = text.getLocalBounds();
@@ -54,9 +69,9 @@ void texturePlant(sf::Sprite& plant, string type, Textures& textures) {
     }
 }
 
-int gameLoop(sf::RenderWindow& window, int width, int height, Textures& textures) {
-    Clock clock;
-    double elapsed = clock.restart().asSeconds();
+int gameLoop(sf::RenderWindow& window, float width, float height, Textures& textures, sf::Font& body) {
+    sf::Clock clock;
+    int elapsed = clock.restart().asSeconds();
 
     sf::Sprite background;
     background.setTexture(textures.getBackgroundTextures().at(0));
@@ -65,7 +80,7 @@ int gameLoop(sf::RenderWindow& window, int width, int height, Textures& textures
     vector<pair<string, int>> plants = genPlants();
 
     sf::Sprite inventoryBackground;
-    inventoryBackground.setTexture(textures.getBackgroundTextures().at(1));
+    inventoryBackground.setTexture(textures.getBackgroundTextures().at(4));
     inventoryBackground.setOrigin(width/2, height/2);
     inventoryBackground.setPosition(width/2, height/2);
 
@@ -96,6 +111,13 @@ int gameLoop(sf::RenderWindow& window, int width, int height, Textures& textures
     plant5.setPosition(plants.at(4).second, plantHeight);
     texturePlant(plant5, plants.at(4).first, textures);
     plant5.setScale(2,2);
+
+    Textbox harvestPlant(width/2, height/4, body, 40, textures, "Press W to Harvest");
+    harvestPlant.open();
+
+    Textbox harvest1(width/2, height/4, body, 40, textures, "Type 1 Added to Inventory");
+    Textbox harvest2(width/2, height/4, body, 40, textures, "Type 2 Added to Inventory");
+    Textbox harvest3(width/2, height/4, body, 40, textures, "Type 3 Added to Inventory");
 
     sf::Texture sprite_sheet;
     Animation animations;
@@ -137,6 +159,105 @@ int gameLoop(sf::RenderWindow& window, int width, int height, Textures& textures
                     animations.update("walkRight", character);
                     isMoving = true;
                 }
+                if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) || sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
+                    int xpos = character.getPosition().x;
+                    if (xpos > plant1.getPosition().x - 10 && xpos < plant1.getPosition().x + 10) {
+                        cout << "Plant 1" << endl;
+                        elapsed = clock.restart().asSeconds();
+                        if (plants.at(0).first == "Type 1") {
+                            harvest1.open();
+                            harvest2.close();
+                            harvest3.close();
+                            harvestPlant.close();
+                        } else if (plants.at(0).first == "Type 2") {
+                            harvest2.open();
+                            harvest1.close();
+                            harvest3.close();
+                            harvestPlant.close();
+                        } else {
+                            harvest3.open();
+                            harvest1.close();
+                            harvest2.close();
+                            harvestPlant.close();
+                        }
+                    } else if (xpos > plant2.getPosition().x - 10 && xpos < plant2.getPosition().x + 10) {
+                        cout << "Plant 2" << endl;
+                        elapsed = clock.restart().asSeconds();
+                        if (plants.at(1).first == "Type 1") {
+                            harvest1.open();
+                            harvest2.close();
+                            harvest3.close();
+                            harvestPlant.close();
+                        } else if (plants.at(1).first == "Type 2") {
+                            harvest2.open();
+                            harvest1.close();
+                            harvest3.close();
+                            harvestPlant.close();
+                        } else {
+                            harvest3.open();
+                            harvest1.close();
+                            harvest2.close();
+                            harvestPlant.close();
+                        }
+                    } else if (xpos > plant3.getPosition().x - 10 && xpos < plant3.getPosition().x + 10) {
+                        cout << "Plant 3" << endl;
+                        elapsed = clock.restart().asSeconds();
+                        if (plants.at(2).first == "Type 1") {
+                            harvest1.open();
+                            harvest2.close();
+                            harvest3.close();
+                            harvestPlant.close();
+                        } else if (plants.at(2).first == "Type 2") {
+                            harvest2.open();
+                            harvest1.close();
+                            harvest3.close();
+                            harvestPlant.close();
+                        } else {
+                            harvest3.open();
+                            harvest1.close();
+                            harvest2.close();
+                            harvestPlant.close();
+                        }
+                    } else if (xpos > plant4.getPosition().x - 10 && xpos < plant4.getPosition().x + 10) {
+                        cout << "Plant 4" << endl;
+                        elapsed = clock.restart().asSeconds();
+                        if (plants.at(3).first == "Type 1") {
+                            harvest1.open();
+                            harvest2.close();
+                            harvest3.close();
+                            harvestPlant.close();
+                        } else if (plants.at(3).first == "Type 2") {
+                            harvest2.open();
+                            harvest1.close();
+                            harvest3.close();
+                            harvestPlant.close();
+                        } else {
+                            harvest3.open();
+                            harvest1.close();
+                            harvest2.close();
+                            harvestPlant.close();
+                        }
+                    } else if (xpos > plant5.getPosition().x - 10 && xpos < plant5.getPosition().x + 10) {
+                        cout << "Plant 5" << endl;
+                        elapsed = clock.restart().asSeconds();
+                        if (plants.at(4).first == "Type 1") {
+                            harvest1.open();
+                            harvest2.close();
+                            harvest3.close();
+                            harvestPlant.close();
+                        } else if (plants.at(4).first == "Type 2") {
+                            harvest2.open();
+                            harvest1.close();
+                            harvest3.close();
+                            harvestPlant.close();
+                        } else {
+                            harvest3.open();
+                            harvest1.close();
+                            harvest2.close();
+                            harvestPlant.close();
+                        }
+                    }
+                }
 
             }
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::E) && !inventoryOpen) {
@@ -156,8 +277,10 @@ int gameLoop(sf::RenderWindow& window, int width, int height, Textures& textures
                 while (newBackground == backgroundNum) {
                     newBackground = rand() % 4;
                 }
+
                 backgroundNum = newBackground;
                 background.setTexture(textures.getBackgroundTextures().at(backgroundNum));
+                harvestPlant.close();
 
                 plants = genPlants();
 
@@ -187,9 +310,28 @@ int gameLoop(sf::RenderWindow& window, int width, int height, Textures& textures
             window.draw(plant4);
             window.draw(plant5);
             window.draw(character);
+            if (harvestPlant.checkOpen() && elapsed <= 5) {
+                harvestPlant.drawTextbox(window);
+            } else {
+                harvestPlant.close();
+            }
+            if (harvest1.checkOpen() && elapsed <= 5) {
+                harvest1.drawTextbox(window);
+            } else {
+                harvest1.close();
+            }
+            if (harvest2.checkOpen() && elapsed <= 5) {
+                harvest2.drawTextbox(window);
+            } else {
+                harvest2.close();
+            }
+            if (harvest3.checkOpen() && elapsed <= 5) {
+                harvest3.drawTextbox(window);
+            } else {
+                harvest3.close();
+            }
             if (inventoryOpen) {
                 window.draw(inventoryBackground);
-                plants = genPlants();
             }
             window.display();
         }
@@ -226,7 +368,7 @@ int main() {
             }
             if (event.type == sf::Event::KeyPressed) {
                 if (event.key.code == sf::Keyboard::Enter) {
-                    run = gameLoop(window, width, height, textures);
+                    run = gameLoop(window, width, height, textures, body);
                 }
             }
         }
