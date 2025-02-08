@@ -140,5 +140,11 @@ int main() {
 		std::cout << inventory_manager.items[i]->name << std::endl;
 	}
 
+	std::cout << "Egg quantity: " << inventory_manager.getItemPtr("Egg")->quantity << std::endl;
+	inventory_manager.pickUpItem(debug_inventory.getItemPtr("Egg"));
+	std::cout << "Newer Egg quantity: " << inventory_manager.getItemPtr("Egg")->quantity << std::endl;
+	inventory_manager.pickUpItem(debug_inventory.getItemPtr("Egg"), 10);
+	std::cout << "Even newer Egg quantity: " << inventory_manager.getItemPtr("Egg")->quantity << std::endl;
+
 	return 0;
 }

@@ -15,7 +15,7 @@ public:
 	std::shared_ptr<Item> getItemPtr(int index);
 	std::shared_ptr<Item> getItemPtr(std::string name);
 	void pickUpItem(std::shared_ptr<Item> item);
-	void pickUpItem(Item item, int quantity);
+	void pickUpItem(std::shared_ptr<Item> item, int quantity);
 	void discardItem(Item item);
 	void discardItem(Item item, int quantity);
 	void tradeItem(Item item, int quantity, std::string traderName);

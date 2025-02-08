@@ -64,17 +64,18 @@ void InventoryManager::pickUpItem(std::shared_ptr<Item> item) {
 	items.push_back(item);
 }
 
+void InventoryManager::pickUpItem(std::shared_ptr<Item> item, int quantity) {
+	if (!item) return;
 
-
-void InventoryManager::pickUpItem(Item item, int quantity) {
-	for (int i = 0; i < items.size(); i++) {
-		if (items[i]->index == item.index) {
-			items[i]->quantity += quantity;
+	for (auto& inventoryItem : items) {
+		if (inventoryItem->name == item->name) {
+			inventoryItem->quantity += quantity;
 			return;
 		}
 	}
-	item.quantity = quantity;
-	items.push_back(std::make_shared<Item>(item));
+
+	item->quantity = quantity;
+	items.push_back(item);
 }
 
 void InventoryManager::discardItem(Item item) {
