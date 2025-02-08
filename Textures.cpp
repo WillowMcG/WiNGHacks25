@@ -10,10 +10,15 @@ Textures::Textures() {
 void Textures::loadTextures() {
   cauldronTexture.loadFromFile("files/images/sprites/Cauldron_Icon.png");
   itemTextures.push_back(cauldronTexture);
+
   cauldronLightTexture.loadFromFile("files/images/sprites/Cauldron_Icon_Highlight.png");
   itemTextures.push_back(cauldronLightTexture);
+
+  forest1.loadFromFile("files/images/backgrounds/forest1.png");
   inventoryTexture.loadFromFile("files/images/backgrounds/Inventory.png");
+  backgroundTextures.push_back(forest1);
   backgroundTextures.push_back(inventoryTexture);
+
   characterSL.loadFromFile("files/images/sprites/StandL.png");
   characterSR.loadFromFile("files/images/sprites/StandR.png");
   characterWL1.loadFromFile("files/images/sprites/WalkL1.png");

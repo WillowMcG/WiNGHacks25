@@ -38,45 +38,13 @@ int gameLoop(sf::RenderWindow& window, int width, int height, Textures& textures
     Clock clock;
     double elapsed = clock.restart().asSeconds();
 
-    sf::RectangleShape background(sf::Vector2f(width, height));
-    background.setFillColor(sf::Color::Red);
-
-    //the screen will be set into eight sections which may contain a small, medium, big, or no tree
-    //this is randomized
-
-    //Draw the initial forest
-    sf::RectangleShape smallTree(sf::Vector2f(100, 800));
-    smallTree.setFillColor(sf::Color::Black);
-    smallTree.setPosition(width/8, 0);
-
-    sf::RectangleShape mediumTree(sf::Vector2f(150, 900));
-    mediumTree.setFillColor(sf::Color::Black);
-    mediumTree.setPosition(width/4, 0);
-
-    sf::RectangleShape largeTree(sf::Vector2f(200, 950));
-    largeTree.setFillColor(sf::Color::Black);
-    largeTree.setPosition(3*width/8, 0);
-
-    sf::RectangleShape smallTree2(sf::Vector2f(100, 800));
-    smallTree2.setFillColor(sf::Color::Black);
-    smallTree2.setPosition(width/2, 0);
-
-    sf::RectangleShape largeTree2(sf::Vector2f(200, 950));
-    largeTree2.setFillColor(sf::Color::Black);
-    largeTree2.setPosition(5*width/8, 0);
-
-    sf::RectangleShape smallTree3(sf::Vector2f(100, 800));
-    smallTree3.setFillColor(sf::Color::Black);
-    smallTree3.setPosition(3*width/4, 0);
-
-    sf::RectangleShape mediumTree2(sf::Vector2f(150, 900));
-    mediumTree2.setFillColor(sf::Color::Black);
-    mediumTree2.setPosition(7*width/8, 0);
+    sf::Sprite background;
+    background.setTexture(textures.getBackgroundTextures().at(0));
 
     vector<tuple<string, int>> plants = genPlants();
 
     sf::Sprite inventoryBackground;
-    inventoryBackground.setTexture(textures.getBackgroundTextures().at(0));
+    inventoryBackground.setTexture(textures.getBackgroundTextures().at(1));
     inventoryBackground.setOrigin(width/2, height/2);
     inventoryBackground.setPosition(width/2, height/2);
 
@@ -140,13 +108,6 @@ int gameLoop(sf::RenderWindow& window, int width, int height, Textures& textures
 
             window.clear();
             window.draw(background);
-            window.draw(smallTree);
-            window.draw(mediumTree);
-            window.draw(largeTree);
-            window.draw(smallTree2);
-            window.draw(largeTree2);
-            window.draw(mediumTree2);
-            window.draw(smallTree3);
             window.draw(character);
             if (inventoryOpen) {
                 window.draw(inventoryBackground);
@@ -168,8 +129,7 @@ int main() {
     int width = 1920;
     int height = 1080;
     sf::RenderWindow window(sf::VideoMode(width, height), "Plant Game");
-    sf::RectangleShape background(sf::Vector2f(width, height));
-    background.setFillColor(sf::Color::Red);
+    sf::Sprite background;
 
     // sf::RectangleShape menu(sf::Vector2f(1200, 880));
     // menu.setPosition(100, 100);
