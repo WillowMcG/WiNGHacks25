@@ -1,0 +1,33 @@
+﻿  main.cpp
+C:\Users\willo\source\repos\WiNGHacks25\main.cpp(16,60): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+C:\Users\willo\source\repos\WiNGHacks25\main.cpp(16,60): warning C4244:         with
+C:\Users\willo\source\repos\WiNGHacks25\main.cpp(16,60): warning C4244:         [
+C:\Users\willo\source\repos\WiNGHacks25\main.cpp(16,60): warning C4244:             T=float
+C:\Users\willo\source\repos\WiNGHacks25\main.cpp(16,60): warning C4244:         ]
+C:\Users\willo\source\repos\WiNGHacks25\main.cpp(16,48): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+C:\Users\willo\source\repos\WiNGHacks25\main.cpp(16,48): warning C4244:         with
+C:\Users\willo\source\repos\WiNGHacks25\main.cpp(16,48): warning C4244:         [
+C:\Users\willo\source\repos\WiNGHacks25\main.cpp(16,48): warning C4244:             T=float
+C:\Users\willo\source\repos\WiNGHacks25\main.cpp(16,48): warning C4244:         ]
+C:\Users\willo\source\repos\WiNGHacks25\main.cpp(20,30): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\willo\source\repos\WiNGHacks25\main.cpp(29,55): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+C:\Users\willo\source\repos\WiNGHacks25\main.cpp(29,55): warning C4244:         with
+C:\Users\willo\source\repos\WiNGHacks25\main.cpp(29,55): warning C4244:         [
+C:\Users\willo\source\repos\WiNGHacks25\main.cpp(29,55): warning C4244:             T=float
+C:\Users\willo\source\repos\WiNGHacks25\main.cpp(29,55): warning C4244:         ]
+C:\Users\willo\source\repos\WiNGHacks25\main.cpp(29,48): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+C:\Users\willo\source\repos\WiNGHacks25\main.cpp(29,48): warning C4244:         with
+C:\Users\willo\source\repos\WiNGHacks25\main.cpp(29,48): warning C4244:         [
+C:\Users\willo\source\repos\WiNGHacks25\main.cpp(29,48): warning C4244:             T=float
+C:\Users\willo\source\repos\WiNGHacks25\main.cpp(29,48): warning C4244:         ]
+C:\Users\willo\source\repos\WiNGHacks25\main.cpp(39,68): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+C:\Users\willo\source\repos\WiNGHacks25\main.cpp(39,68): warning C4244:         with
+C:\Users\willo\source\repos\WiNGHacks25\main.cpp(39,68): warning C4244:         [
+C:\Users\willo\source\repos\WiNGHacks25\main.cpp(39,68): warning C4244:             T=float
+C:\Users\willo\source\repos\WiNGHacks25\main.cpp(39,68): warning C4244:         ]
+C:\Users\willo\source\repos\WiNGHacks25\main.cpp(39,53): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+C:\Users\willo\source\repos\WiNGHacks25\main.cpp(39,53): warning C4244:         with
+C:\Users\willo\source\repos\WiNGHacks25\main.cpp(39,53): warning C4244:         [
+C:\Users\willo\source\repos\WiNGHacks25\main.cpp(39,53): warning C4244:             T=float
+C:\Users\willo\source\repos\WiNGHacks25\main.cpp(39,53): warning C4244:         ]
+  WiNGHacks25.vcxproj -> C:\Users\willo\source\repos\WiNGHacks25\x64\Debug\WiNGHacks25.exe
