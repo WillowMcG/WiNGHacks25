@@ -14,12 +14,14 @@ void initializeItems(InventoryManager& inventory_manager) {
 	sf::Texture texture;
 	texture.loadFromFile("Cauldron_Icon copy.png");
 	sf::Sprite sprite(texture);
-	Item item(0, "Cauldron", sprite, 1);
+
+	std::shared_ptr<Item> item = std::make_shared<Item>(0, "Cauldron", sprite, 1);
 	inventory_manager.items.push_back(item);
+
 	IngrGiftRating gift_rating({ 1, 1, 1 });
 	IngrProperties properties(1, 1, 1, 1, 1, 1);
 	IngrKnowledge knowledge(true, false, false, false, false, false);
-	Ingredient ingredient(1, "Mandrake Root", sprite, 1, gift_rating, properties, knowledge);
+	std::shared_ptr<Item> ingredient = std::make_shared<Ingredient>(1, "Mandrake Root", sprite, 1, properties, knowledge, gift_rating);
 	inventory_manager.items.push_back(ingredient);
 }
 
@@ -28,7 +30,18 @@ int main() {
 	InventoryManager inventory_manager;
 	initializeItems(inventory_manager);
 	for (int i = 0; i < inventory_manager.items.size(); i++) {
-		std::cout << inventory_manager.items[i].name << std::endl;
+		std::cout << inventory_manager.items[i]->name << std::endl;
 	}
+	
+	auto item = inventory_manager.getItemPtr(1);
+
+	auto ingredient = std::dynamic_pointer_cast<Ingredient>(item);
+	if (ingredient) {
+		ingredient->getIngrKnowledge().printKnowledge();
+	}
+	else {
+		std::cout << "Item is not an ingredient." << std::endl;
+	}
+
 	return 0;
 }
