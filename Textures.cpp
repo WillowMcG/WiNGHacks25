@@ -15,8 +15,14 @@ void Textures::loadTextures() {
   itemTextures.push_back(cauldronLightTexture);
 
   forest1.loadFromFile("files/images/backgrounds/forest1.png");
+  forest2.loadFromFile("files/images/backgrounds/forest2.png");
+  forest3.loadFromFile("files/images/backgrounds/forest3.png");
+  forest4.loadFromFile("files/images/backgrounds/forest4.png");
   inventoryTexture.loadFromFile("files/images/backgrounds/Inventory.png");
   backgroundTextures.push_back(forest1);
+  backgroundTextures.push_back(forest2);
+  backgroundTextures.push_back(forest3);
+  backgroundTextures.push_back(forest4);
   backgroundTextures.push_back(inventoryTexture);
 
   characterSL.loadFromFile("files/images/sprites/StandL.png");

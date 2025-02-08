@@ -40,6 +40,7 @@ int gameLoop(sf::RenderWindow& window, int width, int height, Textures& textures
 
     sf::Sprite background;
     background.setTexture(textures.getBackgroundTextures().at(0));
+    int backgroundNum = 0;
 
     vector<tuple<string, int>> plants = genPlants();
 
@@ -106,11 +107,26 @@ int gameLoop(sf::RenderWindow& window, int width, int height, Textures& textures
                 animations.resetAnimationIndex("walkRight");
             }
 
+            if (character.getPosition().x < 0 || character.getPosition().x > 1920) {
+                int newBackground = rand() % 4;
+                while (newBackground == backgroundNum) {
+                    newBackground = rand() % 4;
+                }
+                backgroundNum = newBackground;
+                background.setTexture(textures.getBackgroundTextures().at(backgroundNum));
+                if (character.getPosition().x < 0) {
+                    character.setPosition(1920, height-height/4);
+                } else {
+                    character.setPosition(0, height-height/4);
+                }
+            }
+
             window.clear();
             window.draw(background);
             window.draw(character);
             if (inventoryOpen) {
                 window.draw(inventoryBackground);
+                plants = genPlants();
             }
             window.display();
         }

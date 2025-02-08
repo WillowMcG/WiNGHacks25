@@ -25,6 +25,9 @@ class Textures {
   sf::Texture characterWL2;
 
   sf::Texture forest1;
+  sf::Texture forest2;
+  sf::Texture forest3;
+  sf::Texture forest4;
   sf::Texture inventoryTexture;
 
 public:
