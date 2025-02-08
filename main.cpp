@@ -5,7 +5,6 @@
 #include "Textures.h"
 #include "DrawForest.h"
 #include <SFML/Graphics.hpp>
-#include <SFML/System/Clock.hpp>
 #include <random>
 #include <ctime>
 #include <tuple>
@@ -18,7 +17,7 @@ void setText(sf::Text &text, float x, float y) {
 }
 
 vector<tuple<string, int>> genPlants() {
-    int plantNum = 2 + rand() % 3;
+    int plantNum = 4 + rand() % 3;
     int plantChoice;
     int pos = rand() % 200;
     vector<tuple<string, int>> plants;
@@ -32,7 +31,10 @@ vector<tuple<string, int>> genPlants() {
             plants.push_back({"Type 3", pos});
         }
         cout << pos << endl;;
-        pos += rand() % 1920/(plantChoice+1);
+        pos += rand() % 1800/(plantChoice+2);
+        if (pos >= 1920) {
+            break;
+        }
     }
 
     return plants;
@@ -87,6 +89,8 @@ int gameLoop(sf::RenderWindow& window, int width, int height, Textures& textures
     inventoryBackground.setPosition(width/2, height/2);
 
     bool inventoryOpen = false;
+    bool walkL = false;
+    bool walkR = false;
 
     sf::Event event;
     while (window.isOpen()) {
@@ -100,6 +104,7 @@ int gameLoop(sf::RenderWindow& window, int width, int height, Textures& textures
                 if(sf::Keyboard::isKeyPressed(sf::Keyboard::Left) || sf::Keyboard::isKeyPressed(sf::Keyboard::A))
                 {
                     character.move(-10, 0.f);
+                    walkL = true;
                 }
 
                 if(sf::Keyboard::isKeyPressed(sf::Keyboard::Right) || sf::Keyboard::isKeyPressed(sf::Keyboard::D))
@@ -114,8 +119,11 @@ int gameLoop(sf::RenderWindow& window, int width, int height, Textures& textures
                 inventoryOpen = false;
             }
 
-            if (character.getPosition().x <= 0) {
+            if (walkL) {
+                if () {
 
+
+                }
             }
 
             window.clear();
@@ -170,7 +178,6 @@ int main() {
             }
             if (event.type == sf::Event::KeyPressed) {
                 if (event.key.code == sf::Keyboard::Enter) {
-                    start.setString("Game Started");
                     run = gameLoop(window, width, height, textures);
                 }
             }
