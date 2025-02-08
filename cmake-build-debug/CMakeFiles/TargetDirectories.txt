@@ -1,0 +1,3 @@
+C:/Users/Jules/Documents/Projects/WiNGHacks25/cmake-build-debug/CMakeFiles/WiNGHacks25.dir
+C:/Users/Jules/Documents/Projects/WiNGHacks25/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/Jules/Documents/Projects/WiNGHacks25/cmake-build-debug/CMakeFiles/rebuild_cache.dir
