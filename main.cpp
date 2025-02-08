@@ -2,12 +2,13 @@
 // Created by Jules on 2/7/2025.
 //
 #include <iostream>
-#include "Sprites.h"
+#include "Textures.h"
 #include "DrawForest.h"
 #include <SFML/Graphics.hpp>
 #include <SFML/System/Clock.hpp>
 #include <random>
 #include <ctime>
+#include <tuple>
 
 void setText(sf::Text &text, float x, float y) {
     sf::FloatRect textRect = text.getLocalBounds();
@@ -16,16 +17,28 @@ void setText(sf::Text &text, float x, float y) {
     text.setPosition(sf::Vector2f(x, y));
 }
 
-vector<int> randomTrees() {
-    vector<int> positions;
-    for (int i = 0; i < 8; i++) {
-        positions.push_back(rand() % 4);
+vector<tuple<string, int>> genPlants() {
+    int plantNum = 2 + rand() % 3;
+    int plantChoice;
+    int pos = rand() % 200;
+    vector<tuple<string, int>> plants;
+    for (int i = 0; i < plantNum; i++) {
+        plantChoice = rand() % 3;
+        if (plantChoice == 0) {
+            plants.push_back({"Type 1", pos});
+        } else if (plantChoice == 1) {
+            plants.push_back({"Type 2", pos});
+        } else {
+            plants.push_back({"Type 3", pos});
+        }
+        cout << pos << endl;;
+        pos += rand() % 1920/(plantChoice+1);
     }
 
-    return positions;
+    return plants;
 }
 
-int gameLoop(sf::RenderWindow& window, int width, int height) {
+int gameLoop(sf::RenderWindow& window, int width, int height, Textures& textures) {
     sf::RectangleShape background(sf::Vector2f(width, height));
     background.setFillColor(sf::Color::Red);
 
@@ -66,23 +79,14 @@ int gameLoop(sf::RenderWindow& window, int width, int height) {
     character.setOrigin(128, 128);
     character.setPosition(width-width/12, height-height/8);
 
-    sf::RectangleShape i1(sf::Vector2f(128, 128));
-    i1.setFillColor(sf::Color::Green);
-    i1.setPosition(50, 50);
+    vector<tuple<string, int>> plants = genPlants();
 
-    sf::RectangleShape i2(sf::Vector2f(128, 128));
-    i2.setFillColor(sf::Color::Green);
-    i2.setPosition(100+128, 50);
+    sf::Sprite inventoryBackground;
+    inventoryBackground.setTexture(textures.getBackgroundTextures().at(0));
+    inventoryBackground.setOrigin(width/2, height/2);
+    inventoryBackground.setPosition(width/2, height/2);
 
-    sf::RectangleShape i3(sf::Vector2f(128, 128));
-    i3.setFillColor(sf::Color::Green);
-    i3.setPosition(150+2*128, 50);
-
-    sf::RectangleShape i4(sf::Vector2f(128, 128));
-    i4.setFillColor(sf::Color::Green);
-    i4.setPosition(200+3*128, 50);
-
-    sf::Clock clock;
+    bool inventoryOpen = false;
 
     sf::Event event;
     while (window.isOpen()) {
@@ -92,44 +96,54 @@ int gameLoop(sf::RenderWindow& window, int width, int height) {
                 window.close();
                 return -1;
             }
-            float deltaTime = clock.restart().asSeconds();
+            if (!inventoryOpen) {
+                if(sf::Keyboard::isKeyPressed(sf::Keyboard::Left) || sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+                {
+                    character.move(-10, 0.f);
+                }
 
-            if(sf::Keyboard::isKeyPressed(sf::Keyboard::Left) || sf::Keyboard::isKeyPressed(sf::Keyboard::A))
-            {
-                character.move(-10, 0.f);
+                if(sf::Keyboard::isKeyPressed(sf::Keyboard::Right) || sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+                {
+                    character.move(10, 0.f);
+                }
+            }
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::E) && !inventoryOpen) {
+                inventoryOpen = true;
+            }
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q) && inventoryOpen) {
+                inventoryOpen = false;
             }
 
-            if(sf::Keyboard::isKeyPressed(sf::Keyboard::Right) || sf::Keyboard::isKeyPressed(sf::Keyboard::D))
-            {
-                character.move(10, 0.f);
+            if (character.getPosition().x <= 0) {
+
             }
+
+            window.clear();
+            window.draw(background);
+            window.draw(smallTree);
+            window.draw(mediumTree);
+            window.draw(largeTree);
+            window.draw(smallTree2);
+            window.draw(largeTree2);
+            window.draw(mediumTree2);
+            window.draw(smallTree3);
+            window.draw(character);
+            if (inventoryOpen) {
+                window.draw(inventoryBackground);
+            }
+            window.display();
         }
 
-        if (character.getPosition().x <= 0) {
-
-        }
-
-        window.clear();
-        window.draw(background);
-        window.draw(smallTree);
-        window.draw(mediumTree);
-        window.draw(largeTree);
-        window.draw(smallTree2);
-        window.draw(largeTree2);
-        window.draw(mediumTree2);
-        window.draw(smallTree3);
-        window.draw(character);
-        window.draw(i1);
-        window.draw(i2);
-        window.draw(i3);
-        window.draw(i4);
-        window.display();
     }
+    return 0;
 }
 
 int main() {
     sf::Font body;
     body.loadFromFile("files/SummerPixel.ttf"); //Font - can be changed later
+
+    Textures textures;
+    textures.loadTextures();
 
     int width = 1920;
     int height = 1080;
@@ -141,7 +155,7 @@ int main() {
     // menu.setPosition(100, 100);
 
     sf::Text start;
-    start.setString("- Press E To Start -");
+    start.setString("- Press [Enter] To Start -");
     start.setFont(body);
     start.setCharacterSize(40);
     setText(start, width/2, height/2);
@@ -155,9 +169,9 @@ int main() {
                 window.close();
             }
             if (event.type == sf::Event::KeyPressed) {
-                if (event.key.code == sf::Keyboard::E) {
+                if (event.key.code == sf::Keyboard::Enter) {
                     start.setString("Game Started");
-                    run = gameLoop(window, width, height);
+                    run = gameLoop(window, width, height, textures);
                 }
             }
         }
