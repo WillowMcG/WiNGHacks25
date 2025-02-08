@@ -269,13 +269,13 @@ int main() {
 	std::cout << stats_manager.getHealth() << std::endl;
 	stats_manager.printRelationshipLvls();
 
-	
+
 	InventoryManager inventory_manager;
 	initializeItems(inventory_manager);
 	for (int i = 0; i < inventory_manager.items.size(); i++) {
 		std::cout << inventory_manager.items[i]->name << std::endl;
 	}
-	
+
 	auto item = inventory_manager.getItemPtr(1);
 
 	auto ingredient = std::dynamic_pointer_cast<Ingredient>(item);
@@ -330,116 +330,42 @@ int main() {
 	inventory_manager.pickUpItem(debug_inventory.getItemPtr("Egg"), 10);
 	std::cout << "Even newer Egg quantity: " << inventory_manager.getItemPtr("Egg")->quantity << std::endl;
 
-		sf::Font body;
-		body.loadFromFile("files/SummerPixel.ttf"); //Font - can be changed later
+	sf::Font body;
+	body.loadFromFile("files/SummerPixel.ttf"); //Font - can be changed later
 
-		Textures textures;
-		textures.loadTextures();
+	Textures textures;
+	textures.loadTextures();
 
-		int width = 1920;
-		int height = 1080;
-		sf::RenderWindow window(sf::VideoMode(width, height), "Plant Game");
-		sf::Sprite background;
+	int width = 1920;
+	int height = 1080;
+	sf::RenderWindow window(sf::VideoMode(width, height), "Plant Game");
+	sf::Sprite background;
 
-		sf::Text start;
-		start.setString("- Press [Enter] To Start -");
-		start.setFont(body);
-		start.setCharacterSize(40);
-		setText(start, width / 2, height / 2);
+	sf::Text start;
+	start.setString("- Press [Enter] To Start -");
+	start.setFont(body);
+	start.setCharacterSize(40);
+	setText(start, width / 2, height / 2);
 
-		int run = 0; //is game running?
+	int run = 0; //is game running?
 
-		while (window.isOpen()) {
-			sf::Event event;
-			while (window.pollEvent(event)) {
-				if (event.type == sf::Event::Closed) {
-					window.close();
-				}
-				if (event.type == sf::Event::KeyPressed) {
-					if (event.key.code == sf::Keyboard::Enter) {
-						run = gameLoop(window, width, height, textures);
-					}
-				}
+	while (window.isOpen()) {
+		sf::Event event;
+		while (window.pollEvent(event)) {
+			if (event.type == sf::Event::Closed) {
+				window.close();
 			}
-
-			window.clear();
-			window.draw(background);
-			window.draw(start);
-			window.display();
-		}
-		return 0;
-
-
-		int main() {
-
-			InventoryManager debug_inventory;
-			initializeDebug(debug_inventory);
-
-			StatsManager stats_manager;
-			std::cout << stats_manager.getHealth() << std::endl;
-			stats_manager.printRelationshipLvls();
-
-
-			InventoryManager inventory_manager;
-			initializeItems(inventory_manager);
-			for (int i = 0; i < inventory_manager.items.size(); i++) {
-				std::cout << inventory_manager.items[i]->name << std::endl;
-			}
-
-			auto item = inventory_manager.getItemPtr(1);
-
-			auto ingredient = std::dynamic_pointer_cast<Ingredient>(item);
-			if (ingredient) {
-				ingredient->getIngrKnowledge().printKnowledge();
-			}
-			else {
-				std::cout << "Item is not an ingredient." << std::endl;
-			}
-
-			auto potion = std::dynamic_pointer_cast<Potion>(inventory_manager.getItemPtr(3));
-			if (potion) {
-				potion->getIngrProperties().printProperties();
-				std::unordered_map<std::string, int> ingredients = potion->getIngredients();
-				for (auto it = ingredients.begin(); it != ingredients.end(); it++) {
-					std::cout << it->first << ": " << it->second << std::endl;
+			if (event.type == sf::Event::KeyPressed) {
+				if (event.key.code == sf::Keyboard::Enter) {
+					run = gameLoop(window, width, height, textures);
 				}
 			}
-			else {
-				std::cout << "Item is not a potion." << std::endl;
-			}
-
-			std::cout << "Before eating: " << stats_manager.getHealth() << std::endl;
-
-			eating(inventory_manager, stats_manager, "Mandrake Root");
-			std::cout << "After eating: " << stats_manager.getHealth() << std::endl;
-
-			eating(inventory_manager, stats_manager, "Potion of Strength");
-			std::cout << "After drinking: " << stats_manager.getHealth() << std::endl;
-
-			std::cout << "Egg is in debug: " << debug_inventory.inInventory(debug_inventory.getItem("Egg")) << std::endl;
-			for (int i = 0; i < debug_inventory.items.size(); i++) {
-				std::cout << debug_inventory.items[i]->name << std::endl;
-			}
-
-			std::cout << "In inventory:" <<
-				inventory_manager.inInventory(debug_inventory.getItem("Egg")) << std::endl;
-			for (int i = 0; i < inventory_manager.items.size(); i++) {
-				std::cout << inventory_manager.items[i]->name << std::endl;
-			}
-
-			inventory_manager.pickUpItem(debug_inventory.getItemPtr("Egg"));
-			std::cout << "In inventory:" <<
-				inventory_manager.inInventory(debug_inventory.getItem("Egg")) << std::endl;
-			for (int i = 0; i < inventory_manager.items.size(); i++) {
-				std::cout << inventory_manager.items[i]->name << std::endl;
-			}
-
-			std::cout << "Egg quantity: " << inventory_manager.getItemPtr("Egg")->quantity << std::endl;
-			inventory_manager.pickUpItem(debug_inventory.getItemPtr("Egg"));
-			std::cout << "Newer Egg quantity: " << inventory_manager.getItemPtr("Egg")->quantity << std::endl;
-			inventory_manager.pickUpItem(debug_inventory.getItemPtr("Egg"), 10);
-			std::cout << "Even newer Egg quantity: " << inventory_manager.getItemPtr("Egg")->quantity << std::endl;
-
-			return 0;
 		}
 
+		window.clear();
+		window.draw(background);
+		window.draw(start);
+		window.display();
+	}
+	return 0;
+}
