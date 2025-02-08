@@ -144,7 +144,9 @@
     <ClCompile Include="InventoryManager.cpp" />
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Populate.cpp" />
     <ClCompile Include="Potion.cpp" />
+    <ClCompile Include="Sprites.cpp" />
     <ClCompile Include="StatsManager.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -156,8 +158,10 @@
     <ClInclude Include="IngrStatus.h" />
     <ClInclude Include="InventoryManager.h" />
     <ClInclude Include="Item.h" />
+    <ClInclude Include="Populate.h" />
     <ClInclude Include="Potion.h" />
     <ClInclude Include="RelationshipLvls.h" />
+    <ClInclude Include="Sprites.h" />
     <ClInclude Include="StatsManager.h" />
   </ItemGroup>
   <ItemGroup>

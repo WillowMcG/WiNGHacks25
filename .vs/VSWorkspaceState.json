@@ -3,5 +3,11 @@
     ""
   ],
   "SelectedNode": "\\C:\\Users\\willo\\source\\repos\\WiNGHacks25",
-  "PreviewInSolutionExplorer": false
+  "PreviewInSolutionExplorer": false,
+  "OutputFoldersPerTargetSystem": {
+    "Local Machine": [
+      "out\\build\\x64-Debug",
+      "out\\install\\x64-Debug"
+    ]
+  }
 }

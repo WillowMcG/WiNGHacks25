@@ -36,6 +36,12 @@
     <ClCompile Include="Cooking.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Populate.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Sprites.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="InventoryManager.h">
@@ -69,6 +75,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="IngrStatus.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Populate.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Sprites.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
