@@ -24,12 +24,27 @@
     <ClCompile Include="Item.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Ingredient.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="InventoryManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Item.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Ingredient.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="IngrGiftRating.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="IngrProperties.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="IngrKnowledge.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

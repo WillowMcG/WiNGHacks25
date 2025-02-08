@@ -139,11 +139,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Ingredient.cpp" />
     <ClCompile Include="InventoryManager.cpp" />
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Ingredient.h" />
+    <ClInclude Include="IngrGiftRating.h" />
+    <ClInclude Include="IngrKnowledge.h" />
+    <ClInclude Include="IngrProperties.h" />
     <ClInclude Include="InventoryManager.h" />
     <ClInclude Include="Item.h" />
   </ItemGroup>
