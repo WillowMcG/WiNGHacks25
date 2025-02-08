@@ -3,6 +3,7 @@
 //
 #include <iostream>
 #include <SFML/Graphics.hpp>
+#include "StatsManager.h"
 #include "InventoryManager.h"
 #include "Item.h"
 #include "Ingredient.h"
@@ -26,6 +27,11 @@ void initializeItems(InventoryManager& inventory_manager) {
 }
 
 int main() {
+
+	StatsManager stats_manager;
+	std::cout << stats_manager.getHealth() << std::endl;
+	stats_manager.printRelationshipLvls();
+
 	
 	InventoryManager inventory_manager;
 	initializeItems(inventory_manager);

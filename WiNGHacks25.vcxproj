@@ -143,6 +143,7 @@
     <ClCompile Include="InventoryManager.cpp" />
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="StatsManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Ingredient.h" />
@@ -151,6 +152,8 @@
     <ClInclude Include="IngrProperties.h" />
     <ClInclude Include="InventoryManager.h" />
     <ClInclude Include="Item.h" />
+    <ClInclude Include="RelationshipLvls.h" />
+    <ClInclude Include="StatsManager.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Cauldron_Icon copy.png" />
