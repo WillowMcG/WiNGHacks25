@@ -1,7 +1,36 @@
+#include <iostream>
+
 #include "InventoryManager.h"
 
 InventoryManager::InventoryManager() {
 	items = std::vector<std::shared_ptr<Item>>();
+}
+
+bool InventoryManager::inInventory(Item item) {
+	for (const auto& invItem : items) {
+		if (invItem->name == item.name) {
+			return true;
+		}
+	}
+	return false;
+}
+
+Item InventoryManager::getItem(int index) {
+	for (int i = 0; i < items.size(); i++) {
+		if (items[i]->index == index) {
+			return *items[i];
+		}
+	}
+	return Item();
+}
+
+Item InventoryManager::getItem(std::string name) {
+	for (int i = 0; i < items.size(); i++) {
+		if (items[i]->name == name) {
+			return *items[i];
+		}
+	}
+	return Item();
 }
 
 std::shared_ptr<Item> InventoryManager::getItemPtr(int index) {
@@ -22,9 +51,20 @@ std::shared_ptr<Item> InventoryManager::getItemPtr(std::string name) {
 	return nullptr;
 }
 
-void InventoryManager::pickUpItem(Item item) {
-	items.push_back(std::make_shared<Item>(item));
+void InventoryManager::pickUpItem(std::shared_ptr<Item> item) {
+	if (!item) return;
+
+	for (auto& inventoryItem : items) {
+		if (inventoryItem->name == item->name) {
+			inventoryItem->quantity++;
+			return;
+		}
+	}
+
+	items.push_back(item);
 }
+
+
 
 void InventoryManager::pickUpItem(Item item, int quantity) {
 	for (int i = 0; i < items.size(); i++) {
@@ -83,6 +123,8 @@ void InventoryManager::tradeItem(Item givenItem, int givenQuantity, std::string 
 	recievedItem.quantity = recievedQuantity;
 	items.push_back(std::make_shared<Item>(recievedItem));
 }
+
+
 
 
 

@@ -14,6 +14,7 @@
 #include "Potion.h"
 #include "Cooking.h"
 
+// Test function
 void initializeItems(InventoryManager& inventory_manager) {
 	sf::Texture texture;
 	texture.loadFromFile("Cauldron_Icon copy.png");
@@ -41,6 +42,18 @@ void initializeItems(InventoryManager& inventory_manager) {
 	inventory_manager.items.push_back(potion);
 }
 
+void initializeDebug(InventoryManager& inventory_manager) {
+	sf::Texture texture;
+	texture.loadFromFile("Cauldron_Icon copy.png");
+	sf::Sprite sprite(texture);
+
+	std::shared_ptr<Item> item = std::make_shared<Item>(0, "Egg", sprite, 1);
+	inventory_manager.items.push_back(item);
+	for (int i = 0; i < inventory_manager.items.size(); i++) {
+		std::cout << inventory_manager.items[i]->name << std::endl;
+	}
+}
+
 void eating(InventoryManager& inventory_manager, StatsManager& stats_manager, std::string name) {
 	auto item = inventory_manager.getItemPtr(name);
 	auto ingredient = std::dynamic_pointer_cast<Ingredient>(item);
@@ -64,6 +77,9 @@ void eating(InventoryManager& inventory_manager, StatsManager& stats_manager, st
 }
 
 int main() {
+
+	InventoryManager debug_inventory;
+	initializeDebug(debug_inventory);
 
 	StatsManager stats_manager;
 	std::cout << stats_manager.getHealth() << std::endl;
@@ -105,6 +121,24 @@ int main() {
 
 	eating(inventory_manager, stats_manager, "Potion of Strength");
 	std::cout << "After drinking: " << stats_manager.getHealth() << std::endl;
+
+	std::cout << "Egg is in debug: " << debug_inventory.inInventory(debug_inventory.getItem("Egg")) << std::endl;
+	for (int i = 0; i < debug_inventory.items.size(); i++) {
+		std::cout << debug_inventory.items[i]->name << std::endl;
+	}
+
+	std::cout << "In inventory:" <<
+		inventory_manager.inInventory(debug_inventory.getItem("Egg")) << std::endl;
+	for (int i = 0; i < inventory_manager.items.size(); i++) {
+		std::cout << inventory_manager.items[i]->name << std::endl;
+	}
+
+	inventory_manager.pickUpItem(debug_inventory.getItemPtr("Egg"));
+	std::cout << "In inventory:" <<
+		inventory_manager.inInventory(debug_inventory.getItem("Egg")) << std::endl;
+	for (int i = 0; i < inventory_manager.items.size(); i++) {
+		std::cout << inventory_manager.items[i]->name << std::endl;
+	}
 
 	return 0;
 }

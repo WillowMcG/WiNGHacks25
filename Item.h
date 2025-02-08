@@ -11,5 +11,7 @@ public:
 	Item();
 	Item(int index, std::string name, sf::Sprite sprite, int quantity);
 	virtual ~Item();
+
+	int getIndex() const;
 };
 

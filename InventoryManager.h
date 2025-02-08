@@ -9,9 +9,12 @@ public:
 	std::vector<std::shared_ptr<Item>> items;
 	
 	InventoryManager();
+	bool inInventory(Item item);
+	Item getItem(int index);
+	Item getItem(std::string name);
 	std::shared_ptr<Item> getItemPtr(int index);
 	std::shared_ptr<Item> getItemPtr(std::string name);
-	void pickUpItem(Item item);
+	void pickUpItem(std::shared_ptr<Item> item);
 	void pickUpItem(Item item, int quantity);
 	void discardItem(Item item);
 	void discardItem(Item item, int quantity);

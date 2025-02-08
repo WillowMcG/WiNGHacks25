@@ -18,30 +18,6 @@ struct IngrKnowledge {
 		: knowRawHealing(knowRawHealing), knowStirredHealing(knowStirredHealing), knowCookedHealing(knowCookedHealing),
 		knowRuinedHealing(knowRuinedHealing), knowNumMixes(knowNumMixes), knowCookTime(knowCookTime) {}
 
-	bool getKnowRawHealing() {
-		return knowRawHealing;
-	}
-
-	bool getKnowStirredHealing() {
-		return knowStirredHealing;
-	}
-
-	bool getKnowCookedHealing() {
-		return knowCookedHealing;
-	}
-
-	bool getKnowRuinedHealing() {
-		return knowRuinedHealing;
-	}
-
-	bool getKnowNumMixes() {
-		return knowNumMixes;
-	}
-
-	bool getKnowCookTime() {
-		return knowCookTime;
-	}
-
 	void printKnowledge() {
 		std::cout << "Knows raw healing: " << knowRawHealing << std::endl;
 		std::cout << "Knows stirred healing: " << knowStirredHealing << std::endl;

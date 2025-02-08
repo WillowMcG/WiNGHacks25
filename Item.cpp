@@ -16,3 +16,7 @@ Item::Item(int index, std::string name, sf::Sprite sprite, int quantity) {
 
 Item::~Item() {
 }
+
+int Item::getIndex() const {
+	return index;
+}
