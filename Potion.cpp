@@ -19,3 +19,10 @@ bool Potion::getKnowIngredients() const {
 bool Potion::getIsComplete() const {
 	return isComplete;
 }
+
+bool Potion::checkComplete(const IngrProperties& ingrProperties, const IngrStatus& ingrStatus) {
+	if (ingrStatus.timesStirred >= ingrProperties.numStirs && ingrStatus.timeCooked >= ingrProperties.cookTime) {
+		isComplete = true;
+	}
+	return false;
+}

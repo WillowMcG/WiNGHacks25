@@ -18,7 +18,7 @@ struct IngrProperties {
 		: rawHealing(rawHealing), stirredHealing(stirredHealing), cookedHealing(cookedHealing), ruinedHealing(ruinedHealing), numStirs(numStirs),
 		cookTime(cookTime) {}
 
-	void printProperties() {
+	void printProperties() const {
 		std::cout << "Raw Healing: " << rawHealing << std::endl;
 		std::cout << "Stirred Healing: " << stirredHealing << std::endl;
 		std::cout << "Cooked Healing: " << cookedHealing << std::endl;

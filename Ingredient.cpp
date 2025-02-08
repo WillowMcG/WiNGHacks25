@@ -4,9 +4,10 @@ Ingredient::Ingredient(int index, std::string name, sf::Sprite sprite, int quant
     const IngrGiftRatings& giftRatings, const IngrStatus& ingrStatus)
     : Item(index, name, sprite, quantity), ingrProperties(ingrProperties), ingrKnowledge(ingrKnowledge), ingrGiftRatings(ingrGiftRatings) {}
 
-IngrProperties Ingredient::getIngrProperties() const {
+const IngrProperties& Ingredient::getIngrProperties() const {
 	return ingrProperties;
 }
+
 
 IngrKnowledge Ingredient::getIngrKnowledge() const {
 	return ingrKnowledge;

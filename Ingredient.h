@@ -17,7 +17,7 @@ public:
     Ingredient(int index, std::string name, sf::Sprite sprite, int quantity, const IngrProperties& properties, const IngrKnowledge& ingrKnowledge,
         const IngrGiftRatings& giftRatings, const IngrStatus& ingrStatus);
 
-    IngrProperties getIngrProperties() const;
+    const IngrProperties& getIngrProperties() const;
     IngrKnowledge getIngrKnowledge() const;
 	IngrGiftRatings getIngrGiftRatings() const;
 	IngrStatus getIngrStatus() const;

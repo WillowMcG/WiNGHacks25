@@ -1,72 +1,75 @@
-﻿  main.cpp
-C:\Users\willo\source\repos\WiNGHacks25\main.cpp(72,50): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\willo\source\repos\WiNGHacks25\main.cpp(72,38): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\willo\source\repos\WiNGHacks25\main.cpp(73,52): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\willo\source\repos\WiNGHacks25\main.cpp(73,40): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\willo\source\repos\WiNGHacks25\main.cpp(77,50): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\willo\source\repos\WiNGHacks25\main.cpp(77,30): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\willo\source\repos\WiNGHacks25\main.cpp(87,42): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\willo\source\repos\WiNGHacks25\main.cpp(87,33): warning C4244: 'argument': conversion from '_Ty2' to 'float', possible loss of data
-C:\Users\willo\source\repos\WiNGHacks25\main.cpp(87,33): warning C4244:         with
-C:\Users\willo\source\repos\WiNGHacks25\main.cpp(87,33): warning C4244:         [
-C:\Users\willo\source\repos\WiNGHacks25\main.cpp(87,33): warning C4244:             _Ty2=int
-C:\Users\willo\source\repos\WiNGHacks25\main.cpp(87,33): warning C4244:         ]
-C:\Users\willo\source\repos\WiNGHacks25\main.cpp(89,42): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\willo\source\repos\WiNGHacks25\main.cpp(89,33): warning C4244: 'argument': conversion from '_Ty2' to 'float', possible loss of data
-C:\Users\willo\source\repos\WiNGHacks25\main.cpp(89,33): warning C4244:         with
-C:\Users\willo\source\repos\WiNGHacks25\main.cpp(89,33): warning C4244:         [
-C:\Users\willo\source\repos\WiNGHacks25\main.cpp(89,33): warning C4244:             _Ty2=int
-C:\Users\willo\source\repos\WiNGHacks25\main.cpp(89,33): warning C4244:         ]
-C:\Users\willo\source\repos\WiNGHacks25\main.cpp(91,42): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\willo\source\repos\WiNGHacks25\main.cpp(91,33): warning C4244: 'argument': conversion from '_Ty2' to 'float', possible loss of data
-C:\Users\willo\source\repos\WiNGHacks25\main.cpp(91,33): warning C4244:         with
-C:\Users\willo\source\repos\WiNGHacks25\main.cpp(91,33): warning C4244:         [
-C:\Users\willo\source\repos\WiNGHacks25\main.cpp(91,33): warning C4244:             _Ty2=int
-C:\Users\willo\source\repos\WiNGHacks25\main.cpp(91,33): warning C4244:         ]
-C:\Users\willo\source\repos\WiNGHacks25\main.cpp(93,42): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\willo\source\repos\WiNGHacks25\main.cpp(93,33): warning C4244: 'argument': conversion from '_Ty2' to 'float', possible loss of data
-C:\Users\willo\source\repos\WiNGHacks25\main.cpp(93,33): warning C4244:         with
-C:\Users\willo\source\repos\WiNGHacks25\main.cpp(93,33): warning C4244:         [
-C:\Users\willo\source\repos\WiNGHacks25\main.cpp(93,33): warning C4244:             _Ty2=int
-C:\Users\willo\source\repos\WiNGHacks25\main.cpp(93,33): warning C4244:         ]
-C:\Users\willo\source\repos\WiNGHacks25\main.cpp(95,42): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\willo\source\repos\WiNGHacks25\main.cpp(95,33): warning C4244: 'argument': conversion from '_Ty2' to 'float', possible loss of data
-C:\Users\willo\source\repos\WiNGHacks25\main.cpp(95,33): warning C4244:         with
-C:\Users\willo\source\repos\WiNGHacks25\main.cpp(95,33): warning C4244:         [
-C:\Users\willo\source\repos\WiNGHacks25\main.cpp(95,33): warning C4244:             _Ty2=int
-C:\Users\willo\source\repos\WiNGHacks25\main.cpp(95,33): warning C4244:         ]
-C:\Users\willo\source\repos\WiNGHacks25\main.cpp(162,45): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\willo\source\repos\WiNGHacks25\main.cpp(162,36): warning C4244: 'argument': conversion from '_Ty2' to 'float', possible loss of data
-C:\Users\willo\source\repos\WiNGHacks25\main.cpp(162,36): warning C4244:         with
-C:\Users\willo\source\repos\WiNGHacks25\main.cpp(162,36): warning C4244:         [
-C:\Users\willo\source\repos\WiNGHacks25\main.cpp(162,36): warning C4244:             _Ty2=int
-C:\Users\willo\source\repos\WiNGHacks25\main.cpp(162,36): warning C4244:         ]
-C:\Users\willo\source\repos\WiNGHacks25\main.cpp(164,45): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\willo\source\repos\WiNGHacks25\main.cpp(164,36): warning C4244: 'argument': conversion from '_Ty2' to 'float', possible loss of data
-C:\Users\willo\source\repos\WiNGHacks25\main.cpp(164,36): warning C4244:         with
-C:\Users\willo\source\repos\WiNGHacks25\main.cpp(164,36): warning C4244:         [
-C:\Users\willo\source\repos\WiNGHacks25\main.cpp(164,36): warning C4244:             _Ty2=int
-C:\Users\willo\source\repos\WiNGHacks25\main.cpp(164,36): warning C4244:         ]
-C:\Users\willo\source\repos\WiNGHacks25\main.cpp(166,45): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\willo\source\repos\WiNGHacks25\main.cpp(166,36): warning C4244: 'argument': conversion from '_Ty2' to 'float', possible loss of data
-C:\Users\willo\source\repos\WiNGHacks25\main.cpp(166,36): warning C4244:         with
-C:\Users\willo\source\repos\WiNGHacks25\main.cpp(166,36): warning C4244:         [
-C:\Users\willo\source\repos\WiNGHacks25\main.cpp(166,36): warning C4244:             _Ty2=int
-C:\Users\willo\source\repos\WiNGHacks25\main.cpp(166,36): warning C4244:         ]
-C:\Users\willo\source\repos\WiNGHacks25\main.cpp(168,45): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\willo\source\repos\WiNGHacks25\main.cpp(168,36): warning C4244: 'argument': conversion from '_Ty2' to 'float', possible loss of data
-C:\Users\willo\source\repos\WiNGHacks25\main.cpp(168,36): warning C4244:         with
-C:\Users\willo\source\repos\WiNGHacks25\main.cpp(168,36): warning C4244:         [
-C:\Users\willo\source\repos\WiNGHacks25\main.cpp(168,36): warning C4244:             _Ty2=int
-C:\Users\willo\source\repos\WiNGHacks25\main.cpp(168,36): warning C4244:         ]
-C:\Users\willo\source\repos\WiNGHacks25\main.cpp(170,45): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\willo\source\repos\WiNGHacks25\main.cpp(170,36): warning C4244: 'argument': conversion from '_Ty2' to 'float', possible loss of data
-C:\Users\willo\source\repos\WiNGHacks25\main.cpp(170,36): warning C4244:         with
-C:\Users\willo\source\repos\WiNGHacks25\main.cpp(170,36): warning C4244:         [
-C:\Users\willo\source\repos\WiNGHacks25\main.cpp(170,36): warning C4244:             _Ty2=int
-C:\Users\willo\source\repos\WiNGHacks25\main.cpp(170,36): warning C4244:         ]
-C:\Users\willo\source\repos\WiNGHacks25\main.cpp(174,41): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\willo\source\repos\WiNGHacks25\main.cpp(177,38): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\willo\source\repos\WiNGHacks25\main.cpp(348,35): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\willo\source\repos\WiNGHacks25\main.cpp(348,23): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+﻿  Ingredient.cpp
+  Potion.cpp
+  main.cpp
+C:\Users\willo\source\repos\WiNGHacks25\main.cpp(159,50): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\willo\source\repos\WiNGHacks25\main.cpp(159,38): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\willo\source\repos\WiNGHacks25\main.cpp(160,52): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\willo\source\repos\WiNGHacks25\main.cpp(160,40): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\willo\source\repos\WiNGHacks25\main.cpp(164,50): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\willo\source\repos\WiNGHacks25\main.cpp(164,30): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\willo\source\repos\WiNGHacks25\main.cpp(174,42): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\willo\source\repos\WiNGHacks25\main.cpp(174,33): warning C4244: 'argument': conversion from '_Ty2' to 'float', possible loss of data
+C:\Users\willo\source\repos\WiNGHacks25\main.cpp(174,33): warning C4244:         with
+C:\Users\willo\source\repos\WiNGHacks25\main.cpp(174,33): warning C4244:         [
+C:\Users\willo\source\repos\WiNGHacks25\main.cpp(174,33): warning C4244:             _Ty2=int
+C:\Users\willo\source\repos\WiNGHacks25\main.cpp(174,33): warning C4244:         ]
+C:\Users\willo\source\repos\WiNGHacks25\main.cpp(176,42): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\willo\source\repos\WiNGHacks25\main.cpp(176,33): warning C4244: 'argument': conversion from '_Ty2' to 'float', possible loss of data
+C:\Users\willo\source\repos\WiNGHacks25\main.cpp(176,33): warning C4244:         with
+C:\Users\willo\source\repos\WiNGHacks25\main.cpp(176,33): warning C4244:         [
+C:\Users\willo\source\repos\WiNGHacks25\main.cpp(176,33): warning C4244:             _Ty2=int
+C:\Users\willo\source\repos\WiNGHacks25\main.cpp(176,33): warning C4244:         ]
+C:\Users\willo\source\repos\WiNGHacks25\main.cpp(178,42): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\willo\source\repos\WiNGHacks25\main.cpp(178,33): warning C4244: 'argument': conversion from '_Ty2' to 'float', possible loss of data
+C:\Users\willo\source\repos\WiNGHacks25\main.cpp(178,33): warning C4244:         with
+C:\Users\willo\source\repos\WiNGHacks25\main.cpp(178,33): warning C4244:         [
+C:\Users\willo\source\repos\WiNGHacks25\main.cpp(178,33): warning C4244:             _Ty2=int
+C:\Users\willo\source\repos\WiNGHacks25\main.cpp(178,33): warning C4244:         ]
+C:\Users\willo\source\repos\WiNGHacks25\main.cpp(180,42): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\willo\source\repos\WiNGHacks25\main.cpp(180,33): warning C4244: 'argument': conversion from '_Ty2' to 'float', possible loss of data
+C:\Users\willo\source\repos\WiNGHacks25\main.cpp(180,33): warning C4244:         with
+C:\Users\willo\source\repos\WiNGHacks25\main.cpp(180,33): warning C4244:         [
+C:\Users\willo\source\repos\WiNGHacks25\main.cpp(180,33): warning C4244:             _Ty2=int
+C:\Users\willo\source\repos\WiNGHacks25\main.cpp(180,33): warning C4244:         ]
+C:\Users\willo\source\repos\WiNGHacks25\main.cpp(182,42): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\willo\source\repos\WiNGHacks25\main.cpp(182,33): warning C4244: 'argument': conversion from '_Ty2' to 'float', possible loss of data
+C:\Users\willo\source\repos\WiNGHacks25\main.cpp(182,33): warning C4244:         with
+C:\Users\willo\source\repos\WiNGHacks25\main.cpp(182,33): warning C4244:         [
+C:\Users\willo\source\repos\WiNGHacks25\main.cpp(182,33): warning C4244:             _Ty2=int
+C:\Users\willo\source\repos\WiNGHacks25\main.cpp(182,33): warning C4244:         ]
+C:\Users\willo\source\repos\WiNGHacks25\main.cpp(249,45): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\willo\source\repos\WiNGHacks25\main.cpp(249,36): warning C4244: 'argument': conversion from '_Ty2' to 'float', possible loss of data
+C:\Users\willo\source\repos\WiNGHacks25\main.cpp(249,36): warning C4244:         with
+C:\Users\willo\source\repos\WiNGHacks25\main.cpp(249,36): warning C4244:         [
+C:\Users\willo\source\repos\WiNGHacks25\main.cpp(249,36): warning C4244:             _Ty2=int
+C:\Users\willo\source\repos\WiNGHacks25\main.cpp(249,36): warning C4244:         ]
+C:\Users\willo\source\repos\WiNGHacks25\main.cpp(251,45): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\willo\source\repos\WiNGHacks25\main.cpp(251,36): warning C4244: 'argument': conversion from '_Ty2' to 'float', possible loss of data
+C:\Users\willo\source\repos\WiNGHacks25\main.cpp(251,36): warning C4244:         with
+C:\Users\willo\source\repos\WiNGHacks25\main.cpp(251,36): warning C4244:         [
+C:\Users\willo\source\repos\WiNGHacks25\main.cpp(251,36): warning C4244:             _Ty2=int
+C:\Users\willo\source\repos\WiNGHacks25\main.cpp(251,36): warning C4244:         ]
+C:\Users\willo\source\repos\WiNGHacks25\main.cpp(253,45): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\willo\source\repos\WiNGHacks25\main.cpp(253,36): warning C4244: 'argument': conversion from '_Ty2' to 'float', possible loss of data
+C:\Users\willo\source\repos\WiNGHacks25\main.cpp(253,36): warning C4244:         with
+C:\Users\willo\source\repos\WiNGHacks25\main.cpp(253,36): warning C4244:         [
+C:\Users\willo\source\repos\WiNGHacks25\main.cpp(253,36): warning C4244:             _Ty2=int
+C:\Users\willo\source\repos\WiNGHacks25\main.cpp(253,36): warning C4244:         ]
+C:\Users\willo\source\repos\WiNGHacks25\main.cpp(255,45): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\willo\source\repos\WiNGHacks25\main.cpp(255,36): warning C4244: 'argument': conversion from '_Ty2' to 'float', possible loss of data
+C:\Users\willo\source\repos\WiNGHacks25\main.cpp(255,36): warning C4244:         with
+C:\Users\willo\source\repos\WiNGHacks25\main.cpp(255,36): warning C4244:         [
+C:\Users\willo\source\repos\WiNGHacks25\main.cpp(255,36): warning C4244:             _Ty2=int
+C:\Users\willo\source\repos\WiNGHacks25\main.cpp(255,36): warning C4244:         ]
+C:\Users\willo\source\repos\WiNGHacks25\main.cpp(257,45): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\willo\source\repos\WiNGHacks25\main.cpp(257,36): warning C4244: 'argument': conversion from '_Ty2' to 'float', possible loss of data
+C:\Users\willo\source\repos\WiNGHacks25\main.cpp(257,36): warning C4244:         with
+C:\Users\willo\source\repos\WiNGHacks25\main.cpp(257,36): warning C4244:         [
+C:\Users\willo\source\repos\WiNGHacks25\main.cpp(257,36): warning C4244:             _Ty2=int
+C:\Users\willo\source\repos\WiNGHacks25\main.cpp(257,36): warning C4244:         ]
+C:\Users\willo\source\repos\WiNGHacks25\main.cpp(261,41): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\willo\source\repos\WiNGHacks25\main.cpp(264,38): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\willo\source\repos\WiNGHacks25\main.cpp(372,35): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\willo\source\repos\WiNGHacks25\main.cpp(372,23): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  Generating Code...
   WiNGHacks25.vcxproj -> C:\Users\willo\source\repos\WiNGHacks25\x64\Debug\WiNGHacks25.exe
