@@ -26,7 +26,6 @@ public:
   void loadTextures();
   void loadSprites();
   vector<sf::Sprite>& getTrees();
-  vector<sf::Sprite>& getTreesPlaceholder();
 };
 
 
