@@ -3,10 +3,10 @@
 //
 #include <iostream>
 #include <SFML/Graphics.hpp>
+#include "InventoryManager.h"
+#include "Item.h"
 
-
-void drawForest(sf::RenderWindow& window, int width, int height) {
-
+void initializeItems(std::vector<Item>& items) {
 }
 
 int main() {
@@ -16,8 +16,8 @@ int main() {
     sf::RectangleShape background(sf::Vector2f(width, height));
     background.setFillColor(sf::Color::Red);
 
-    // sf::RectangleShape menu(sf::Vector2f(1200, 880));
-    // menu.setPosition(100, 100);
+    sf::RectangleShape menu(sf::Vector2f(1200, 880));
+    menu.setPosition(100, 100);
 
     sf::Text start;
     start.setString("- Press E To Start -");

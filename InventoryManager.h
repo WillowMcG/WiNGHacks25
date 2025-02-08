@@ -1,15 +1,6 @@
 #pragma once
 #include <SFML/Graphics.hpp>
-
-struct Item {
-	int index;
-	std::string name;
-	sf::Sprite sprite;
-	int quantity;
-	std::map <std::string, int> gift_lvl;
-	std::map <std::string, int> properties;
-	std::vector<std::string> notes;
-};
+#include "Item.h"
 
 class InventoryManager {
 	std::vector<Item> items;
