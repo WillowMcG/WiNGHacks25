@@ -4,7 +4,18 @@
 #include <iostream>
 #include "Textures.h"
 #include "Animation.h"
+#include "StatsManager.h"
+#include "InventoryManager.h"
+#include "Item.h"
+#include "Ingredient.h"
+#include "IngrGiftRatings.h"
+#include "IngrProperties.h"
+#include "IngrKnowledge.h"
+#include "IngrStatus.h"
+#include "Potion.h"
+#include "Cooking.h"
 #include <SFML/Graphics.hpp>
+#include <memory>
 #include <random>
 #include <ctime>
 #include <tuple>
@@ -72,14 +83,19 @@ int gameLoop(sf::RenderWindow& window, int width, int height, Textures& textures
 
     plant1.setPosition(plants.at(0).second, plantHeight);
     texturePlant(plant1, plants.at(0).first, textures);
+    plant1.setScale(2,2);
     plant2.setPosition(plants.at(1).second, plantHeight);
+    plant2.setScale(2,2);
     texturePlant(plant2, plants.at(1).first, textures);
     plant3.setPosition(plants.at(2).second, plantHeight);
+    plant3.setScale(2,2);
     texturePlant(plant3, plants.at(2).first, textures);
     plant4.setPosition(plants.at(3).second, plantHeight);
+    plant4.setScale(2,2);
     texturePlant(plant4, plants.at(3).first, textures);
     plant5.setPosition(plants.at(4).second, plantHeight);
     texturePlant(plant5, plants.at(4).first, textures);
+    plant5.setScale(2,2);
 
     sf::Texture sprite_sheet;
     Animation animations;
