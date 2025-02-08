@@ -6,34 +6,23 @@
 #include "InventoryManager.h"
 #include "Item.h"
 
-void initializeItems(std::vector<Item>& items) {
+void initializeItems(InventoryManager& inventory_manager) {
+	sf::Texture texture;
+	texture.loadFromFile("Cauldron_Icon copy.png");
+	sf::Sprite sprite(texture);
+	std::map <std::string, int> gift_lvl;
+	std::map <std::string, int> properties;
+	std::vector<std::string> notes;
+	Item item(0, "Cauldron", sprite, 1, gift_lvl, properties, notes);
+	inventory_manager.items.push_back(item);
 }
 
 int main() {
-    int width = 1920;
-    int height = 1080;
-    sf::RenderWindow window(sf::VideoMode(width, height), "Plant Game");
-    sf::RectangleShape background(sf::Vector2f(width, height));
-    background.setFillColor(sf::Color::Red);
-
-    sf::RectangleShape menu(sf::Vector2f(1200, 880));
-    menu.setPosition(100, 100);
-
-    sf::Text start;
-    start.setString("- Press E To Start -");
-
-    while(window.isOpen()) {
-        sf::Event event;
-        while(window.pollEvent(event)) {
-            if(event.type == sf::Event::Closed) {
-                window.close();
-            }
-        }
-
-        window.clear();
-        window.draw(background);
-        window.draw(menu);
-        window.display();
-    }
+	
+	InventoryManager inventory_manager;
+	initializeItems(inventory_manager);
+	for (int i = 0; i < inventory_manager.items.size(); i++) {
+		std::cout << inventory_manager.items[i].name << std::endl;
+	}
     return 0;
 }

@@ -3,8 +3,8 @@
 #include "Item.h"
 
 class InventoryManager {
-	std::vector<Item> items;
 public:
+	std::vector<Item> items;
 	InventoryManager();
 	void pickUpItem(Item item);
 	void pickUpItem(Item item, int quantity);

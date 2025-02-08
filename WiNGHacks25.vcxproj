@@ -147,6 +147,11 @@
     <ClInclude Include="InventoryManager.h" />
     <ClInclude Include="Item.h" />
   </ItemGroup>
+  <ItemGroup>
+    <Image Include="Cauldron_Icon copy.png" />
+    <Image Include="Cauldron_Icon_Highlight.png" />
+    <Image Include="Inventory.png" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

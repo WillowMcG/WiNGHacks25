@@ -33,4 +33,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <Image Include="Cauldron_Icon copy.png">
+      <Filter>Source Files</Filter>
+    </Image>
+    <Image Include="Cauldron_Icon_Highlight.png">
+      <Filter>Source Files</Filter>
+    </Image>
+    <Image Include="Inventory.png">
+      <Filter>Source Files</Filter>
+    </Image>
+  </ItemGroup>
 </Project>
