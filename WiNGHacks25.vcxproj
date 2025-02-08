@@ -157,9 +157,6 @@
     <ClInclude Include="InventoryManager.h" />
     <ClInclude Include="Item.h" />
     <ClInclude Include="Potion.h" />
-    <ClInclude Include="PtnGiftRatings.h" />
-    <ClInclude Include="PtnKnowledge.h" />
-    <ClInclude Include="PtnProperties.h" />
     <ClInclude Include="RelationshipLvls.h" />
     <ClInclude Include="StatsManager.h" />
   </ItemGroup>

@@ -65,15 +65,6 @@
     <ClInclude Include="Potion.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="PtnProperties.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="PtnKnowledge.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="PtnGiftRatings.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Cooking.h">
       <Filter>Header Files</Filter>
     </ClInclude>
