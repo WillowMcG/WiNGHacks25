@@ -4,25 +4,21 @@
 #include <vector>
 #include <unordered_map>
 
-#include "Item.h"
-#include "PtnProperties.h"
-#include "PtnKnowledge.h"
-#include "PtnGiftRatings.h"
+#include "Ingredient.h"
 
-class Potion : public Item {
+class Potion : public Ingredient {
 	std::unordered_map<std::string, int> ingredients;
+	bool knowIngredients;
+	bool isComplete;
 public:
-	PtnProperties ptnProperties;
-	PtnKnowledge ptnKnowledge;
-	PtnGiftRatings ptnGiftRatings;
 
-	Potion(int index, std::string name, sf::Sprite sprite, int quantity, const std::unordered_map<std::string, int>& ingredients, const PtnProperties& properties, const PtnKnowledge& ptnKnowledge,
-		const PtnGiftRatings& giftRatings);
+	Potion(int index, std::string name, sf::Sprite sprite, int quantity, const IngrProperties& ingrProperties, const IngrKnowledge& ingrKnowledge,
+		const IngrGiftRatings& ingrGiftRatings, const IngrStatus& ingrStatus, const std::unordered_map<std::string, int>& ingredients,
+		bool knowIngredients, bool isComplete);
 
 	const std::unordered_map<std::string, int>& getIngredients() const;
-	PtnProperties getPtnProperties() const;
-	PtnKnowledge getPtnKnowledge() const;
-	PtnGiftRatings getPtnGiftRatings() const;
+	bool getKnowIngredients() const;
+	bool getIsComplete() const;
 };
 
 #endif

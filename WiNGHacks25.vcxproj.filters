@@ -33,6 +33,9 @@
     <ClCompile Include="Potion.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Cooking.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="InventoryManager.h">
@@ -69,6 +72,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="PtnGiftRatings.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Cooking.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="IngrStatus.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

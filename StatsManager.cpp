@@ -2,88 +2,181 @@
 
 StatsManager::StatsManager() {
 	health = 100;
-	hunger = 100;
+	hunger = 50;
 }
 
 StatsManager::~StatsManager() {
 }
 
+// Health functions
 int StatsManager::getHealth() {
 	return health;
 }
 
+void StatsManager::setHealth(int health) {
+	if (health < 0 || health > 100) {
+		return;
+	}
+	this->health = health;
+}
+
+void StatsManager::increaseHealth() {
+	health++;
+	if (health > 100) {
+		health = 100;
+	}
+}
+
+void StatsManager::decreaseHealth() {
+	health--;
+	if (health < 0) {
+		health = 0;
+	}
+}
+
+void StatsManager::changeHealth(int val) {
+	health += val;
+	if (health > 100) {
+		health = 100;
+	}
+	else if (health < 0) {
+		health = 0;
+	}
+}
+
+void StatsManager::resetHealth() {
+	health = 100;
+}
+
+// Hunger functions
 int StatsManager::getHunger() {
 	return hunger;
 }
 
-void StatsManager::setHealth(int health) {
-	this->health = health;
-}
-
 void StatsManager::setHunger(int hunger) {
+	if (hunger < 0 || hunger > 100) {
+		return;
+	}
 	this->hunger = hunger;
 }
 
-void StatsManager::increaseHealth(int health) {
-	this->health += health;
+void StatsManager::increaseHunger() {
+	hunger++;
+	if (hunger > 100) {
+		hunger = 100;
+	}
 }
 
-void StatsManager::increaseHunger(int hunger) {
-	this->hunger += hunger;
+void StatsManager::decreaseHunger() {
+	hunger--;
+	if (hunger < 0) {
+		hunger = 0;
+	}
 }
 
-void StatsManager::decreaseHealth(int health) {
-	this->health -= health;
+void StatsManager::changeHunger(int val) {
+	hunger += val;
+	if (hunger > 100) {
+		hunger = 100;
+	}
+	else if (hunger < 0) {
+		hunger = 0;
+	}
 }
 
-void StatsManager::decreaseHunger(int hunger) {
-	this->hunger -= hunger;
+void StatsManager::resetHunger() {
+	hunger = 50;
 }
 
+// Relationship functions
 int StatsManager::getRelationshipLvl(std::string name) {
-	return relationshipLvls.getLvl(name);
+	return relationshipLvls.lvls[name];
 }
 
 RelationshipLvls& StatsManager::getRelationshipLvls() {
 	return relationshipLvls;
 }
 
-void StatsManager::setRelationshipLvl(std::string name, int value) {
-	relationshipLvls.setLvl(name, value);
+void StatsManager::setRelationshipLvl(std::string name, int val) {
+	if (val < 0 || val > 100) {
+		return;
+	}
+	relationshipLvls.lvls[name] = val;
 }
 
-void StatsManager::setRelationshipLvls(int value) {
-	relationshipLvls = RelationshipLvls(std::vector<int>(3, value));
+void StatsManager::setRelationshipLvls(int val) {
+	if (val < 0 || val > 100) {
+		return;
+	}
+	for (auto& pair : relationshipLvls.lvls) {
+		pair.second = val;
+	}
 }
 
 void StatsManager::increaseRelationshipLvl(std::string name) {
-	relationshipLvls.increaseLvl(name);
+	relationshipLvls.lvls[name]++;
+	if (relationshipLvls.lvls[name] > 100) {
+		relationshipLvls.lvls[name] = 100;
+	}
 }
 
-void StatsManager::increaseRelationshipLvl(std::string name, int value) {
-	relationshipLvls.increaseLvl(name, value);
+void StatsManager::increaseRelationshipLvls() {
+	for (auto& pair : relationshipLvls.lvls) {
+		pair.second++;
+		if (pair.second > 100) {
+			pair.second = 100;
+		}
+	}
 }
 
 void StatsManager::decreaseRelationshipLvl(std::string name) {
-	relationshipLvls.decreaseLvl(name);
+	relationshipLvls.lvls[name]--;
+	if (relationshipLvls.lvls[name] < 0) {
+		relationshipLvls.lvls[name] = 0;
+	}
 }
 
-void StatsManager::decreaseRelationshipLvl(std::string name, int value) {
-	relationshipLvls.decreaseLvl(name, value);
+void StatsManager::decreaseRelationshipLvls() {
+	for (auto& pair : relationshipLvls.lvls) {
+		pair.second--;
+		if (pair.second < 0) {
+			pair.second = 0;
+		}
+	}
+}
+
+void StatsManager::changeRelationshipLvl(std::string name, int val) {
+	if (val < 0 || val > 100) {
+		return;
+	}
+	relationshipLvls.lvls[name] += val;
+}
+
+void StatsManager::changeRelationshipLvls(int lvl) {
+	if (lvl < 0 || lvl > 100) {
+		return;
+	}
+	for (auto& pair : relationshipLvls.lvls) {
+		pair.second += lvl;
+	}
 }
 
 void StatsManager::resetRelationshipLvl(std::string name) {
-	relationshipLvls.resetLvl(name);
+	relationshipLvls.lvls[name] = 0;
 }
 
 void StatsManager::resetRelationshipLvls() {
-	relationshipLvls.resetAllLvls();
+	for (auto& pair : relationshipLvls.lvls) {
+		pair.second = 0;
+	}
 }
 
 void StatsManager::printRelationshipLvl(std::string name) {
-	std::cout << name << ": " << relationshipLvls.getLvl(name) << std::endl;
+	std::cout << name << ": " << relationshipLvls.lvls[name] << std::endl;
 }
 
 void StatsManager::printRelationshipLvls() {
-	relationshipLvls.printAllLvls();
+	for (auto& pair : relationshipLvls.lvls) {
+		std::cout << pair.first << ": " << pair.second << std::endl;
+	}
 }

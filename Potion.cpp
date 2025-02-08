@@ -2,23 +2,20 @@
 
 #include "Potion.h"
 
-Potion::Potion(int index, std::string name, sf::Sprite sprite, int quantity, const std::unordered_map<std::string, int>& ingredients,
-	const PtnProperties& properties, const PtnKnowledge& ptnKnowledge, const PtnGiftRatings& giftRatings)
-	: Item(index, name, sprite, quantity), ingredients(ingredients), ptnProperties(properties), ptnKnowledge(ptnKnowledge),
-	ptnGiftRatings(giftRatings) {}
+Potion::Potion(int index, std::string name, sf::Sprite sprite, int quantity, const IngrProperties& ingrProperties, 
+	const IngrKnowledge& ingrKnowledge, const IngrGiftRatings& ingrGiftRatings, const IngrStatus& ingrStatus, 
+	const std::unordered_map<std::string, int>& ingredients, bool knowIngredients, bool isComplete)
+	: Ingredient(index, name, sprite, quantity, ingrProperties, ingrKnowledge, ingrGiftRatings, ingrStatus), ingredients(ingredients), 
+	knowIngredients(knowIngredients), isComplete(isComplete) {}
 
 const std::unordered_map<std::string, int>& Potion::getIngredients() const {
 	return ingredients;
 }
 
-PtnProperties Potion::getPtnProperties() const {
-	return ptnProperties;
+bool Potion::getKnowIngredients() const {
+	return knowIngredients;
 }
 
-PtnKnowledge Potion::getPtnKnowledge() const {
-	return ptnKnowledge;
-}
-
-PtnGiftRatings Potion::getPtnGiftRatings() const {
-	return ptnGiftRatings;
+bool Potion::getIsComplete() const {
+	return isComplete;
 }
