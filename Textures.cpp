@@ -8,10 +8,16 @@ Textures::Textures() {
 }
 
 void Textures::loadTextures() {
-  cauldronTexture.loadFromFile("files/images/sprites/Cauldron_Icon.png");
-  itemTextures.push_back(cauldronTexture);
+  plant1.loadFromFile("files/images/sprites/plants_64_7.png");
+  plant2.loadFromFile("files/images/sprites/plants_64_8.png");
+  plant3.loadFromFile("files/images/sprites/plants_64_14.png");
+  plantTextures.push_back(plant1);
+  plantTextures.push_back(plant2);
+  plantTextures.push_back(plant3);
 
+  cauldronTexture.loadFromFile("files/images/sprites/Cauldron_Icon.png");
   cauldronLightTexture.loadFromFile("files/images/sprites/Cauldron_Icon_Highlight.png");
+  itemTextures.push_back(cauldronTexture);
   itemTextures.push_back(cauldronLightTexture);
 
   forest1.loadFromFile("files/images/backgrounds/forest1.png");
@@ -38,6 +44,11 @@ void Textures::loadTextures() {
   walkCycle.push_back(characterWR1);
   walkCycle.push_back(characterWR2);
 }
+
+vector<sf::Texture> &Textures::getPlantTextures() {
+  return plantTextures;
+}
+
 
 vector<sf::Texture>& Textures::getItemTextures() {
   return itemTextures;

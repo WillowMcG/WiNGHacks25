@@ -10,10 +10,14 @@
 using namespace std;
 
 class Textures {
+  vector<sf::Texture> plantTextures;
   vector<sf::Texture> itemTextures;
   vector<sf::Texture> walkCycle;
   vector<sf::Texture> backgroundTextures;
 
+  sf::Texture plant1;
+  sf::Texture plant2;
+  sf::Texture plant3;
   sf::Texture cauldronTexture;
   sf::Texture cauldronLightTexture;
 
@@ -33,6 +37,7 @@ class Textures {
 public:
   Textures();
   void loadTextures();
+  vector<sf::Texture>& getPlantTextures();
   vector<sf::Texture>& getItemTextures();
   vector<sf::Texture>& getWalkCycle();
   vector<sf::Texture>& getBackgroundTextures();

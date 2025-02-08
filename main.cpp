@@ -16,22 +16,31 @@ void setText(sf::Text &text, float x, float y) {
     text.setPosition(sf::Vector2f(x, y));
 }
 
-vector<tuple<string, int>> genPlants() {
-    vector<tuple<string, int>> plants;
-    int plantNum = 4 + rand() % 3;
+vector<pair<string, int>> genPlants() {
+    vector<pair<string, int>> plants;
+    int plantNum = 5;
     int pos = rand() % 200;
+    pair<string, int> plantInfo;
 
     for (int i = 0; i < plantNum; i++) {
         int plantChoice = rand() % 3;
         string plantType = (plantChoice == 0) ? "Type 1" :
                            (plantChoice == 1) ? "Type 2" : "Type 3";
 
-        plants.emplace_back(plantType, pos);
+        plants.push_back({plantType, pos});
         pos += 200 + rand() % 300;
-
-        if (pos >= 1920) break;
     }
     return plants;
+}
+
+void texturePlant(sf::Sprite& plant, string type, Textures& textures) {
+    if (type == "Type 1") {
+        plant.setTexture(textures.getPlantTextures().at(0));
+    } else if (type == "Type 2") {
+        plant.setTexture(textures.getPlantTextures().at(1));
+    } else if (type == "Type 3") {
+        plant.setTexture(textures.getPlantTextures().at(2));
+    }
 }
 
 int gameLoop(sf::RenderWindow& window, int width, int height, Textures& textures) {
@@ -42,7 +51,7 @@ int gameLoop(sf::RenderWindow& window, int width, int height, Textures& textures
     background.setTexture(textures.getBackgroundTextures().at(0));
     int backgroundNum = 0;
 
-    vector<tuple<string, int>> plants = genPlants();
+    vector<pair<string, int>> plants = genPlants();
 
     sf::Sprite inventoryBackground;
     inventoryBackground.setTexture(textures.getBackgroundTextures().at(1));
@@ -52,6 +61,25 @@ int gameLoop(sf::RenderWindow& window, int width, int height, Textures& textures
     sf::Sprite character;
     character.setOrigin(256, 256);
     character.setPosition(width-width/8, height-height/4);
+
+    int plantHeight = height-height/4;
+
+    sf::Sprite plant1;
+    sf::Sprite plant2;
+    sf::Sprite plant3;
+    sf::Sprite plant4;
+    sf::Sprite plant5;
+
+    plant1.setPosition(plants.at(0).second, plantHeight);
+    texturePlant(plant1, plants.at(0).first, textures);
+    plant2.setPosition(plants.at(1).second, plantHeight);
+    texturePlant(plant2, plants.at(1).first, textures);
+    plant3.setPosition(plants.at(2).second, plantHeight);
+    texturePlant(plant3, plants.at(2).first, textures);
+    plant4.setPosition(plants.at(3).second, plantHeight);
+    texturePlant(plant4, plants.at(3).first, textures);
+    plant5.setPosition(plants.at(4).second, plantHeight);
+    texturePlant(plant5, plants.at(4).first, textures);
 
     sf::Texture sprite_sheet;
     Animation animations;
@@ -66,7 +94,7 @@ int gameLoop(sf::RenderWindow& window, int width, int height, Textures& textures
     animations.addAnimation("walkLeft", sprite_sheet, {6, 1}, {512, 512}, {3,0}, 8, {3,0});
     animations.setAnimationStartingIndex("walkLeft", {3,0});
     animations.setAnimationEndingIndex("walkLeft", {5,0});
-    animations.addAnimation("walkRight", sprite_sheet, {6,1}, {512, 512}, {3,0}, 8, {0,0});
+    animations.addAnimation("walkRight", sprite_sheet, {6,1}, {512, 512}, {3,0}, 12, {0,0});
     animations.setAnimationStartingIndex("walkRight", {0,0});
     animations.setAnimationEndingIndex("walkRight", {2, 0});
 
@@ -84,12 +112,12 @@ int gameLoop(sf::RenderWindow& window, int width, int height, Textures& textures
             if (!inventoryOpen) {
 
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) || sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
-                    character.move(-10, 0.f);
+                    character.move(-8, 0.f);
                     animations.update("walkLeft", character);
                     isMoving = true;
                 }
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) || sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
-                    character.move(10, 0.f);
+                    character.move(8, 0.f);
                     animations.update("walkRight", character);
                     isMoving = true;
                 }
@@ -114,6 +142,20 @@ int gameLoop(sf::RenderWindow& window, int width, int height, Textures& textures
                 }
                 backgroundNum = newBackground;
                 background.setTexture(textures.getBackgroundTextures().at(backgroundNum));
+
+                plants = genPlants();
+
+                plant1.setPosition(plants.at(0).second, plantHeight);
+                texturePlant(plant1, plants.at(0).first, textures);
+                plant2.setPosition(plants.at(1).second, plantHeight);
+                texturePlant(plant2, plants.at(1).first, textures);
+                plant3.setPosition(plants.at(2).second, plantHeight);
+                texturePlant(plant3, plants.at(2).first, textures);
+                plant4.setPosition(plants.at(3).second, plantHeight);
+                texturePlant(plant4, plants.at(3).first, textures);
+                plant5.setPosition(plants.at(4).second, plantHeight);
+                texturePlant(plant5, plants.at(4).first, textures);
+
                 if (character.getPosition().x < 0) {
                     character.setPosition(1920, height-height/4);
                 } else {
@@ -123,6 +165,11 @@ int gameLoop(sf::RenderWindow& window, int width, int height, Textures& textures
 
             window.clear();
             window.draw(background);
+            window.draw(plant1);
+            window.draw(plant2);
+            window.draw(plant3);
+            window.draw(plant4);
+            window.draw(plant5);
             window.draw(character);
             if (inventoryOpen) {
                 window.draw(inventoryBackground);
@@ -146,9 +193,6 @@ int main() {
     int height = 1080;
     sf::RenderWindow window(sf::VideoMode(width, height), "Plant Game");
     sf::Sprite background;
-
-    // sf::RectangleShape menu(sf::Vector2f(1200, 880));
-    // menu.setPosition(100, 100);
 
     sf::Text start;
     start.setString("- Press [Enter] To Start -");
