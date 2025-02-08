@@ -63,6 +63,13 @@ build CMakeFiles/WiNGHacks25.dir/Textures.cpp.obj: CXX_COMPILER__WiNGHacks25_uns
   OBJECT_DIR = CMakeFiles\WiNGHacks25.dir
   OBJECT_FILE_DIR = CMakeFiles\WiNGHacks25.dir
 
+build CMakeFiles/WiNGHacks25.dir/Animation.cpp.obj: CXX_COMPILER__WiNGHacks25_unscanned_Debug C$:/Users/Jules/Documents/Projects/WiNGHacks25/Animation.cpp || cmake_object_order_depends_target_WiNGHacks25
+  DEP_FILE = CMakeFiles\WiNGHacks25.dir\Animation.cpp.obj.d
+  FLAGS = -g -std=gnu++11 -fdiagnostics-color=always
+  INCLUDES = -isystem C:/SFML/include
+  OBJECT_DIR = CMakeFiles\WiNGHacks25.dir
+  OBJECT_FILE_DIR = CMakeFiles\WiNGHacks25.dir
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target WiNGHacks25
@@ -71,7 +78,7 @@ build CMakeFiles/WiNGHacks25.dir/Textures.cpp.obj: CXX_COMPILER__WiNGHacks25_uns
 #############################################
 # Link the executable WiNGHacks25.exe
 
-build WiNGHacks25.exe: CXX_EXECUTABLE_LINKER__WiNGHacks25_Debug CMakeFiles/WiNGHacks25.dir/main.cpp.obj CMakeFiles/WiNGHacks25.dir/Textures.cpp.obj | C$:/SFML/lib/libsfml-graphics-d.a C$:/SFML/lib/libsfml-audio-d.a C$:/SFML/lib/libsfml-window-d.a C$:/SFML/lib/libsfml-system-d.a
+build WiNGHacks25.exe: CXX_EXECUTABLE_LINKER__WiNGHacks25_Debug CMakeFiles/WiNGHacks25.dir/main.cpp.obj CMakeFiles/WiNGHacks25.dir/Textures.cpp.obj CMakeFiles/WiNGHacks25.dir/Animation.cpp.obj | C$:/SFML/lib/libsfml-graphics-d.a C$:/SFML/lib/libsfml-audio-d.a C$:/SFML/lib/libsfml-window-d.a C$:/SFML/lib/libsfml-system-d.a
   FLAGS = -g
   LINK_LIBRARIES = C:/SFML/lib/libsfml-graphics-d.a  C:/SFML/lib/libsfml-audio-d.a  C:/SFML/lib/libsfml-window-d.a  C:/SFML/lib/libsfml-system-d.a  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\WiNGHacks25.dir

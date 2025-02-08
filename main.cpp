@@ -3,7 +3,7 @@
 //
 #include <iostream>
 #include "Textures.h"
-#include "DrawForest.h"
+#include "Animation.h"
 #include <SFML/Graphics.hpp>
 #include <random>
 #include <ctime>
@@ -17,30 +17,27 @@ void setText(sf::Text &text, float x, float y) {
 }
 
 vector<tuple<string, int>> genPlants() {
-    int plantNum = 4 + rand() % 3;
-    int plantChoice;
-    int pos = rand() % 200;
     vector<tuple<string, int>> plants;
-    for (int i = 0; i < plantNum; i++) {
-        plantChoice = rand() % 3;
-        if (plantChoice == 0) {
-            plants.push_back({"Type 1", pos});
-        } else if (plantChoice == 1) {
-            plants.push_back({"Type 2", pos});
-        } else {
-            plants.push_back({"Type 3", pos});
-        }
-        cout << pos << endl;;
-        pos += rand() % 1800/(plantChoice+2);
-        if (pos >= 1920) {
-            break;
-        }
-    }
+    int plantNum = 4 + rand() % 3;
+    int pos = rand() % 200;
 
+    for (int i = 0; i < plantNum; i++) {
+        int plantChoice = rand() % 3;
+        string plantType = (plantChoice == 0) ? "Type 1" :
+                           (plantChoice == 1) ? "Type 2" : "Type 3";
+
+        plants.emplace_back(plantType, pos);
+        pos += 200 + rand() % 300;
+
+        if (pos >= 1920) break;
+    }
     return plants;
 }
 
 int gameLoop(sf::RenderWindow& window, int width, int height, Textures& textures) {
+    Clock clock;
+    double elapsed = clock.restart().asSeconds();
+
     sf::RectangleShape background(sf::Vector2f(width, height));
     background.setFillColor(sf::Color::Red);
 
@@ -76,11 +73,6 @@ int gameLoop(sf::RenderWindow& window, int width, int height, Textures& textures
     mediumTree2.setFillColor(sf::Color::Black);
     mediumTree2.setPosition(7*width/8, 0);
 
-    sf::RectangleShape character(sf::Vector2f(256, 256));
-    character.setFillColor(sf::Color::Green);
-    character.setOrigin(128, 128);
-    character.setPosition(width-width/12, height-height/8);
-
     vector<tuple<string, int>> plants = genPlants();
 
     sf::Sprite inventoryBackground;
@@ -88,9 +80,29 @@ int gameLoop(sf::RenderWindow& window, int width, int height, Textures& textures
     inventoryBackground.setOrigin(width/2, height/2);
     inventoryBackground.setPosition(width/2, height/2);
 
+    sf::Sprite character;
+    character.setOrigin(256, 256);
+    character.setPosition(width-width/8, height-height/4);
+
+    sf::Texture sprite_sheet;
+    Animation animations;
+
+    if (!(sprite_sheet.loadFromFile("files/images/sprites/sprite_sheet.png")))
+    {
+        cout << "Could Not Load File..." << endl;
+    }
+
+    character.setTexture(sprite_sheet);
+
+    animations.addAnimation("walkLeft", sprite_sheet, {6, 1}, {512, 512}, {3,0}, 8, {3,0});
+    animations.setAnimationStartingIndex("walkLeft", {3,0});
+    animations.setAnimationEndingIndex("walkLeft", {5,0});
+    animations.addAnimation("walkRight", sprite_sheet, {6,1}, {512, 512}, {3,0}, 8, {0,0});
+    animations.setAnimationStartingIndex("walkRight", {0,0});
+    animations.setAnimationEndingIndex("walkRight", {2, 0});
+
     bool inventoryOpen = false;
-    bool walkL = false;
-    bool walkR = false;
+    bool isMoving = false;
 
     sf::Event event;
     while (window.isOpen()) {
@@ -101,16 +113,18 @@ int gameLoop(sf::RenderWindow& window, int width, int height, Textures& textures
                 return -1;
             }
             if (!inventoryOpen) {
-                if(sf::Keyboard::isKeyPressed(sf::Keyboard::Left) || sf::Keyboard::isKeyPressed(sf::Keyboard::A))
-                {
+
+                if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) || sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
                     character.move(-10, 0.f);
-                    walkL = true;
+                    animations.update("walkLeft", character);
+                    isMoving = true;
+                }
+                if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) || sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
+                    character.move(10, 0.f);
+                    animations.update("walkRight", character);
+                    isMoving = true;
                 }
 
-                if(sf::Keyboard::isKeyPressed(sf::Keyboard::Right) || sf::Keyboard::isKeyPressed(sf::Keyboard::D))
-                {
-                    character.move(10, 0.f);
-                }
             }
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::E) && !inventoryOpen) {
                 inventoryOpen = true;
@@ -119,11 +133,9 @@ int gameLoop(sf::RenderWindow& window, int width, int height, Textures& textures
                 inventoryOpen = false;
             }
 
-            if (walkL) {
-                if () {
-
-
-                }
+            if (!isMoving) {
+                animations.resetAnimationIndex("walkLeft");
+                animations.resetAnimationIndex("walkRight");
             }
 
             window.clear();

@@ -8,9 +8,9 @@ Textures::Textures() {
 }
 
 void Textures::loadTextures() {
-  cauldronTexture.loadFromFile("files/images/sprites/Cauldron_Icon copy.png");
+  cauldronTexture.loadFromFile("files/images/sprites/Cauldron_Icon.png");
   itemTextures.push_back(cauldronTexture);
-  cauldronLightTexture.loadFromFile("files/images/sprites/Cauldron_Icon_Highlight copy.png");
+  cauldronLightTexture.loadFromFile("files/images/sprites/Cauldron_Icon_Highlight.png");
   itemTextures.push_back(cauldronLightTexture);
   inventoryTexture.loadFromFile("files/images/backgrounds/Inventory.png");
   backgroundTextures.push_back(inventoryTexture);
@@ -21,9 +21,9 @@ void Textures::loadTextures() {
   characterWR1.loadFromFile("files/images/sprites/WalkR1.png");
   characterWR2.loadFromFile("files/images/sprites/WalkR2.png");
   walkCycle.push_back(characterSL);
-  walkCycle.push_back(characterSR);
   walkCycle.push_back(characterWL1);
   walkCycle.push_back(characterWL2);
+  walkCycle.push_back(characterSR);
   walkCycle.push_back(characterWR1);
   walkCycle.push_back(characterWR2);
 }
