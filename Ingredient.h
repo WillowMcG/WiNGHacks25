@@ -1,23 +1,23 @@
-#ifndef INGRINGREDIENT_H
-#define INGRINGREDIENT_H
+#ifndef INGREDIENT_H
+#define INGREDIENT_H
 
 #include "Item.h"
 #include "IngrProperties.h"
 #include "IngrKnowledge.h"
-#include "IngrGiftRating.h"
+#include "IngrGiftRatings.h"
 
 class Ingredient : public Item {
 public:
     IngrProperties ingrProperties;
     IngrKnowledge ingrKnowledge;
-    IngrGiftRating ingrGiftRating;
+    IngrGiftRatings ingrGiftRatings;
 
     Ingredient(int index, std::string name, sf::Sprite sprite, int quantity, const IngrProperties& properties, const IngrKnowledge& ingrKnowledge,
-        const IngrGiftRating& giftRating);
+        const IngrGiftRatings& giftRatings);
 
     IngrProperties getIngrProperties() const;
     IngrKnowledge getIngrKnowledge() const;
-	IngrGiftRating getIngrGiftRating() const;
+	IngrGiftRatings getIngrGiftRatings() const;
 
 
 

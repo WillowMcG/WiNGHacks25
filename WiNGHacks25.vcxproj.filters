@@ -30,6 +30,9 @@
     <ClCompile Include="StatsManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Potion.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="InventoryManager.h">
@@ -41,7 +44,7 @@
     <ClInclude Include="Ingredient.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="IngrGiftRating.h">
+    <ClInclude Include="IngrGiftRatings.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="IngrProperties.h">
@@ -54,6 +57,18 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="RelationshipLvls.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Potion.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PtnProperties.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PtnKnowledge.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PtnGiftRatings.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

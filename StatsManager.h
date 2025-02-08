@@ -1,12 +1,10 @@
 #pragma once
 #include "RelationshipLvls.h"
 
-class StatsManager
-{
+class StatsManager{
 	int health;
 	int hunger;
 	RelationshipLvls relationshipLvls;
-
 public:
 	StatsManager();
 	~StatsManager();

@@ -7,9 +7,13 @@
 #include "InventoryManager.h"
 #include "Item.h"
 #include "Ingredient.h"
-#include "IngrGiftRating.h"
+#include "IngrGiftRatings.h"
 #include "IngrProperties.h"
 #include "IngrKnowledge.h"
+#include "Potion.h"
+#include "PtnProperties.h"
+#include "PtnKnowledge.h"
+#include "PtnGiftRatings.h"
 
 void initializeItems(InventoryManager& inventory_manager) {
 	sf::Texture texture;
@@ -19,11 +23,25 @@ void initializeItems(InventoryManager& inventory_manager) {
 	std::shared_ptr<Item> item = std::make_shared<Item>(0, "Cauldron", sprite, 1);
 	inventory_manager.items.push_back(item);
 
-	IngrGiftRating gift_rating({ 1, 1, 1 });
-	IngrProperties properties(1, 1, 1, 1, 1, 1);
+	IngrGiftRatings gift_ratings({ 1, 1, 1 });
+	IngrProperties properties(1, 1, 1, 1);
 	IngrKnowledge knowledge(true, false, false, false, false, false);
-	std::shared_ptr<Item> ingredient = std::make_shared<Ingredient>(1, "Mandrake Root", sprite, 1, properties, knowledge, gift_rating);
+	std::shared_ptr<Item> ingredient = std::make_shared<Ingredient>(1, "Mandrake Root", sprite, 1, properties, knowledge, gift_ratings);
 	inventory_manager.items.push_back(ingredient);
+
+	IngrGiftRatings gift_ratings2({ -5, 11, 0 });
+	IngrProperties properties2(7, -2, 5, 20);
+	IngrKnowledge knowledge2(true, true, true, true, true, true);
+	std::shared_ptr<Item> ingredient2 = std::make_shared<Ingredient>(2, "Dragon Scale", sprite, 1, properties2, knowledge2, gift_ratings2);
+	inventory_manager.items.push_back(ingredient2);
+
+	PtnGiftRatings ptn_gift_ratings({ 1, 1, 1 });
+	std::unordered_map<std::string, int> ingredients = { { "Mandrake Root", 1 }, { "Dragon Scale", 1 } };
+	PtnProperties ptn_properties(1, 1, 1, 1);
+	PtnKnowledge ptn_knowledge(true, false, false, false, false);
+	std::shared_ptr<Item> potion = std::make_shared<Potion>(3, "Potion of Strength", sprite, 1, ingredients, ptn_properties, ptn_knowledge, ptn_gift_ratings);
+	inventory_manager.items.push_back(potion);
+
 }
 
 int main() {
@@ -47,6 +65,18 @@ int main() {
 	}
 	else {
 		std::cout << "Item is not an ingredient." << std::endl;
+	}
+
+	auto potion = std::dynamic_pointer_cast<Potion>(inventory_manager.getItemPtr(3));
+	if (potion) {
+		potion->getPtnProperties().printProperties();
+		std::unordered_map<std::string, int> ingredients = potion->getIngredients();
+		for (auto it = ingredients.begin(); it != ingredients.end(); it++) {
+			std::cout << it->first << ": " << it->second << std::endl;
+		}
+	}
+	else {
+		std::cout << "Item is not a potion." << std::endl;
 	}
 
 	return 0;

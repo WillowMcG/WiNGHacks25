@@ -143,15 +143,20 @@
     <ClCompile Include="InventoryManager.cpp" />
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Potion.cpp" />
     <ClCompile Include="StatsManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Ingredient.h" />
-    <ClInclude Include="IngrGiftRating.h" />
+    <ClInclude Include="IngrGiftRatings.h" />
     <ClInclude Include="IngrKnowledge.h" />
     <ClInclude Include="IngrProperties.h" />
     <ClInclude Include="InventoryManager.h" />
     <ClInclude Include="Item.h" />
+    <ClInclude Include="Potion.h" />
+    <ClInclude Include="PtnGiftRatings.h" />
+    <ClInclude Include="PtnKnowledge.h" />
+    <ClInclude Include="PtnProperties.h" />
     <ClInclude Include="RelationshipLvls.h" />
     <ClInclude Include="StatsManager.h" />
   </ItemGroup>
