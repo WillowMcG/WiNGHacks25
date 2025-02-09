@@ -9,14 +9,14 @@ public:
 	StatsManager();
 	~StatsManager();
 
-	int getHealth();
+	int getHealth() const;
 	void setHealth(int health);
 	void increaseHealth();
 	void decreaseHealth();
 	void changeHealth(int val);
 	void resetHealth();
 
-	int getHunger();
+	int getHunger() const;
 	void setHunger(int hunger);
 	void increaseHunger();
 	void decreaseHunger();
@@ -24,7 +24,7 @@ public:
 	void resetHunger();
 
 	int getRelationshipLvl(std::string name);
-	RelationshipLvls& getRelationshipLvls();
+	const RelationshipLvls& getRelationshipLvls() const;
 	void setRelationshipLvl(std::string name, int val);
 	void setRelationshipLvls(int lvl);
 	void increaseRelationshipLvl(std::string name);
@@ -38,4 +38,3 @@ public:
 	void printRelationshipLvl(std::string name);
 	void printRelationshipLvls();
 };
-

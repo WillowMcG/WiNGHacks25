@@ -1,4 +1,7 @@
 #include "Animation.h"
+#include <iomanip>
+struct tm datetime;
+time_t timestamp;
 
 // Map definitions
 map<string, Texture> Animation::m_textures;

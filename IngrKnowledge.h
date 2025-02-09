@@ -3,29 +3,20 @@
 #include <iostream>
 
 struct IngrKnowledge {
-    bool knowRawHealing;
+	bool knowRawHealing;
 	bool knowStirredHealing;
-    bool knowCookedHealing;
+	bool knowCookedHealing;
 	bool knowRuinedHealing;
-    bool knowNumMixes;
-    bool knowCookTime;
+	bool knowNumStirs;
+	bool knowCookTime;
 
-    IngrKnowledge()
-        : knowRawHealing(false), knowStirredHealing(false), knowCookedHealing(false), knowRuinedHealing(false), knowNumMixes(false),
+	IngrKnowledge()
+		: knowRawHealing(false), knowStirredHealing(false), knowCookedHealing(false), knowRuinedHealing(false), knowNumStirs(false),
 		knowCookTime(false) {}
 
 	IngrKnowledge(bool knowRawHealing, bool knowStirredHealing, bool knowCookedHealing, bool knowRuinedHealing, bool knowNumMixes, bool knowCookTime)
 		: knowRawHealing(knowRawHealing), knowStirredHealing(knowStirredHealing), knowCookedHealing(knowCookedHealing),
-		knowRuinedHealing(knowRuinedHealing), knowNumMixes(knowNumMixes), knowCookTime(knowCookTime) {}
-
-	void printKnowledge() {
-		std::cout << "Knows raw healing: " << knowRawHealing << std::endl;
-		std::cout << "Knows stirred healing: " << knowStirredHealing << std::endl;
-		std::cout << "Knows cooked healing: " << knowCookedHealing << std::endl;
-		std::cout << "Knows ruined healing: " << knowRuinedHealing << std::endl;
-		std::cout << "Knows number of mixes: " << knowNumMixes << std::endl;
-		std::cout << "Knows cook time: " << knowCookTime << std::endl;
-	}
+		knowRuinedHealing(knowRuinedHealing), knowNumStirs(knowNumStirs), knowCookTime(knowCookTime) {}
 };
 
 #endif

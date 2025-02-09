@@ -31,6 +31,7 @@ sf::Vector2i/f
 */
 
 #pragma once
+#include <chrono>
 #include <SFML/Graphics.hpp>
 #include <map>
 #include <string>
@@ -57,6 +58,7 @@ for which is linked below:
 https://www.sfml-dev.org/documentation/2.5.1/classsf_1_1Sprite.php
 
 */
+
 
 class Animation {
 /*
