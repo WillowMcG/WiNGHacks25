@@ -24,6 +24,24 @@
     <ClCompile Include="Item.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Ingredient.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="StatsManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Potion.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Cooking.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Textures.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Animation.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="InventoryManager.h">
@@ -32,5 +50,146 @@
     <ClInclude Include="Item.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Ingredient.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="IngrGiftRatings.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="IngrProperties.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="IngrKnowledge.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="StatsManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RelationshipLvls.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Potion.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Cooking.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="IngrStatus.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Populate.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Sprites.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Textures.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Animation.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="files\SummerPixel.ttf">
+      <Filter>Source Files</Filter>
+    </Font>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="files\images\backgrounds\BackTrees1.png">
+      <Filter>Source Files</Filter>
+    </Image>
+    <Image Include="files\images\backgrounds\BackTrees2.png">
+      <Filter>Source Files</Filter>
+    </Image>
+    <Image Include="files\images\backgrounds\BackTrees3.png">
+      <Filter>Source Files</Filter>
+    </Image>
+    <Image Include="files\images\backgrounds\BigTree.png">
+      <Filter>Source Files</Filter>
+    </Image>
+    <Image Include="files\images\backgrounds\BirchTree.png">
+      <Filter>Source Files</Filter>
+    </Image>
+    <Image Include="files\images\backgrounds\forest1.png">
+      <Filter>Source Files</Filter>
+    </Image>
+    <Image Include="files\images\backgrounds\forest2.png">
+      <Filter>Source Files</Filter>
+    </Image>
+    <Image Include="files\images\backgrounds\forest3.png">
+      <Filter>Source Files</Filter>
+    </Image>
+    <Image Include="files\images\backgrounds\forest4.png">
+      <Filter>Source Files</Filter>
+    </Image>
+    <Image Include="files\images\backgrounds\ForestBackground.png">
+      <Filter>Source Files</Filter>
+    </Image>
+    <Image Include="files\images\backgrounds\Inventory.png">
+      <Filter>Source Files</Filter>
+    </Image>
+    <Image Include="files\images\backgrounds\SmallTree.png">
+      <Filter>Source Files</Filter>
+    </Image>
+    <Image Include="files\images\backgrounds\Tree1.png">
+      <Filter>Source Files</Filter>
+    </Image>
+    <Image Include="files\images\backgrounds\Tree3.png">
+      <Filter>Source Files</Filter>
+    </Image>
+    <Image Include="files\images\backgrounds\Tree5.png">
+      <Filter>Source Files</Filter>
+    </Image>
+    <Image Include="files\images\backgrounds\Tree6.png">
+      <Filter>Source Files</Filter>
+    </Image>
+    <Image Include="files\images\sprites\Cauldron_Icon.png">
+      <Filter>Source Files</Filter>
+    </Image>
+    <Image Include="files\images\sprites\Cauldron_Icon_Highlight.png">
+      <Filter>Source Files</Filter>
+    </Image>
+    <Image Include="files\images\sprites\plants_64_7.png">
+      <Filter>Source Files</Filter>
+    </Image>
+    <Image Include="files\images\sprites\plants_64_8.png">
+      <Filter>Source Files</Filter>
+    </Image>
+    <Image Include="files\images\sprites\plants_64_14.png">
+      <Filter>Source Files</Filter>
+    </Image>
+    <Image Include="files\images\sprites\sprite_sheet.png">
+      <Filter>Source Files</Filter>
+    </Image>
+    <Image Include="files\images\sprites\StandL.png">
+      <Filter>Source Files</Filter>
+    </Image>
+    <Image Include="files\images\sprites\StandR.png">
+      <Filter>Source Files</Filter>
+    </Image>
+    <Image Include="files\images\sprites\WalkL1.png">
+      <Filter>Source Files</Filter>
+    </Image>
+    <Image Include="files\images\sprites\WalkL2.png">
+      <Filter>Source Files</Filter>
+    </Image>
+    <Image Include="files\images\sprites\WalkR1.png">
+      <Filter>Source Files</Filter>
+    </Image>
+    <Image Include="files\images\sprites\WalkR2.png">
+      <Filter>Source Files</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="files\images\backgrounds\forest.clip">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="files\images\sprites\Illustration2.clip">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="files\images\sprites\sprite_sheet.clip">
+      <Filter>Source Files</Filter>
+    </None>
   </ItemGroup>
 </Project>
