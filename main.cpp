@@ -37,9 +37,9 @@ void initializeItems(InventoryManager& inventory_manager) {
 	std::shared_ptr<Item> ingredient = std::make_shared<Ingredient>(1, "Mandrake Root", sprite, 1, properties, knowledge, gift_ratings, status);
 	inventory_manager.items.push_back(ingredient);
 
-	IngrGiftRatings giftRatingsDjorch({ -5, 11, 0 });
 	IngrProperties propertiesDjorch(7, 3, -2, -20, 5, 20);
 	IngrKnowledge knowledgeDjorch(true, true, true, true, true, true);
+	IngrGiftRatings giftRatingsDjorch({ -5, 11, 0 });
 	IngrStatus statusDjorch(false, false, false, 0, 0);
 	std::shared_ptr<Item> ingredient2 = std::make_shared<Ingredient>(2, "Djorchertwitz", sprite, 1, propertiesDjorch, knowledgeDjorch, giftRatingsDjorch, statusDjorch);
 	inventory_manager.items.push_back(ingredient2);
