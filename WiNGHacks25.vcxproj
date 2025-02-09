@@ -139,6 +139,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Animation.cpp" />
     <ClCompile Include="Cooking.cpp" />
     <ClCompile Include="Ingredient.cpp" />
     <ClCompile Include="InventoryManager.cpp" />
@@ -146,8 +147,10 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Potion.cpp" />
     <ClCompile Include="StatsManager.cpp" />
+    <ClCompile Include="Textures.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Animation.h" />
     <ClInclude Include="Cooking.h" />
     <ClInclude Include="Ingredient.h" />
     <ClInclude Include="IngrGiftRatings.h" />
@@ -156,14 +159,50 @@
     <ClInclude Include="IngrStatus.h" />
     <ClInclude Include="InventoryManager.h" />
     <ClInclude Include="Item.h" />
+    <ClInclude Include="Populate.h" />
     <ClInclude Include="Potion.h" />
     <ClInclude Include="RelationshipLvls.h" />
+    <ClInclude Include="Sprites.h" />
     <ClInclude Include="StatsManager.h" />
+    <ClInclude Include="Textures.h" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="Cauldron_Icon copy.png" />
-    <Image Include="Cauldron_Icon_Highlight.png" />
-    <Image Include="Inventory.png" />
+    <Font Include="files\SummerPixel.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="files\images\backgrounds\BackTrees1.png" />
+    <Image Include="files\images\backgrounds\BackTrees2.png" />
+    <Image Include="files\images\backgrounds\BackTrees3.png" />
+    <Image Include="files\images\backgrounds\BigTree.png" />
+    <Image Include="files\images\backgrounds\BirchTree.png" />
+    <Image Include="files\images\backgrounds\forest1.png" />
+    <Image Include="files\images\backgrounds\forest2.png" />
+    <Image Include="files\images\backgrounds\forest3.png" />
+    <Image Include="files\images\backgrounds\forest4.png" />
+    <Image Include="files\images\backgrounds\ForestBackground.png" />
+    <Image Include="files\images\backgrounds\Inventory.png" />
+    <Image Include="files\images\backgrounds\SmallTree.png" />
+    <Image Include="files\images\backgrounds\Tree1.png" />
+    <Image Include="files\images\backgrounds\Tree3.png" />
+    <Image Include="files\images\backgrounds\Tree5.png" />
+    <Image Include="files\images\backgrounds\Tree6.png" />
+    <Image Include="files\images\sprites\Cauldron_Icon.png" />
+    <Image Include="files\images\sprites\Cauldron_Icon_Highlight.png" />
+    <Image Include="files\images\sprites\plants_64_14.png" />
+    <Image Include="files\images\sprites\plants_64_7.png" />
+    <Image Include="files\images\sprites\plants_64_8.png" />
+    <Image Include="files\images\sprites\sprite_sheet.png" />
+    <Image Include="files\images\sprites\StandL.png" />
+    <Image Include="files\images\sprites\StandR.png" />
+    <Image Include="files\images\sprites\WalkL1.png" />
+    <Image Include="files\images\sprites\WalkL2.png" />
+    <Image Include="files\images\sprites\WalkR1.png" />
+    <Image Include="files\images\sprites\WalkR2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="files\images\backgrounds\forest.clip" />
+    <None Include="files\images\sprites\Illustration2.clip" />
+    <None Include="files\images\sprites\sprite_sheet.clip" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
