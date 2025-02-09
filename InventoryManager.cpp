@@ -112,6 +112,41 @@ void InventoryManager::tradeItem(Item givenItem, int givenQuantity, std::string 
 	items.push_back(Item(recievedItem));
 }
 
+void InventoryManager::drawInventory(sf::RenderWindow &window, sf::Font& body, int width, int height, Textures& textures) {
+	sf::Sprite inventoryBackground(textures.getBackgroundTextures().at(4));
+	inventoryBackground.setOrigin(width/2, height/2);
+	inventoryBackground.setPosition(width/2, height/2);
+
+	window.draw(inventoryBackground);
+
+	int hindex = 0;
+	int vindex = 0;
+	for (auto it : items) {
+		if (it.name == "Cauldron") {
+			it.sprite.setTexture(textures.getItemTextures().at(0));
+			it.sprite.setScale(1/8, 1/8);
+		} else if (it.name == "Djorchertwitz") {
+			it.sprite.setTexture(textures.getPlantTextures().at(0));
+			it.sprite.setScale(3,3);
+		} else if (it.name == "Hygogix") {
+			it.sprite.setTexture(textures.getPlantTextures().at(1));
+			it.sprite.setScale(.75, .75);
+		} else if (it.name == "Type 3") {
+			it.sprite.setTexture(textures.getPlantTextures().at(2));
+			it.sprite.setScale(3,3);
+		}
+		hindex++;
+		if (hindex == 5) {
+			hindex = 0;
+			vindex++;
+		}
+
+		it.sprite.setPosition(200+266*hindex, 80+256*vindex);
+		window.draw(it.sprite);
+	}
+}
+
+
 
 
 

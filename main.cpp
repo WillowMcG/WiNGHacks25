@@ -36,7 +36,7 @@ vector<pair<string, int>> genPlants() {
     for (int i = 0; i < plantNum; i++) {
         int plantChoice = rand() % 3;
         string plantType = (plantChoice == 0) ? "Djorchertwitz" :
-                           (plantChoice == 1) ? "Type 2" : "Type 3";
+                           (plantChoice == 1) ? "Hygogix" : "Type 3";
 
         plants.push_back({plantType, pos});
         pos += 200 + rand() % 300;
@@ -47,19 +47,23 @@ vector<pair<string, int>> genPlants() {
 void texturePlant(sf::Sprite& plant, string type, Textures& textures) {
     if (type == "Djorchertwitz") {
         plant.setTexture(textures.getPlantTextures().at(0));
-    } else if (type == "Type 2") {
+    } else if (type == "Hygogix") {
         plant.setTexture(textures.getPlantTextures().at(1));
     } else if (type == "Type 3") {
         plant.setTexture(textures.getPlantTextures().at(2));
     }
 }
 
-void initializePlants(InventoryManager& inventory_manager) {
-    sf::Texture texture;
-    texture.loadFromFile("files/images/sprites/Cauldron_Icon.png");
-    sf::Sprite djorchSprite(texture);
-    sf::Sprite sprite2(texture);
-    sf::Sprite sprite3(texture);
+void initializePlants(InventoryManager& inventoryManager) {
+    sf::Texture djorchTexture;
+    djorchTexture.loadFromFile("files/images/sprites/plants_64_7.png");
+    sf::Sprite djorchSprite(djorchTexture);
+    sf::Texture hygogixTexture;
+    hygogixTexture.loadFromFile("files/images/sprites/Hygogix.png");
+    sf::Sprite sprite2(hygogixTexture);
+    sf::Texture type3Texture;
+    type3Texture.loadFromFile("files/images/sprites/plants_64_14.png");
+    sf::Sprite sprite3(type3Texture);
 
     // People: Mushroom Man, Witch, Wolfhound
 
@@ -68,24 +72,24 @@ void initializePlants(InventoryManager& inventory_manager) {
     IngrGiftRatings giftRatingDjorch({-5, 11, 0});
     IngrStatus statusDjorch(false, false, false, 0, 0);
     Ingredient djorchertwitz = Ingredient(0, "Djorchertwitz", djorchSprite, 1, propertiesDjorch, knowledgeDjorch, giftRatingDjorch, statusDjorch);
-    inventory_manager.items.push_back(djorchertwitz);
+    inventoryManager.items.push_back(djorchertwitz);
 
-    IngrProperties propertiesType2(8, 12, 15, -10, 8, 15);
-    IngrKnowledge knowledgeType2(false, false, false, false, false, false);
-    IngrGiftRatings giftRatingType2({5, -10, 8});
-    IngrStatus statusType2(false, false, false, 0, 0);
-    Ingredient type2 = Ingredient(0, "Type 2", sprite2, 1, propertiesType2, knowledgeType2, giftRatingType2, statusType2);
-    inventory_manager.items.push_back(type2);
+    IngrProperties propertiesHygogix(8, 12, 15, -10, 8, 15);
+    IngrKnowledge knowledgeHygogix(false, false, false, false, false, false);
+    IngrGiftRatings giftRatingHygogix({5, -10, 8});
+    IngrStatus statusHygogix(false, false, false, 0, 0);
+    Ingredient hygogix = Ingredient(0, "Hygogix", sprite2, 1, propertiesHygogix, knowledgeHygogix, giftRatingHygogix, statusHygogix);
+    inventoryManager.items.push_back(hygogix);
 
     IngrProperties propertiesType3(0, 0, 0, 0, 0, 0);
     IngrKnowledge knowledgeType3(false, false, false, false, false, false);
     IngrGiftRatings giftRatingType3({0, 0, 0});
     IngrStatus statusType3(false, false, false, 0, 0);
     Ingredient type3 = Ingredient(0, "Type 3", sprite3, 1, propertiesType3, knowledgeType3, giftRatingType3, statusType3);
-    inventory_manager.items.emplace_back(type3);
+    inventoryManager.items.push_back(type3);
 }
 
-void initializeInventory(InventoryManager& inventory_manager) {}
+void initializeInventory(InventoryManager& inventoryManager) {}
 
 int gameLoop(sf::RenderWindow& window, float width, float height, Textures& textures, sf::Font& body) {
     InventoryManager plantDebug;
@@ -94,6 +98,13 @@ int gameLoop(sf::RenderWindow& window, float width, float height, Textures& text
 
     InventoryManager playerInventory;
     initializeInventory(playerInventory);
+
+    sf::Texture cauldronTexture;
+    cauldronTexture.loadFromFile("files/images/sprites/Cauldron_Icon.png");
+
+    sf::Sprite cauldronSprite(cauldronTexture);
+    Item cauldron(0, "Cauldron", cauldronSprite, 1);
+    playerInventory.items.push_back(cauldron);
 
     sf::Sprite background;
     background.setTexture(textures.getBackgroundTextures().at(0));
@@ -142,7 +153,7 @@ int gameLoop(sf::RenderWindow& window, float width, float height, Textures& text
     harvestPlant.open();
 
     Textbox harvestDjorch(width/2, height/4, body, 40, textures, "Djorchertwitz Added to Inventory");
-    Textbox harvest2(width/2, height/4, body, 40, textures, "Type 2 Added to Inventory");
+    Textbox harvestHygogix(width/2, height/4, body, 40, textures, "Hygogix Added to Inventory");
     Textbox harvest3(width/2, height/4, body, 40, textures, "Type 3 Added to Inventory");
 
     sf::Texture sprite_sheet;
@@ -163,7 +174,10 @@ int gameLoop(sf::RenderWindow& window, float width, float height, Textures& text
     animations.setAnimationEndingIndex("walkRight", {2, 0});
 
     bool inventoryOpen = false;
+    bool infoOpen = false;
+    bool cookingOpen = false;
     bool isMoving = false;
+    bool lock_click;
 
     int elapsed=0;
 
@@ -175,7 +189,7 @@ int gameLoop(sf::RenderWindow& window, float width, float height, Textures& text
                 window.close();
                 return -1;
             }
-            if (!inventoryOpen) {
+            if (!inventoryOpen && !infoOpen && !cookingOpen) {
 
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) || sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
                     character.move(-8, 0.f);
@@ -187,7 +201,7 @@ int gameLoop(sf::RenderWindow& window, float width, float height, Textures& text
                     animations.update("walkRight", character);
                     isMoving = true;
                 }
-                if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) || sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
+                if ((sf::Keyboard::isKeyPressed(sf::Keyboard::W) || sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) && !inventoryOpen) {
                     int xpos = character.getPosition().x;
                     if (xpos > plant1.getPosition().x - 80 && xpos < plant1.getPosition().x + 80 && p1) {
                         p1 = false;
@@ -195,12 +209,12 @@ int gameLoop(sf::RenderWindow& window, float width, float height, Textures& text
                         if (plants.at(0).first == "Djorchertwitz") {
                             playerInventory.pickUpItem(plantDebug.getItem("Djorchertwitz"));
                             harvestDjorch.open();
-                            harvest2.close();
+                            harvestHygogix.close();
                             harvest3.close();
                             harvestPlant.close();
-                        } else if (plants.at(0).first == "Type 2") {
-                            playerInventory.pickUpItem(plantDebug.getItem("Type 2"));
-                            harvest2.open();
+                        } else if (plants.at(0).first == "Hygogix") {
+                            playerInventory.pickUpItem(plantDebug.getItem("Hygogix"));
+                            harvestHygogix.open();
                             harvestDjorch.close();
                             harvest3.close();
                             harvestPlant.close();
@@ -208,7 +222,7 @@ int gameLoop(sf::RenderWindow& window, float width, float height, Textures& text
                             playerInventory.pickUpItem(plantDebug.getItem("Type 3"));
                             harvest3.open();
                             harvestDjorch.close();
-                            harvest2.close();
+                            harvestHygogix.close();
                             harvestPlant.close();
                         }
                     } else if (xpos > plant2.getPosition().x - 80 && xpos < plant2.getPosition().x + 80 && p2) {
@@ -217,12 +231,12 @@ int gameLoop(sf::RenderWindow& window, float width, float height, Textures& text
                         if (plants.at(1).first == "Djorchertwitz") {
                             playerInventory.pickUpItem(plantDebug.getItem("Djorchertwitz"));
                             harvestDjorch.open();
-                            harvest2.close();
+                            harvestHygogix.close();
                             harvest3.close();
                             harvestPlant.close();
-                        } else if (plants.at(1).first == "Type 2") {
+                        } else if (plants.at(1).first == "Hygogix") {
                             playerInventory.pickUpItem(plantDebug.getItem("Djorchertwitz"));
-                            harvest2.open();
+                            harvestHygogix.open();
                             harvestDjorch.close();
                             harvest3.close();
                             harvestPlant.close();
@@ -230,7 +244,7 @@ int gameLoop(sf::RenderWindow& window, float width, float height, Textures& text
                             playerInventory.pickUpItem(plantDebug.getItem("Type 3"));
                             harvest3.open();
                             harvestDjorch.close();
-                            harvest2.close();
+                            harvestHygogix.close();
                             harvestPlant.close();
                         }
                     } else if (xpos > plant3.getPosition().x - 80 && xpos < plant3.getPosition().x + 80 && p3) {
@@ -239,12 +253,12 @@ int gameLoop(sf::RenderWindow& window, float width, float height, Textures& text
                         if (plants.at(2).first == "Djorchertwitz") {
                             playerInventory.pickUpItem(plantDebug.getItem("Djorchertwitz"));
                             harvestDjorch.open();
-                            harvest2.close();
+                            harvestHygogix.close();
                             harvest3.close();
                             harvestPlant.close();
-                        } else if (plants.at(2).first == "Type 2") {
+                        } else if (plants.at(2).first == "Hygogix") {
                             playerInventory.pickUpItem(plantDebug.getItem("Djorchertwitz"));
-                            harvest2.open();
+                            harvestHygogix.open();
                             harvestDjorch.close();
                             harvest3.close();
                             harvestPlant.close();
@@ -252,7 +266,7 @@ int gameLoop(sf::RenderWindow& window, float width, float height, Textures& text
                             playerInventory.pickUpItem(plantDebug.getItem("Type 3"));
                             harvest3.open();
                             harvestDjorch.close();
-                            harvest2.close();
+                            harvestHygogix.close();
                             harvestPlant.close();
                         }
                     } else if (xpos > plant4.getPosition().x - 80 && xpos < plant4.getPosition().x + 80 & p4) {
@@ -261,12 +275,12 @@ int gameLoop(sf::RenderWindow& window, float width, float height, Textures& text
                         if (plants.at(3).first == "Djorchertwitz") {
                             playerInventory.pickUpItem(plantDebug.getItem("Djorchertwitz"));
                             harvestDjorch.open();
-                            harvest2.close();
+                            harvestHygogix.close();
                             harvest3.close();
                             harvestPlant.close();
-                        } else if (plants.at(3).first == "Type 2") {
-                            playerInventory.pickUpItem(plantDebug.getItem("Type 2"));
-                            harvest2.open();
+                        } else if (plants.at(3).first == "Hygogix") {
+                            playerInventory.pickUpItem(plantDebug.getItem("Hygogix"));
+                            harvestHygogix.open();
                             harvestDjorch.close();
                             harvest3.close();
                             harvestPlant.close();
@@ -274,7 +288,7 @@ int gameLoop(sf::RenderWindow& window, float width, float height, Textures& text
                             playerInventory.pickUpItem(plantDebug.getItem("Type 3"));
                             harvest3.open();
                             harvestDjorch.close();
-                            harvest2.close();
+                            harvestHygogix.close();
                             harvestPlant.close();
                         }
                     } else if (xpos > plant5.getPosition().x - 80 && xpos < plant5.getPosition().x + 80 && p5) {
@@ -283,12 +297,12 @@ int gameLoop(sf::RenderWindow& window, float width, float height, Textures& text
                         if (plants.at(4).first == "Djorchertwitz") {
                             playerInventory.pickUpItem(plantDebug.getItem("Djorchertwitz"));
                             harvestDjorch.open();
-                            harvest2.close();
+                            harvestHygogix.close();
                             harvest3.close();
                             harvestPlant.close();
-                        } else if (plants.at(4).first == "Type 2") {
-                            playerInventory.pickUpItem(plantDebug.getItem("Type 2"));
-                            harvest2.open();
+                        } else if (plants.at(4).first == "Hygogix") {
+                            playerInventory.pickUpItem(plantDebug.getItem("Hygogix"));
+                            harvestHygogix.open();
                             harvestDjorch.close();
                             harvest3.close();
                             harvestPlant.close();
@@ -296,12 +310,48 @@ int gameLoop(sf::RenderWindow& window, float width, float height, Textures& text
                             playerInventory.pickUpItem(plantDebug.getItem("Type 3"));
                             harvest3.open();
                             harvestDjorch.close();
-                            harvest2.close();
+                            harvestHygogix.close();
                             harvestPlant.close();
                         }
                     }
                 }
 
+            } else if (inventoryOpen && !infoOpen && !cookingOpen) {
+                if (event.type == sf::Event::MouseButtonPressed) {
+                    if (event.mouseButton.button == sf::Mouse::Left && lock_click != true) {
+                        lock_click = true;
+                    }
+                    if (event.mouseButton.button == sf::Mouse::Right && lock_click!= true) {
+                        lock_click = true;
+                    }
+                }
+                if (event.type == sf::Event::MouseButtonReleased) {
+                    if (event.mouseButton.button == sf::Mouse::Left) {
+                        sf::Vector2i pos = sf::Mouse::getPosition(window);
+                        cout << pos.x << ", " << pos.y << endl;
+                        if (pos.y > 75 && pos.y < 285) {
+                            if (pos.x > 420 && pos.x < 568) {
+                                cout << "Box one" << endl;
+                            } else if (pos.x > 690 && pos.x < 930) {
+                                cout << "Box two" << endl;
+                            } else if (pos.x > 960 && pos.x < 1120) {
+                                cout << "Box three" << endl;
+                            } else if (pos.x > 1230 && pos.x < 1470) {
+                                cout << "Box four" << endl;
+                            }
+                        } else if (pos.y > 315 && pos.y < 525) {
+                            if (pos.x > 420 && pos.x < 568) {
+                                cout << "Box five" << endl;
+                            } else if (pos.x > 690 && pos.x < 930) {
+                                cout << "Box six" << endl;
+                            } else if (pos.x > 960 && pos.x < 1120) {
+                                cout << "Box seven" << endl;
+                            } else if (pos.x > 1230 && pos.x < 1470) {
+                                cout << "Box eight" << endl;
+                            }
+                        }
+                    }
+                }
             }
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::E) && !inventoryOpen) {
                 inventoryOpen = true;
@@ -379,10 +429,10 @@ int gameLoop(sf::RenderWindow& window, float width, float height, Textures& text
             } else {
                 harvestDjorch.close();
             }
-            if (harvest2.checkOpen() && elapsed <= 5) {
-                harvest2.drawTextbox(window);
+            if (harvestHygogix.checkOpen() && elapsed <= 5) {
+                harvestHygogix.drawTextbox(window);
             } else {
-                harvest2.close();
+                harvestHygogix.close();
             }
             if (harvest3.checkOpen() && elapsed <= 5) {
                 harvest3.drawTextbox(window);
@@ -391,6 +441,7 @@ int gameLoop(sf::RenderWindow& window, float width, float height, Textures& text
             }
             if (inventoryOpen) {
                 window.draw(inventoryBackground);
+                playerInventory.drawInventory(window, body, width, height, textures);
             }
             window.display();
         }

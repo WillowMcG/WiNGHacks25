@@ -3,6 +3,7 @@
 #include <SFML/Graphics.hpp>
 #include <memory>
 #include "Item.h"
+#include "Textures.h"
 
 class InventoryManager {
 public:
@@ -19,6 +20,7 @@ public:
 	void discardItem(Item item, int quantity);
 	void tradeItem(Item item, int quantity, std::string traderName);
 	void tradeItem(Item given_item, int givenQuantity, std::string traderName, Item recievedItem, int recievedQuantity);
-	//void drawInventory(sf::RenderWindow& window, int width, int height, int visible_items);
+	void drawInventory(sf::RenderWindow& window, sf::Font& body, int width, int height, Textures& textures);
+	void highlightItem(int index);
 	//void drawCookingInventory(sf::RenderWindow& window, int width, int height, int visible_items);
 };
