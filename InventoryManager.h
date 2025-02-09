@@ -9,9 +9,10 @@ public:
 	std::vector<Item> items;
 	
 	InventoryManager();
-	bool inInventory(Item item);
+	bool inInventory(std::string name);
 	Item getItem(int index);
 	Item getItem(std::string name);
+	void print();
 	void pickUpItem(Item item);
 	void pickUpItem(Item item, int quantity);
 	void discardItem(Item item);

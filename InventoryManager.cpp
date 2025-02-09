@@ -6,13 +6,20 @@ InventoryManager::InventoryManager() {
 	items = std::vector<Item>();
 }
 
-bool InventoryManager::inInventory(Item item) {
+bool InventoryManager::inInventory(std::string name) {
 	for (const auto& invItem : items) {
-		if (invItem.name == item.name) {
+		if (invItem.name == name) {
 			return true;
 		}
 	}
 	return false;
+}
+
+void InventoryManager::print() {
+	for (auto it : items) {
+		std::cout << it.name << std::endl;
+		std::cout << items.size() << std::endl;
+	}
 }
 
 Item InventoryManager::getItem(int index) {
@@ -25,7 +32,9 @@ Item InventoryManager::getItem(int index) {
 }
 
 Item InventoryManager::getItem(std::string name) {
+	std::cout << items.size() << std::endl;
 	for (int i = 0; i < items.size(); i++) {
+		std::cout << "Searching..." << std::endl;
 		if (items[i].name == name) {
 			return items[i];
 		}
@@ -36,11 +45,14 @@ Item InventoryManager::getItem(std::string name) {
 void InventoryManager::pickUpItem(Item item) {
 	for (auto& inventoryItem : items) {
 		if (inventoryItem.name == item.name) {
+			std::cout << "Picked up another item " << item.name << std::endl;
 			inventoryItem.quantity++;
 			return;
 		}
 	}
 
+
+	std::cout << "Picked up new item " << item.name << std::endl;
 	items.push_back(item);
 }
 
