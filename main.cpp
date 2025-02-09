@@ -98,41 +98,63 @@ void initializeInventory(InventoryManager& inventoryManager) {
     inventoryManager.items.push_back(cauldron);
 }
 
-void displayInfo(sf::RenderWindow& window, float width, float height, sf::Font& body, const Item& item, Textures& textures) {
-    sf::Sprite background;
-    background.setTexture(textures.getBackgroundTextures().at(5));
-    background.setOrigin(250,250);
-    background.setPosition(width/2, height/2);
-
-    sf::Text itemName;
-    itemName.setString(item.name);
-    itemName.setFont(body);
-    itemName.setCharacterSize(72);
-    itemName.setStyle(sf::Text::Bold);
-    itemName.setFillColor(sf::Color::Black);
-    setText(itemName, width/2, height/2+200);
-
-    window.draw(background);
-    window.draw(itemName);
-}
-
-void displayInfo(sf::RenderWindow& window, float width, float height, sf::Font& body, const Ingredient& ingredient) {
-    sf::RectangleShape background(sf::Vector2f(500,500));
-    background.setOrigin(250,250);
-    background.setPosition(width/2, height/2);
-    background.setFillColor(sf::Color::Yellow);
-
-    sf::Text itemName;
-    itemName.setString(ingredient.name);
-    itemName.setFont(body);
-    itemName.setCharacterSize(72);
-    itemName.setStyle(sf::Text::Bold);
-    itemName.setFillColor(sf::Color::Black);
-    setText(itemName, width/2, height/2+200);
-
-    window.draw(background);
-    window.draw(itemName);
-}
+// void displayInfo(sf::RenderWindow& window, float width, float height, sf::Font& body, const Item& item, Textures& textures) {
+//     if (item.name == "") {
+//         return;
+//     }
+//
+//     sf::Sprite background;
+//     background.setTexture(textures.getBackgroundTextures().at(5));
+//     background.setOrigin(250,250);
+//     background.setPosition(width/2, height/2);
+//
+//     sf::Text itemName;
+//     itemName.setFont(body);
+//     itemName.setCharacterSize(72);
+//     itemName.setStyle(sf::Text::Bold);
+//     itemName.setFillColor(sf::Color::Black);
+//     setText(itemName, width/2, height/2-200);
+//
+//     sf::Text line1;
+//     line1.setFont(body);
+//     line1.setCharacterSize(40);
+//     line1.setFillColor(sf::Color::Black);
+//
+//     sf::Text line2;
+//     line2.setFont(body);
+//     line2.setCharacterSize(40);
+//     line2.setFillColor(sf::Color::Black);
+//
+//     sf::Text line3;
+//     line3.setFont(body);
+//     line3.setCharacterSize(40);
+//     line3.setFillColor(sf::Color::Black);
+//
+//     if (item.name == "Djorchertwitz") {
+//         itemName.setString("Djorchertwitz");
+//         line1.setString("Is this mushroom cool? Morel less...");
+//         line2.setString("");
+//         line3.setString("");
+//     } else if (item.name == "Hygogix") {
+//         itemName.setString("Hygogix");
+//         line1.setString("");
+//         line2.setString("");
+//         line3.setString("");
+//     } else if (item.name == "Spindlewort") {
+//         itemName.setString("Spindlewort");
+//         line1.setString("");
+//         line2.setString("");
+//         line3.setString("");
+//     } else if (item.name == "Cauldron") {
+//         itemName.setString("Cauldron");
+//         line1.setString("");
+//         line2.setString("");
+//         line3.setString("");
+//     }
+//
+//     window.draw(background);
+//     window.draw(itemName);
+// }
 
 int gameLoop(sf::RenderWindow& window, float width, float height, Textures& textures, sf::Font& body) {
     InventoryManager plantDebug;
@@ -183,12 +205,24 @@ int gameLoop(sf::RenderWindow& window, float width, float height, Textures& text
     Textbox harvestPlant(width/2, height/4, body, 40, textures, "Press W to Harvest");
     harvestPlant.open();
 
+    sf::Texture cookingTexture;
+    cookingTexture.loadFromFile("files/images/backgrounds/Cooking_Background.png");
+    sf::Sprite cookingBackground(cookingTexture);
+
     Textbox harvestDjorch(width/2, height/4, body, 40, textures, "Djorchertwitz Added to Inventory");
     Textbox harvestHygogix(width/2, height/4, body, 40, textures, "Hygogix Added to Inventory");
     Textbox harvestSpindlewort(width/2, height/4, body, 40, textures, "Spindlewort Added to Inventory");
 
     sf::Texture sprite_sheet;
     Animation animations;
+
+    sf::Texture stir;
+    stir.loadFromFile("files/images/backgrounds/stirring (3).png");
+    sf::Sprite stirSprite(stir);
+    animations.addAnimation("stirring", stir, {2, 2}, {500, 500}, {0,0}, 8, {0,0});
+
+    stirSprite.setOrigin(128, 128);
+    stirSprite.setPosition(width/2-170, height/2-210);
 
     if (!(sprite_sheet.loadFromFile("files/images/sprites/sprite_sheet.png")))
     {
@@ -205,10 +239,8 @@ int gameLoop(sf::RenderWindow& window, float width, float height, Textures& text
     animations.setAnimationEndingIndex("walkRight", {2, 0});
 
     bool inventoryOpen = false;
-    bool infoOpen = false;
     bool cookingOpen = false;
     bool isMoving = false;
-    int index = 0;
     bool lock_click;
 
     int elapsed=0;
@@ -221,7 +253,7 @@ int gameLoop(sf::RenderWindow& window, float width, float height, Textures& text
                 window.close();
                 return -1;
             }
-            if (!inventoryOpen && !infoOpen && !cookingOpen) {
+            if (!inventoryOpen && !cookingOpen) {
 
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) || sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
                     character.move(-8, 0.f);
@@ -348,7 +380,7 @@ int gameLoop(sf::RenderWindow& window, float width, float height, Textures& text
                     }
                 }
 
-            } else if (inventoryOpen && !infoOpen && !cookingOpen) {
+            } else if (inventoryOpen && !cookingOpen) {
                 if (event.type == sf::Event::MouseButtonPressed) {
                     if (event.mouseButton.button == sf::Mouse::Left && lock_click != true) {
                         lock_click = true;
@@ -363,62 +395,59 @@ int gameLoop(sf::RenderWindow& window, float width, float height, Textures& text
                         cout << pos.x << ", " << pos.y << endl;
                         if (pos.y > 75 && pos.y < 285) {
                             if (pos.x > 420 && pos.x < 568) {
-                                if (playerInventory.getNumItems() >= 1) {
-                                    index = 0;
-                                    infoOpen = true;
-                                }
+                                cookingOpen = true;
                             }
-                            } else if (pos.x > 690 && pos.x < 930) {
-                                if (playerInventory.getNumItems() >= 2) {
-                                    index = 1;
-                                    infoOpen = true;
-                                }
-                            } else if (pos.x > 960 && pos.x < 1120) {
-                                if (playerInventory.getNumItems() >= 3) {
-                                    index = 2;
-                                    infoOpen = true;
-                                }
-                            } else if (pos.x > 1230 && pos.x < 1470) {
-                                if (playerInventory.getNumItems() >= 4) {
-                                    index = 3;
-                                    infoOpen = true;
-                                }
-                        } else if (pos.y > 315 && pos.y < 525) {
-                            if (pos.x > 420 && pos.x < 568) {
-                                if (playerInventory.getNumItems() >= 5) {
-                                    index = 4;
-                                    infoOpen = true;
-                                }
-                            } else if (pos.x > 690 && pos.x < 930) {
-                                if (playerInventory.getNumItems() >= 6) {
-                                    index = 5;
-                                    infoOpen = true;
-                                }
-                            } else if (pos.x > 960 && pos.x < 1120) {
-                                if (playerInventory.getNumItems() >= 7) {
-                                    index = 6;
-                                    infoOpen = true;
-                                }
-                            } else if (pos.x > 1230 && pos.x < 1470) {
-                                if (playerInventory.getNumItems() >= 8) {
-                                    index = 7;
-                                    infoOpen = true;
-                                }
-                            }
+                        //     } else if (pos.x > 690 && pos.x < 930) {
+                        //         if (playerInventory.getNumItems() >= 2) {
+                        //             index = 1;
+                        //             infoOpen = true;
+                        //         }
+                        //     } else if (pos.x > 960 && pos.x < 1120) {
+                        //         if (playerInventory.getNumItems() >= 3) {
+                        //             index = 2;
+                        //             infoOpen = true;
+                        //         }
+                        //     } else if (pos.x > 1230 && pos.x < 1470) {
+                        //         if (playerInventory.getNumItems() >= 4) {
+                        //             index = 3;
+                        //             infoOpen = true;
+                        //         }
+                        // } else if (pos.y > 315 && pos.y < 525) {
+                        //     if (pos.x > 420 && pos.x < 568) {
+                        //         if (playerInventory.getNumItems() >= 5) {
+                        //             index = 4;
+                        //             infoOpen = true;
+                        //         }
+                        //     } else if (pos.x > 690 && pos.x < 930) {
+                        //         if (playerInventory.getNumItems() >= 6) {
+                        //             index = 5;
+                        //             infoOpen = true;
+                        //         }
+                        //     } else if (pos.x > 960 && pos.x < 1120) {
+                        //         if (playerInventory.getNumItems() >= 7) {
+                        //             index = 6;
+                        //             infoOpen = true;
+                        //         }
+                        //     } else if (pos.x > 1230 && pos.x < 1470) {
+                        //         if (playerInventory.getNumItems() >= 8) {
+                        //             index = 7;
+                        //             infoOpen = true;
+                        //         }
+                        //     }
                         }
                     }
                 }
-            }
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q) && infoOpen) {
-                infoOpen = false;
             }
 
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::E) && !inventoryOpen) {
                 inventoryOpen = true;
                 playerInventory.print();
             }
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q) && inventoryOpen && !infoOpen) {
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q) && inventoryOpen) {
                 inventoryOpen = false;
+            }
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q) && cookingOpen) {
+                cookingOpen = false;
             }
 
             if (!isMoving) {
@@ -503,9 +532,11 @@ int gameLoop(sf::RenderWindow& window, float width, float height, Textures& text
                 window.draw(inventoryBackground);
                 playerInventory.drawInventory(window, body, width, height, textures);
             }
-            if (infoOpen) {
-                displayInfo(window, width, height, body, playerInventory.getItem(index), textures);
-            }
+                if (cookingOpen) {
+                    window.draw(cookingBackground);
+                    animations.update("stirring", stirSprite);
+                    window.draw(stirSprite);
+                }
             window.display();
         }
 
