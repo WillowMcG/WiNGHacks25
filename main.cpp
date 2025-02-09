@@ -35,7 +35,7 @@ vector<pair<string, int>> genPlants() {
 
     for (int i = 0; i < plantNum; i++) {
         int plantChoice = rand() % 3;
-        string plantType = (plantChoice == 0) ? "Type 1" :
+        string plantType = (plantChoice == 0) ? "Djorchertwitz" :
                            (plantChoice == 1) ? "Type 2" : "Type 3";
 
         plants.push_back({plantType, pos});
@@ -45,7 +45,7 @@ vector<pair<string, int>> genPlants() {
 }
 
 void texturePlant(sf::Sprite& plant, string type, Textures& textures) {
-    if (type == "Type 1") {
+    if (type == "Djorchertwitz") {
         plant.setTexture(textures.getPlantTextures().at(0));
     } else if (type == "Type 2") {
         plant.setTexture(textures.getPlantTextures().at(1));
@@ -65,27 +65,37 @@ void initializePlants(InventoryManager& inventory_manager, Textures& textures) {
     IngrKnowledge knowledgeDjorch(false, false, false, false, false, false);
     IngrGiftRatings giftRatingDjorch({-5, 11, 0});
     IngrStatus statusDjorch(false, false, false, 0, 0);
-    std::shared_ptr<Ingredient> djorchertwitz = std::make_shared<Ingredient>(0, "Djorchertwitz", djorchSprite, 1, propertiesDjorch, knowledgeDjorch, giftRatingDjorch, statusDjorch);
-    inventory_manager.items.push_back(djorchertwitz);
+    Ingredient djorchertwitz = Ingredient(0, "Djorchertwitz", djorchSprite, 1, propertiesDjorch, knowledgeDjorch, giftRatingDjorch, statusDjorch);
+    inventory_manager.items.emplace_back(djorchertwitz);
 
-    IngrProperties propertiesType2(8, 12, 15, -10, 8, 15);
-    IngrKnowledge knowledgeType2(false, false, false, false, false, false);
-    IngrGiftRatings giftRatingType2({5, -10, 8});
-    IngrStatus statusType2(false, false, false, 0, 0);
-    std::shared_ptr<Ingredient> type2 = std::make_shared<Ingredient>(0, "Type 2", sprite2, 1, propertiesType2, knowledgeType2, giftRatingType2, statusType2);
-    inventory_manager.items.push_back(type2);
+    // IngrProperties propertiesType2(8, 12, 15, -10, 8, 15);
+    // IngrKnowledge knowledgeType2(false, false, false, false, false, false);
+    // IngrGiftRatings giftRatingType2({5, -10, 8});
+    // IngrStatus statusType2(false, false, false, 0, 0);
+    // std::shared_ptr<Ingredient> type2 = std::make_shared<Ingredient>(0, "Type 2", sprite2, 1, propertiesType2, knowledgeType2, giftRatingType2, statusType2);
+    // inventory_manager.items.emplace_back(type2);
+    //
+    // IngrProperties propertiesType3(0, 0, 0, 0, 0, 0);
+    // IngrKnowledge knowledgeType3(false, false, false, false, false, false);
+    // IngrGiftRatings giftRatingType3({0, 0, 0});
+    // IngrStatus statusType3(false, false, false, 0, 0);
+    // std::shared_ptr<Ingredient> type3 = std::make_shared<Ingredient>(0, "Type 3", sprite3, 1, propertiesType3, knowledgeType3, giftRatingType3, statusType3);
+    // inventory_manager.items.emplace_back(type3);
 
-    IngrProperties propertiesType3(0, 0, 0, 0, 0, 0);
-    IngrKnowledge knowledgeType3(false, false, false, false, false, false);
-    IngrGiftRatings giftRatingType3({0, 0, 0});
-    IngrStatus statusType3(false, false, false, 0, 0);
-    std::shared_ptr<Ingredient> type3 = std::make_shared<Ingredient>(0, "Type 3", sprite3, 1, propertiesType3, knowledgeType3, giftRatingType3, statusType3);
-    inventory_manager.items.push_back(type3);
+
+}
+
+void initializeInventory(InventoryManager& inventory_manager) {
+
 }
 
 int gameLoop(sf::RenderWindow& window, float width, float height, Textures& textures, sf::Font& body) {
-    InventoryManager inventory_manager;
+    InventoryManager plantDebug;
+    initializePlants(plantDebug, textures);
     sf::Clock clock;
+
+    InventoryManager playerInventory;
+    initializeInventory(playerInventory);
 
     sf::Sprite background;
     background.setTexture(textures.getBackgroundTextures().at(0));
@@ -93,8 +103,7 @@ int gameLoop(sf::RenderWindow& window, float width, float height, Textures& text
 
     vector<pair<string, int>> plants = genPlants();
 
-    sf::Sprite inventoryBackground;
-    inventoryBackground.setTexture(textures.getBackgroundTextures().at(4));
+    sf::Sprite inventoryBackground(textures.getBackgroundTextures().at(4));
     inventoryBackground.setOrigin(width/2, height/2);
     inventoryBackground.setPosition(width/2, height/2);
 
@@ -134,7 +143,7 @@ int gameLoop(sf::RenderWindow& window, float width, float height, Textures& text
     Textbox harvestPlant(width/2, height/4, body, 40, textures, "Press W to Harvest");
     harvestPlant.open();
 
-    Textbox harvest1(width/2, height/4, body, 40, textures, "Type 1 Added to Inventory");
+    Textbox harvestDjorch(width/2, height/4, body, 40, textures, "Djorchertwitz Added to Inventory");
     Textbox harvest2(width/2, height/4, body, 40, textures, "Type 2 Added to Inventory");
     Textbox harvest3(width/2, height/4, body, 40, textures, "Type 3 Added to Inventory");
 
@@ -158,7 +167,7 @@ int gameLoop(sf::RenderWindow& window, float width, float height, Textures& text
     bool inventoryOpen = false;
     bool isMoving = false;
 
-    int elapsed;
+    int elapsed=0;
 
     sf::Event event;
     while (window.isOpen()) {
@@ -184,21 +193,22 @@ int gameLoop(sf::RenderWindow& window, float width, float height, Textures& text
                     int xpos = character.getPosition().x;
                     if (xpos > plant1.getPosition().x - 80 && xpos < plant1.getPosition().x + 80 && p1) {
                         p1 = false;
-                        cout << "Plant 1" << endl;
+                        cout << "Djorchertwitz" << endl;
                         clock.restart();
-                        if (plants.at(0).first == "Type 1") {
-                            harvest1.open();
+                        if (plants.at(0).first == "Djorchertwitz") {
+                            playerInventory.pickUpItem(plantDebug.getItem("Djorchertwitz"));
+                            harvestDjorch.open();
                             harvest2.close();
                             harvest3.close();
                             harvestPlant.close();
                         } else if (plants.at(0).first == "Type 2") {
                             harvest2.open();
-                            harvest1.close();
+                            harvestDjorch.close();
                             harvest3.close();
                             harvestPlant.close();
                         } else {
                             harvest3.open();
-                            harvest1.close();
+                            harvestDjorch.close();
                             harvest2.close();
                             harvestPlant.close();
                         }
@@ -206,19 +216,20 @@ int gameLoop(sf::RenderWindow& window, float width, float height, Textures& text
                         p2 = false;
                         cout << "Plant 2" << endl;
                         clock.restart();
-                        if (plants.at(1).first == "Type 1") {
-                            harvest1.open();
+                        if (plants.at(1).first == "Djorchertwitz") {
+                            playerInventory.pickUpItem(plantDebug.getItem("Djorchertwitz"));
+                            harvestDjorch.open();
                             harvest2.close();
                             harvest3.close();
                             harvestPlant.close();
                         } else if (plants.at(1).first == "Type 2") {
                             harvest2.open();
-                            harvest1.close();
+                            harvestDjorch.close();
                             harvest3.close();
                             harvestPlant.close();
                         } else {
                             harvest3.open();
-                            harvest1.close();
+                            harvestDjorch.close();
                             harvest2.close();
                             harvestPlant.close();
                         }
@@ -226,19 +237,20 @@ int gameLoop(sf::RenderWindow& window, float width, float height, Textures& text
                         p3 = false;
                         cout << "Plant 3" << endl;
                         clock.restart();
-                        if (plants.at(2).first == "Type 1") {
-                            harvest1.open();
+                        if (plants.at(2).first == "Djorchertwitz") {
+                            playerInventory.pickUpItem(plantDebug.getItem("Djorchertwitz"));
+                            harvestDjorch.open();
                             harvest2.close();
                             harvest3.close();
                             harvestPlant.close();
                         } else if (plants.at(2).first == "Type 2") {
                             harvest2.open();
-                            harvest1.close();
+                            harvestDjorch.close();
                             harvest3.close();
                             harvestPlant.close();
                         } else {
                             harvest3.open();
-                            harvest1.close();
+                            harvestDjorch.close();
                             harvest2.close();
                             harvestPlant.close();
                         }
@@ -246,19 +258,20 @@ int gameLoop(sf::RenderWindow& window, float width, float height, Textures& text
                         p4 = false;
                         cout << "Plant 4" << endl;
                         clock.restart();
-                        if (plants.at(3).first == "Type 1") {
-                            harvest1.open();
+                        if (plants.at(3).first == "Djorchertwitz") {
+                            playerInventory.pickUpItem(plantDebug.getItem("Djorchertwitz"));
+                            harvestDjorch.open();
                             harvest2.close();
                             harvest3.close();
                             harvestPlant.close();
                         } else if (plants.at(3).first == "Type 2") {
                             harvest2.open();
-                            harvest1.close();
+                            harvestDjorch.close();
                             harvest3.close();
                             harvestPlant.close();
                         } else {
                             harvest3.open();
-                            harvest1.close();
+                            harvestDjorch.close();
                             harvest2.close();
                             harvestPlant.close();
                         }
@@ -266,19 +279,20 @@ int gameLoop(sf::RenderWindow& window, float width, float height, Textures& text
                         p5 = false;
                         cout << "Plant 5" << endl;
                         clock.restart();
-                        if (plants.at(4).first == "Type 1") {
-                            harvest1.open();
+                        if (plants.at(4).first == "Djorchertwitz") {
+                            playerInventory.pickUpItem(plantDebug.getItem("Djorchertwitz"));
+                            harvestDjorch.open();
                             harvest2.close();
                             harvest3.close();
                             harvestPlant.close();
                         } else if (plants.at(4).first == "Type 2") {
                             harvest2.open();
-                            harvest1.close();
+                            harvestDjorch.close();
                             harvest3.close();
                             harvestPlant.close();
                         } else {
                             harvest3.open();
-                            harvest1.close();
+                            harvestDjorch.close();
                             harvest2.close();
                             harvestPlant.close();
                         }
@@ -356,10 +370,10 @@ int gameLoop(sf::RenderWindow& window, float width, float height, Textures& text
             } else {
                 harvestPlant.close();
             }
-            if (harvest1.checkOpen() && elapsed <= 5) {
-                harvest1.drawTextbox(window);
+            if (harvestDjorch.checkOpen() && elapsed <= 5) {
+                harvestDjorch.drawTextbox(window);
             } else {
-                harvest1.close();
+                harvestDjorch.close();
             }
             if (harvest2.checkOpen() && elapsed <= 5) {
                 harvest2.drawTextbox(window);
@@ -381,7 +395,15 @@ int gameLoop(sf::RenderWindow& window, float width, float height, Textures& text
     return 0;
 }
 
+
 int main() {
+    sf::ContextSettings settings;
+    settings.depthBits = 24;
+    settings.stencilBits = 8;
+    settings.antialiasingLevel = 4;
+    settings.majorVersion = 3;
+    settings.minorVersion = 3;
+
     sf::Font body;
     body.loadFromFile("files/SummerPixel.ttf"); //Font - can be changed later
 

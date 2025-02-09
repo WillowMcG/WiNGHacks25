@@ -8,6 +8,6 @@ CMake Deprecation Warning at CMakeLists.txt:1 (cmake_minimum_required):
 
 
 -- Found SFML 2.5.1 in C:/SFML/lib/cmake/SFML
--- Configuring done (0.2s)
--- Generating done (0.0s)
+-- Configuring done (1.1s)
+-- Generating done (0.1s)
 -- Build files have been written to: C:/Users/Jules/Documents/Projects/WiNGHacks25/cmake-build-debug
