@@ -25,11 +25,13 @@ void Textures::loadTextures() {
   forest3.loadFromFile("files/images/backgrounds/forest3.png");
   forest4.loadFromFile("files/images/backgrounds/forest4.png");
   inventoryTexture.loadFromFile("files/images/backgrounds/Inventory.png");
+  infoBackground.loadFromFile("files/images/backgrounds/InfoBackground.png");
   backgroundTextures.push_back(forest1);
   backgroundTextures.push_back(forest2);
   backgroundTextures.push_back(forest3);
   backgroundTextures.push_back(forest4);
   backgroundTextures.push_back(inventoryTexture);
+  backgroundTextures.push_back(infoBackground);
 }
 
 vector<sf::Texture> &Textures::getPlantTextures() {

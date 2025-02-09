@@ -62,7 +62,7 @@ void initializePlants(InventoryManager& inventoryManager) {
     hygogixTexture.loadFromFile("files/images/sprites/Hygogix.png");
     sf::Sprite hygogixSprite(hygogixTexture);
     sf::Texture spindlewortTexture;
-    spindlewortTexture.loadFromFile("files/images/sprites/plants_64_14.png");
+    spindlewortTexture.loadFromFile("files/images/sprites/Spindlewort.png");
     sf::Sprite spindlewortSprite(spindlewortTexture);
 
     // People: Mushroom Man, Witch, Wolfhound
@@ -98,14 +98,32 @@ void initializeInventory(InventoryManager& inventoryManager) {
     inventoryManager.items.push_back(cauldron);
 }
 
-void displayInfo(sf::RenderWindow& window, float width, float height, sf::Font& body, const Item& item) {
+void displayInfo(sf::RenderWindow& window, float width, float height, sf::Font& body, const Item& item, Textures& textures) {
+    sf::Sprite background;
+    background.setTexture(textures.getBackgroundTextures().at(5));
+    background.setOrigin(250,250);
+    background.setPosition(width/2, height/2);
+
+    sf::Text itemName;
+    itemName.setString(item.name);
+    itemName.setFont(body);
+    itemName.setCharacterSize(72);
+    itemName.setStyle(sf::Text::Bold);
+    itemName.setFillColor(sf::Color::Black);
+    setText(itemName, width/2, height/2+200);
+
+    window.draw(background);
+    window.draw(itemName);
+}
+
+void displayInfo(sf::RenderWindow& window, float width, float height, sf::Font& body, const Ingredient& ingredient) {
     sf::RectangleShape background(sf::Vector2f(500,500));
     background.setOrigin(250,250);
     background.setPosition(width/2, height/2);
     background.setFillColor(sf::Color::Yellow);
 
     sf::Text itemName;
-    itemName.setString(item.name);
+    itemName.setString(ingredient.name);
     itemName.setFont(body);
     itemName.setCharacterSize(72);
     itemName.setStyle(sf::Text::Bold);
@@ -190,6 +208,7 @@ int gameLoop(sf::RenderWindow& window, float width, float height, Textures& text
     bool infoOpen = false;
     bool cookingOpen = false;
     bool isMoving = false;
+    int index = 0;
     bool lock_click;
 
     int elapsed=0;
@@ -340,37 +359,65 @@ int gameLoop(sf::RenderWindow& window, float width, float height, Textures& text
                 }
                 if (event.type == sf::Event::MouseButtonReleased) {
                     if (event.mouseButton.button == sf::Mouse::Left) {
-                        // sf::Vector2i pos = sf::Mouse::getPosition(window);
-                        // cout << pos.x << ", " << pos.y << endl;
-                        // if (pos.y > 75 && pos.y < 285) {
-                        //     if (pos.x > 420 && pos.x < 568) {
-                        //         displayInfo(window, width, height, body, playerInventory.getItem(0));
-                        //     } else if (pos.x > 690 && pos.x < 930) {
-                        //         displayInfo(window, width, height, body, playerInventory.getItem(1));
-                        //     } else if (pos.x > 960 && pos.x < 1120) {
-                        //         displayInfo(window, width, height, body, playerInventory.getItem(2));
-                        //     } else if (pos.x > 1230 && pos.x < 1470) {
-                        //         displayInfo(window, width, height, body, playerInventory.getItem(3));
-                        //     }
-                        // } else if (pos.y > 315 && pos.y < 525) {
-                        //     if (pos.x > 420 && pos.x < 568) {
-                        //         displayInfo(window, width, height, body, playerInventory.getItem(4));
-                        //     } else if (pos.x > 690 && pos.x < 930) {
-                        //         displayInfo(window, width, height, body, playerInventory.getItem(5));
-                        //     } else if (pos.x > 960 && pos.x < 1120) {
-                        //         displayInfo(window, width, height, body, playerInventory.getItem(6));
-                        //     } else if (pos.x > 1230 && pos.x < 1470) {
-                        //         displayInfo(window, width, height, body, playerInventory.getItem(7));
-                        //     }
-                        // }
+                        sf::Vector2i pos = sf::Mouse::getPosition(window);
+                        cout << pos.x << ", " << pos.y << endl;
+                        if (pos.y > 75 && pos.y < 285) {
+                            if (pos.x > 420 && pos.x < 568) {
+                                if (playerInventory.getNumItems() >= 1) {
+                                    index = 0;
+                                    infoOpen = true;
+                                }
+                            }
+                            } else if (pos.x > 690 && pos.x < 930) {
+                                if (playerInventory.getNumItems() >= 2) {
+                                    index = 1;
+                                    infoOpen = true;
+                                }
+                            } else if (pos.x > 960 && pos.x < 1120) {
+                                if (playerInventory.getNumItems() >= 3) {
+                                    index = 2;
+                                    infoOpen = true;
+                                }
+                            } else if (pos.x > 1230 && pos.x < 1470) {
+                                if (playerInventory.getNumItems() >= 4) {
+                                    index = 3;
+                                    infoOpen = true;
+                                }
+                        } else if (pos.y > 315 && pos.y < 525) {
+                            if (pos.x > 420 && pos.x < 568) {
+                                if (playerInventory.getNumItems() >= 5) {
+                                    index = 4;
+                                    infoOpen = true;
+                                }
+                            } else if (pos.x > 690 && pos.x < 930) {
+                                if (playerInventory.getNumItems() >= 6) {
+                                    index = 5;
+                                    infoOpen = true;
+                                }
+                            } else if (pos.x > 960 && pos.x < 1120) {
+                                if (playerInventory.getNumItems() >= 7) {
+                                    index = 6;
+                                    infoOpen = true;
+                                }
+                            } else if (pos.x > 1230 && pos.x < 1470) {
+                                if (playerInventory.getNumItems() >= 8) {
+                                    index = 7;
+                                    infoOpen = true;
+                                }
+                            }
+                        }
                     }
                 }
             }
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q) && infoOpen) {
+                infoOpen = false;
+            }
+
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::E) && !inventoryOpen) {
                 inventoryOpen = true;
                 playerInventory.print();
             }
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q) && inventoryOpen) {
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q) && inventoryOpen && !infoOpen) {
                 inventoryOpen = false;
             }
 
@@ -455,6 +502,9 @@ int gameLoop(sf::RenderWindow& window, float width, float height, Textures& text
             if (inventoryOpen) {
                 window.draw(inventoryBackground);
                 playerInventory.drawInventory(window, body, width, height, textures);
+            }
+            if (infoOpen) {
+                displayInfo(window, width, height, body, playerInventory.getItem(index), textures);
             }
             window.display();
         }

@@ -41,6 +41,7 @@ Item InventoryManager::getItem(std::string name) {
 }
 
 int InventoryManager::getNumItems() {
+	std::cout << "Here" << std::endl;
 	return items.size();
 }
 
@@ -138,7 +139,7 @@ void InventoryManager::drawInventory(sf::RenderWindow &window, sf::Font& body, i
 			it.sprite.setScale(1.5, 1.5);
 		} else if (it.name == "Spindlewort") {
 			it.sprite.setTexture(textures.getPlantTextures().at(2));
-			it.sprite.setScale(1.5,1.5);
+			it.sprite.setScale(.75,.75);
 		}
 		hindex++;
 		if (hindex == 5) {
