@@ -36,7 +36,7 @@ vector<pair<string, int>> genPlants() {
     for (int i = 0; i < plantNum; i++) {
         int plantChoice = rand() % 3;
         string plantType = (plantChoice == 0) ? "Djorchertwitz" :
-                           (plantChoice == 1) ? "Hygogix" : "Type 3";
+                           (plantChoice == 1) ? "Hygogix" : "Spindlewort";
 
         plants.push_back({plantType, pos});
         pos += 200 + rand() % 300;
@@ -49,21 +49,21 @@ void texturePlant(sf::Sprite& plant, string type, Textures& textures) {
         plant.setTexture(textures.getPlantTextures().at(0));
     } else if (type == "Hygogix") {
         plant.setTexture(textures.getPlantTextures().at(1));
-    } else if (type == "Type 3") {
+    } else if (type == "Spindlewort") {
         plant.setTexture(textures.getPlantTextures().at(2));
     }
 }
 
 void initializePlants(InventoryManager& inventoryManager) {
     sf::Texture djorchTexture;
-    djorchTexture.loadFromFile("files/images/sprites/plants_64_7.png");
+    djorchTexture.loadFromFile("files/images/sprites/Djorchertwitz.png");
     sf::Sprite djorchSprite(djorchTexture);
     sf::Texture hygogixTexture;
     hygogixTexture.loadFromFile("files/images/sprites/Hygogix.png");
-    sf::Sprite sprite2(hygogixTexture);
-    sf::Texture type3Texture;
-    type3Texture.loadFromFile("files/images/sprites/plants_64_14.png");
-    sf::Sprite sprite3(type3Texture);
+    sf::Sprite hygogixSprite(hygogixTexture);
+    sf::Texture spindlewortTexture;
+    spindlewortTexture.loadFromFile("files/images/sprites/plants_64_14.png");
+    sf::Sprite spindlewortSprite(spindlewortTexture);
 
     // People: Mushroom Man, Witch, Wolfhound
 
@@ -78,18 +78,43 @@ void initializePlants(InventoryManager& inventoryManager) {
     IngrKnowledge knowledgeHygogix(false, false, false, false, false, false);
     IngrGiftRatings giftRatingHygogix({5, -10, 8});
     IngrStatus statusHygogix(false, false, false, 0, 0);
-    Ingredient hygogix = Ingredient(0, "Hygogix", sprite2, 1, propertiesHygogix, knowledgeHygogix, giftRatingHygogix, statusHygogix);
+    Ingredient hygogix = Ingredient(0, "Hygogix", hygogixSprite, 1, propertiesHygogix, knowledgeHygogix, giftRatingHygogix, statusHygogix);
     inventoryManager.items.push_back(hygogix);
 
-    IngrProperties propertiesType3(0, 0, 0, 0, 0, 0);
-    IngrKnowledge knowledgeType3(false, false, false, false, false, false);
-    IngrGiftRatings giftRatingType3({0, 0, 0});
-    IngrStatus statusType3(false, false, false, 0, 0);
-    Ingredient type3 = Ingredient(0, "Type 3", sprite3, 1, propertiesType3, knowledgeType3, giftRatingType3, statusType3);
-    inventoryManager.items.push_back(type3);
+    IngrProperties propertiesSpindlewort(0, 0, 0, 0, 0, 0);
+    IngrKnowledge knowledgeSpindlewort(false, false, false, false, false, false);
+    IngrGiftRatings giftRatingSpindlewort({0, 0, 0});
+    IngrStatus statusSpindlewort(false, false, false, 0, 0);
+    Ingredient spindlewort = Ingredient(0, "Spindlewort", spindlewortSprite, 1, propertiesSpindlewort, knowledgeSpindlewort, giftRatingSpindlewort, statusSpindlewort);
+    inventoryManager.items.push_back(spindlewort);
 }
 
-void initializeInventory(InventoryManager& inventoryManager) {}
+void initializeInventory(InventoryManager& inventoryManager) {
+    sf::Texture cauldronTexture;
+    cauldronTexture.loadFromFile("files/images/sprites/Cauldron_Icon.png");
+
+    sf::Sprite cauldronSprite(cauldronTexture);
+    Item cauldron(0, "Cauldron", cauldronSprite, 1);
+    inventoryManager.items.push_back(cauldron);
+}
+
+void displayInfo(sf::RenderWindow& window, float width, float height, sf::Font& body, const Item& item) {
+    sf::RectangleShape background(sf::Vector2f(500,500));
+    background.setOrigin(250,250);
+    background.setPosition(width/2, height/2);
+    background.setFillColor(sf::Color::Yellow);
+
+    sf::Text itemName;
+    itemName.setString(item.name);
+    itemName.setFont(body);
+    itemName.setCharacterSize(72);
+    itemName.setStyle(sf::Text::Bold);
+    itemName.setFillColor(sf::Color::Black);
+    setText(itemName, width/2, height/2+200);
+
+    window.draw(background);
+    window.draw(itemName);
+}
 
 int gameLoop(sf::RenderWindow& window, float width, float height, Textures& textures, sf::Font& body) {
     InventoryManager plantDebug;
@@ -98,13 +123,6 @@ int gameLoop(sf::RenderWindow& window, float width, float height, Textures& text
 
     InventoryManager playerInventory;
     initializeInventory(playerInventory);
-
-    sf::Texture cauldronTexture;
-    cauldronTexture.loadFromFile("files/images/sprites/Cauldron_Icon.png");
-
-    sf::Sprite cauldronSprite(cauldronTexture);
-    Item cauldron(0, "Cauldron", cauldronSprite, 1);
-    playerInventory.items.push_back(cauldron);
 
     sf::Sprite background;
     background.setTexture(textures.getBackgroundTextures().at(0));
@@ -130,23 +148,18 @@ int gameLoop(sf::RenderWindow& window, float width, float height, Textures& text
 
     plant1.setPosition(plants.at(0).second, plantHeight);
     texturePlant(plant1, plants.at(0).first, textures);
-    plant1.setScale(2,2);
     bool p1 = true;
     plant2.setPosition(plants.at(1).second, plantHeight);
-    plant2.setScale(2,2);
     texturePlant(plant2, plants.at(1).first, textures);
     bool p2 = true;
     plant3.setPosition(plants.at(2).second, plantHeight);
-    plant3.setScale(2,2);
     texturePlant(plant3, plants.at(2).first, textures);
     bool p3 = true;
     plant4.setPosition(plants.at(3).second, plantHeight);
-    plant4.setScale(2,2);
     texturePlant(plant4, plants.at(3).first, textures);
     bool p4 = true;
     plant5.setPosition(plants.at(4).second, plantHeight);
     texturePlant(plant5, plants.at(4).first, textures);
-    plant5.setScale(2,2);
     bool p5 = true;
 
     Textbox harvestPlant(width/2, height/4, body, 40, textures, "Press W to Harvest");
@@ -154,7 +167,7 @@ int gameLoop(sf::RenderWindow& window, float width, float height, Textures& text
 
     Textbox harvestDjorch(width/2, height/4, body, 40, textures, "Djorchertwitz Added to Inventory");
     Textbox harvestHygogix(width/2, height/4, body, 40, textures, "Hygogix Added to Inventory");
-    Textbox harvest3(width/2, height/4, body, 40, textures, "Type 3 Added to Inventory");
+    Textbox harvestSpindlewort(width/2, height/4, body, 40, textures, "Spindlewort Added to Inventory");
 
     sf::Texture sprite_sheet;
     Animation animations;
@@ -210,17 +223,17 @@ int gameLoop(sf::RenderWindow& window, float width, float height, Textures& text
                             playerInventory.pickUpItem(plantDebug.getItem("Djorchertwitz"));
                             harvestDjorch.open();
                             harvestHygogix.close();
-                            harvest3.close();
+                            harvestSpindlewort.close();
                             harvestPlant.close();
                         } else if (plants.at(0).first == "Hygogix") {
                             playerInventory.pickUpItem(plantDebug.getItem("Hygogix"));
                             harvestHygogix.open();
                             harvestDjorch.close();
-                            harvest3.close();
+                            harvestSpindlewort.close();
                             harvestPlant.close();
                         } else {
-                            playerInventory.pickUpItem(plantDebug.getItem("Type 3"));
-                            harvest3.open();
+                            playerInventory.pickUpItem(plantDebug.getItem("Spindlewort"));
+                            harvestSpindlewort.open();
                             harvestDjorch.close();
                             harvestHygogix.close();
                             harvestPlant.close();
@@ -232,17 +245,17 @@ int gameLoop(sf::RenderWindow& window, float width, float height, Textures& text
                             playerInventory.pickUpItem(plantDebug.getItem("Djorchertwitz"));
                             harvestDjorch.open();
                             harvestHygogix.close();
-                            harvest3.close();
+                            harvestSpindlewort.close();
                             harvestPlant.close();
                         } else if (plants.at(1).first == "Hygogix") {
                             playerInventory.pickUpItem(plantDebug.getItem("Djorchertwitz"));
                             harvestHygogix.open();
                             harvestDjorch.close();
-                            harvest3.close();
+                            harvestSpindlewort.close();
                             harvestPlant.close();
                         } else {
-                            playerInventory.pickUpItem(plantDebug.getItem("Type 3"));
-                            harvest3.open();
+                            playerInventory.pickUpItem(plantDebug.getItem("Spindlewort"));
+                            harvestSpindlewort.open();
                             harvestDjorch.close();
                             harvestHygogix.close();
                             harvestPlant.close();
@@ -254,17 +267,17 @@ int gameLoop(sf::RenderWindow& window, float width, float height, Textures& text
                             playerInventory.pickUpItem(plantDebug.getItem("Djorchertwitz"));
                             harvestDjorch.open();
                             harvestHygogix.close();
-                            harvest3.close();
+                            harvestSpindlewort.close();
                             harvestPlant.close();
                         } else if (plants.at(2).first == "Hygogix") {
                             playerInventory.pickUpItem(plantDebug.getItem("Djorchertwitz"));
                             harvestHygogix.open();
                             harvestDjorch.close();
-                            harvest3.close();
+                            harvestSpindlewort.close();
                             harvestPlant.close();
                         } else {
-                            playerInventory.pickUpItem(plantDebug.getItem("Type 3"));
-                            harvest3.open();
+                            playerInventory.pickUpItem(plantDebug.getItem("Spindlewort"));
+                            harvestSpindlewort.open();
                             harvestDjorch.close();
                             harvestHygogix.close();
                             harvestPlant.close();
@@ -276,17 +289,17 @@ int gameLoop(sf::RenderWindow& window, float width, float height, Textures& text
                             playerInventory.pickUpItem(plantDebug.getItem("Djorchertwitz"));
                             harvestDjorch.open();
                             harvestHygogix.close();
-                            harvest3.close();
+                            harvestSpindlewort.close();
                             harvestPlant.close();
                         } else if (plants.at(3).first == "Hygogix") {
                             playerInventory.pickUpItem(plantDebug.getItem("Hygogix"));
                             harvestHygogix.open();
                             harvestDjorch.close();
-                            harvest3.close();
+                            harvestSpindlewort.close();
                             harvestPlant.close();
                         } else {
-                            playerInventory.pickUpItem(plantDebug.getItem("Type 3"));
-                            harvest3.open();
+                            playerInventory.pickUpItem(plantDebug.getItem("Spindlewort"));
+                            harvestSpindlewort.open();
                             harvestDjorch.close();
                             harvestHygogix.close();
                             harvestPlant.close();
@@ -298,17 +311,17 @@ int gameLoop(sf::RenderWindow& window, float width, float height, Textures& text
                             playerInventory.pickUpItem(plantDebug.getItem("Djorchertwitz"));
                             harvestDjorch.open();
                             harvestHygogix.close();
-                            harvest3.close();
+                            harvestSpindlewort.close();
                             harvestPlant.close();
                         } else if (plants.at(4).first == "Hygogix") {
                             playerInventory.pickUpItem(plantDebug.getItem("Hygogix"));
                             harvestHygogix.open();
                             harvestDjorch.close();
-                            harvest3.close();
+                            harvestSpindlewort.close();
                             harvestPlant.close();
                         } else {
-                            playerInventory.pickUpItem(plantDebug.getItem("Type 3"));
-                            harvest3.open();
+                            playerInventory.pickUpItem(plantDebug.getItem("Spindlewort"));
+                            harvestSpindlewort.open();
                             harvestDjorch.close();
                             harvestHygogix.close();
                             harvestPlant.close();
@@ -327,29 +340,29 @@ int gameLoop(sf::RenderWindow& window, float width, float height, Textures& text
                 }
                 if (event.type == sf::Event::MouseButtonReleased) {
                     if (event.mouseButton.button == sf::Mouse::Left) {
-                        sf::Vector2i pos = sf::Mouse::getPosition(window);
-                        cout << pos.x << ", " << pos.y << endl;
-                        if (pos.y > 75 && pos.y < 285) {
-                            if (pos.x > 420 && pos.x < 568) {
-                                cout << "Box one" << endl;
-                            } else if (pos.x > 690 && pos.x < 930) {
-                                cout << "Box two" << endl;
-                            } else if (pos.x > 960 && pos.x < 1120) {
-                                cout << "Box three" << endl;
-                            } else if (pos.x > 1230 && pos.x < 1470) {
-                                cout << "Box four" << endl;
-                            }
-                        } else if (pos.y > 315 && pos.y < 525) {
-                            if (pos.x > 420 && pos.x < 568) {
-                                cout << "Box five" << endl;
-                            } else if (pos.x > 690 && pos.x < 930) {
-                                cout << "Box six" << endl;
-                            } else if (pos.x > 960 && pos.x < 1120) {
-                                cout << "Box seven" << endl;
-                            } else if (pos.x > 1230 && pos.x < 1470) {
-                                cout << "Box eight" << endl;
-                            }
-                        }
+                        // sf::Vector2i pos = sf::Mouse::getPosition(window);
+                        // cout << pos.x << ", " << pos.y << endl;
+                        // if (pos.y > 75 && pos.y < 285) {
+                        //     if (pos.x > 420 && pos.x < 568) {
+                        //         displayInfo(window, width, height, body, playerInventory.getItem(0));
+                        //     } else if (pos.x > 690 && pos.x < 930) {
+                        //         displayInfo(window, width, height, body, playerInventory.getItem(1));
+                        //     } else if (pos.x > 960 && pos.x < 1120) {
+                        //         displayInfo(window, width, height, body, playerInventory.getItem(2));
+                        //     } else if (pos.x > 1230 && pos.x < 1470) {
+                        //         displayInfo(window, width, height, body, playerInventory.getItem(3));
+                        //     }
+                        // } else if (pos.y > 315 && pos.y < 525) {
+                        //     if (pos.x > 420 && pos.x < 568) {
+                        //         displayInfo(window, width, height, body, playerInventory.getItem(4));
+                        //     } else if (pos.x > 690 && pos.x < 930) {
+                        //         displayInfo(window, width, height, body, playerInventory.getItem(5));
+                        //     } else if (pos.x > 960 && pos.x < 1120) {
+                        //         displayInfo(window, width, height, body, playerInventory.getItem(6));
+                        //     } else if (pos.x > 1230 && pos.x < 1470) {
+                        //         displayInfo(window, width, height, body, playerInventory.getItem(7));
+                        //     }
+                        // }
                     }
                 }
             }
@@ -434,10 +447,10 @@ int gameLoop(sf::RenderWindow& window, float width, float height, Textures& text
             } else {
                 harvestHygogix.close();
             }
-            if (harvest3.checkOpen() && elapsed <= 5) {
-                harvest3.drawTextbox(window);
+            if (harvestSpindlewort.checkOpen() && elapsed <= 5) {
+                harvestSpindlewort.drawTextbox(window);
             } else {
-                harvest3.close();
+                harvestSpindlewort.close();
             }
             if (inventoryOpen) {
                 window.draw(inventoryBackground);
@@ -450,16 +463,7 @@ int gameLoop(sf::RenderWindow& window, float width, float height, Textures& text
     return 0;
 }
 
-
-
 int main() {
-    sf::ContextSettings settings;
-    settings.depthBits = 24;
-    settings.stencilBits = 8;
-    settings.antialiasingLevel = 4;
-    settings.majorVersion = 3;
-    settings.minorVersion = 3;
-
     sf::Font body;
     body.loadFromFile("files/SummerPixel.ttf"); //Font - can be changed later
 

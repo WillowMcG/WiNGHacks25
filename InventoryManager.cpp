@@ -40,6 +40,11 @@ Item InventoryManager::getItem(std::string name) {
 	return Item();
 }
 
+int InventoryManager::getNumItems() {
+	return items.size();
+}
+
+
 void InventoryManager::pickUpItem(Item item) {
 	for (auto& inventoryItem : items) {
 		if (inventoryItem.name == item.name) {
@@ -124,16 +129,16 @@ void InventoryManager::drawInventory(sf::RenderWindow &window, sf::Font& body, i
 	for (auto it : items) {
 		if (it.name == "Cauldron") {
 			it.sprite.setTexture(textures.getItemTextures().at(0));
-			it.sprite.setScale(1/8, 1/8);
+			it.sprite.setScale(.75, .75);
 		} else if (it.name == "Djorchertwitz") {
 			it.sprite.setTexture(textures.getPlantTextures().at(0));
-			it.sprite.setScale(3,3);
+			it.sprite.setScale(1.5, 1.5);
 		} else if (it.name == "Hygogix") {
 			it.sprite.setTexture(textures.getPlantTextures().at(1));
-			it.sprite.setScale(.75, .75);
-		} else if (it.name == "Type 3") {
+			it.sprite.setScale(1.5, 1.5);
+		} else if (it.name == "Spindlewort") {
 			it.sprite.setTexture(textures.getPlantTextures().at(2));
-			it.sprite.setScale(3,3);
+			it.sprite.setScale(1.5,1.5);
 		}
 		hindex++;
 		if (hindex == 5) {

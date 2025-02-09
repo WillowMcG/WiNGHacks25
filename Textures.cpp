@@ -8,9 +8,9 @@ Textures::Textures() {
 }
 
 void Textures::loadTextures() {
-  plant1.loadFromFile("files/images/sprites/plants_64_7.png");
+  plant1.loadFromFile("files/images/sprites/Djorchertwitz.png");
   plant2.loadFromFile("files/images/sprites/Hygogix.png");
-  plant3.loadFromFile("files/images/sprites/plants_64_14.png");
+  plant3.loadFromFile("files/images/sprites/Spindlewort.png");
   plantTextures.push_back(plant1);
   plantTextures.push_back(plant2);
   plantTextures.push_back(plant3);
