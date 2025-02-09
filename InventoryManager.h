@@ -12,6 +12,8 @@ public:
 	bool inInventory(std::string name);
 	Item getItem(int index);
 	Item getItem(std::string name);
+	Item& getItemRef(int index);
+	Item& getItemRef(std::string name);
 	void print();
 	void pickUpItem(Item item);
 	void pickUpItem(Item item, int quantity);

@@ -13,5 +13,8 @@ public:
 	virtual ~Item();
 
 	int getIndex() const;
+	std::string getName() const;
+	sf::Sprite getSprite() const;
+	int getQuantity() const;
 };
 

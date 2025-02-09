@@ -147,6 +147,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Potion.cpp" />
     <ClCompile Include="StatsManager.cpp" />
+    <ClCompile Include="Textbox.cpp" />
     <ClCompile Include="Textures.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -164,6 +165,7 @@
     <ClInclude Include="RelationshipLvls.h" />
     <ClInclude Include="Sprites.h" />
     <ClInclude Include="StatsManager.h" />
+    <ClInclude Include="Textbox.h" />
     <ClInclude Include="Textures.h" />
   </ItemGroup>
   <ItemGroup>

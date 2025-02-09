@@ -20,3 +20,15 @@ Item::~Item() {
 int Item::getIndex() const {
 	return index;
 }
+
+std::string Item::getName() const {
+	return name;
+}
+
+sf::Sprite Item::getSprite() const {
+	return sprite;
+}
+
+int Item::getQuantity() const {
+	return quantity;
+}

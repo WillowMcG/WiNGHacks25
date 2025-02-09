@@ -20,6 +20,125 @@
 #include <random>
 #include <tuple>
 
+void stirring(InventoryManager& playerInventory, std::string name) {
+	std::cout << "Pre-Stirring" << std::endl;
+    if (playerInventory.inInventory(name)) {
+		std::cout << "In my inventory" << std::endl;
+        Item& item = playerInventory.getItemRef(name);
+		std::cout << "Got the item" << std::endl;
+		Ingredient* ingredient = static_cast<Ingredient*>(&item);
+
+        if (!ingredient) {
+            std::cout << "Failed to cast item to Ingredient. Item may not be an Ingredient." << std::endl;
+            return;
+        }
+
+		std::cout << "Cast the item" << std::endl;
+		std::cout << "Ingredient name: " << ingredient->getName() << std::endl;
+
+        if (ingredient) {
+			std::cout << "Entered stirring" << std::endl;
+			std::cout << "Stirring " << ingredient->getName() << std::endl;
+			ingredient->stir();
+			ingredient->checkStir();
+			std::cout << "Times Stirred: " << ingredient->getIngrStatus().timesStirred << std::endl;
+			std::cout << "Is finished stirring: " << ingredient->getIngrStatus().isStirred << std::endl;
+			std::cout << "Is ruined: " << ingredient->getIngrStatus().isRuined << std::endl;
+			std::cout << "Know stir healing: " << ingredient->getIngrKnowledge().knowStirredHealing << std::endl;
+			std::cout << "Stirred healing: " << ingredient->getIngrProperties().stirredHealing << std::endl;
+		}
+    }
+}
+
+void cooking(InventoryManager& playerInventory, std::string name) {
+	if (playerInventory.inInventory(name)) {
+		Item& item = playerInventory.getItemRef(name);
+		if (Ingredient* ingredient = static_cast<Ingredient*>(&item)) {
+			std::cout << "Cooking " << ingredient->getName() << std::endl;
+			ingredient->cook();
+			ingredient->checkCook();
+			std::cout << "Time Cooked: " << ingredient->getIngrStatus().timeCooked << std::endl;
+			std::cout << "Is finished cooking: " << ingredient->getIngrStatus().isCooked << std::endl;
+			std::cout << "Is ruined: " << ingredient->getIngrStatus().isRuined << std::endl;
+		}
+	}
+}
+
+void combine(InventoryManager& playerInventory, InventoryManager& potionDebug, std::string name1, std::string name2) {
+	std::cout << "Pre-Combining" << std::endl;
+
+	std::cout << "Printing potionDebug: " << std::endl;
+	for (auto& item : potionDebug.items) {
+		std::cout << item.getName() << std::endl;
+	}
+
+    if (playerInventory.inInventory(name1) && playerInventory.inInventory(name2)) {
+		std::cout << "In my inventory" << std::endl;
+        Item& item1 = playerInventory.getItemRef(name1);
+        Item& item2 = playerInventory.getItemRef(name2);
+
+        Ingredient* ingredient1 = static_cast<Ingredient*>(&item1);
+        Ingredient* ingredient2 = static_cast<Ingredient*>(&item2);
+
+        for (auto& item : potionDebug.items) {
+			std::cout << "In potions debug" << std::endl;
+			std::cout << "Checking item: " << item.getName() << std::endl;
+			std::cout << "Mem address of potion inside: " << &item << std::endl;
+			std::cout << "More checking items: " << item.getQuantity() << std::endl;
+			std::cout << "get index: " << item.getIndex() << std::endl;
+            Potion* potion = static_cast<Potion*>(&item);
+
+            if (!potion) {
+                std::cout << "Failed to cast item to Potion!" << std::endl;
+                continue;
+            }
+			std::cout << "Potion cast" << std::endl;
+			std::cout << "Checking potion: " << potion->getName() << std::endl;
+			std::cout << "More checking potion: " << potion->getIsComplete() << std::endl;  // wrong number
+			std::cout << "checking quantity: " << potion->getQuantity() << std::endl;
+			std::cout << "checking index: " << potion->getIndex() << std::endl;
+            std::cout << "Checking knowledge: " << potion->getIngrKnowledge().knowRawHealing << std::endl;
+			std::cout << "Checking properties: " << potion->getIngrProperties().rawHealing << std::endl;
+			std::cout << "Checking more knowledge: " << potion->getIngrKnowledge().knowStirredHealing << std::endl;
+			std::cout << "Checking more properties: " << potion->getIngrProperties().stirredHealing << std::endl;
+
+			//std::unordered_map<std::string, int> ingredients = potion->getIngredients();
+            std::cout << "Mem address of potion outside: " << &potion << std::endl;
+
+            const auto& ingredients = potion->getIngredients();
+			std::cout << "Potion is accessible" << std::endl;
+
+            std::cout << "Ingredients map size: " << ingredients.size() << std::endl;
+
+			std::cout << "Checking ingredients" << std::endl;
+			for (const auto& ingredient : ingredients) {
+				std::cout << ingredient.first << ": " << ingredient.second << std::endl;
+			}
+			std::cout << "Finished checking ingredients" << std::endl;
+
+            bool hasIngredient1 = ingredients.count(name1) && ingredient1->getQuantity() >= ingredients.at(name1);
+            bool hasIngredient2 = ingredients.count(name2) && ingredient2->getQuantity() >= ingredients.at(name2);
+			std::cout << "Created bools" << std::endl;
+
+            if (hasIngredient1 && hasIngredient2) {
+				std::cout << "Recipe found!" << std::endl;
+				std::cout << "Starting inventory: " << std::endl;
+				for (auto& item : playerInventory.items) {
+					std::cout << item.getName() << std::endl;
+				}
+                std::cout << "Combining " << ingredients.at(name1) << " " << name1 << " and " << ingredients.at(name2) << " " << name2 << " to make " << potion->getName() << std::endl;
+				playerInventory.discardItem(item1, ingredients.at(name1));
+				playerInventory.discardItem(item2, ingredients.at(name2));
+                playerInventory.pickUpItem(item);
+				std::cout << "New Inventory: " << std::endl;
+				for (auto& item : playerInventory.items) {
+					std::cout << item.getName() << std::endl;
+				}
+            }
+        }
+    }
+}
+
 void setText(sf::Text &text, float x, float y) {
     sf::FloatRect textRect = text.getLocalBounds();
     text.setOrigin(textRect.left + textRect.width/2.0f,
@@ -55,6 +174,7 @@ void texturePlant(sf::Sprite& plant, string type, Textures& textures) {
 }
 
 void initializePlants(InventoryManager& inventory_manager) {
+	std::cout << "Initializing Plants" << std::endl;
     sf::Texture texture;
     texture.loadFromFile("files/images/sprites/Cauldron_Icon.png");
     sf::Sprite djorchSprite(texture);
@@ -85,9 +205,29 @@ void initializePlants(InventoryManager& inventory_manager) {
     inventory_manager.items.emplace_back(type3);
 }
 
-void initializeInventory(InventoryManager& inventory_manager) {}
+void initializePotions(InventoryManager& potionDebug) {
+    std::cout << "Initializing Potions" << std::endl;
+	sf::Texture texture;
+	texture.loadFromFile("files/images/sprites/Cauldron_Icon.png");
+	sf::Sprite sprite(texture);
 
-int gameLoop(sf::RenderWindow& window, float width, float height, Textures& textures, sf::Font& body) {
+	IngrProperties properties1(0, 0, 0, 0, 0, 0);
+	IngrKnowledge knowledge1(false, false, false, false, false, false);
+	IngrGiftRatings giftRating1({ 0, 0, 0 });
+	IngrStatus status1(false, false, false, 0, 0);
+	std::unordered_map<std::string, int> ingredients1 = {{"Djorchertwitz", 1}, {"Type 2", 1}};
+	Potion potion = Potion(0, "Potion", sprite, 1, properties1, knowledge1, giftRating1, status1, ingredients1, true, true);
+	potionDebug.items.push_back(potion);
+
+    std::cout << "ingredients map size initialized: " << ingredients1.size() << std::endl;
+    std::cout << "Mem address of potion inside: " << &potion << std::endl;
+}
+
+void initializeInventory(InventoryManager& inventory_manager) {
+	std::cout << "Initializing Inventory" << std::endl;
+}
+
+/*int gameLoop(sf::RenderWindow& window, float width, float height, Textures& textures, sf::Font& body) {
     InventoryManager plantDebug;
     initializePlants(plantDebug);
     sf::Clock clock;
@@ -397,12 +537,84 @@ int gameLoop(sf::RenderWindow& window, float width, float height, Textures& text
 
     }
     return 0;
-}
+}*/
 
 
 
 int main() {
-    sf::ContextSettings settings;
+	std::cout << "Hello, World!" << std::endl;
+
+	InventoryManager plantDebug;
+	initializePlants(plantDebug);
+
+	InventoryManager potionDebug;
+	initializePotions(potionDebug);
+
+	InventoryManager playerInventory;
+	initializeInventory(playerInventory);
+
+	Ingredient* testA = static_cast<Ingredient*>(&plantDebug.getItemRef("Djorchertwitz"));
+	if (testA) {
+		std::cout << "Successfully casted Djorchertwitz in Debug" << std::endl;
+	}
+	else {
+		std::cout << "Failed to cast Djorchertwitz in Debug" << std::endl;
+	}
+	Ingredient* testB = static_cast<Ingredient*>(&plantDebug.getItemRef("Type 2"));
+	if (testB) {
+		std::cout << "Successfully casted Type 2 in Debug" << std::endl;
+	}
+	else {
+		std::cout << "Failed to cast Type 2 in Debug" << std::endl;
+	}
+
+	playerInventory.pickUpItem(plantDebug.getItem("Djorchertwitz"));
+	playerInventory.pickUpItem(plantDebug.getItem("Type 2"));
+
+	Ingredient* testC = static_cast<Ingredient*>(&playerInventory.getItemRef("Djorchertwitz"));
+	if (testC) {
+		std::cout << "Successfully casted Djorchertwitz in Player" << std::endl;
+	}
+	else {
+		std::cout << "Failed to cast Djorchertwitz in Player" << std::endl;
+	}
+	Ingredient* testD = static_cast<Ingredient*>(&playerInventory.getItemRef("Type 2"));
+	if (testD) {
+		std::cout << "Successfully casted Type 2 in Player" << std::endl;
+	}
+	else {
+		std::cout << "Failed to cast Type 2 in Player" << std::endl;
+	}
+
+	std::cout << "Start printing ingredients" << std::endl;
+	Potion* testPotion = static_cast<Potion*>(&potionDebug.getItemRef("Potion"));
+	if (testPotion) {
+		std::cout << "Successfully casted Potion" << std::endl;
+	}
+	else {
+		std::cout << "Failed to cast Potion" << std::endl;
+	}
+	/*std::unordered_map<std::string, int> ingredients = testPotion->getIngredients();
+	for (const auto& ingredient : ingredients) {
+		std::cout << ingredient.first << ": " << ingredient.second << std::endl;
+	}*/
+
+	//std::cout << &potionDebug.getItemRef("Potion")->getIngredients().size() << std::endl;
+	std::cout << "\nABOUT TO START COOKING!" << std::endl;
+	stirring(playerInventory, "Djorchertwitz");
+	stirring(playerInventory, "Djorchertwitz");
+	stirring(playerInventory, "Djorchertwitz");
+	stirring(playerInventory, "Djorchertwitz");
+    stirring(playerInventory, "Djorchertwitz");
+	stirring(playerInventory, "Djorchertwitz");
+	stirring(playerInventory, "Djorchertwitz");
+	std::cout << "\nTIME TO COMBINE!" << std::endl;
+	combine(playerInventory, potionDebug, "Djorchertwitz", "Type 2");
+	std::cout << "\nPUT THAT POTION IN MOTION" << std::endl;
+	stirring(playerInventory, "Potion");
+
+    return 0;
+    /*sf::ContextSettings settings;
     settings.depthBits = 24;
     settings.stencilBits = 8;
     settings.antialiasingLevel = 4;
@@ -445,6 +657,6 @@ int main() {
         window.draw(background);
         window.draw(start);
         window.display();
-    }
+    }*/
     return 0;
 }

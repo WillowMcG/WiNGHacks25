@@ -40,6 +40,24 @@ Item InventoryManager::getItem(std::string name) {
 	return Item();
 }
 
+Item& InventoryManager::getItemRef(int index) {
+	for (int i = 0; i < items.size(); i++) {
+		if (items[i].index == index) {
+			return items[i];
+		}
+	}
+	return items[0];
+}
+
+Item& InventoryManager::getItemRef(std::string name) {
+	for (int i = 0; i < items.size(); i++) {
+		if (items[i].name == name) {
+			return items[i];
+		}
+	}
+	return items[0];
+}
+
 void InventoryManager::pickUpItem(Item item) {
 	for (auto& inventoryItem : items) {
 		if (inventoryItem.name == item.name) {
