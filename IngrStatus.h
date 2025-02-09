@@ -14,26 +14,6 @@ public:
 
 	IngrStatus(bool isStirred, bool isCooked, bool isRuined, int numMixes, int timeCooked)
 		: isStirred(isStirred), isCooked(isCooked), isRuined(isRuined), timesStirred(numMixes), timeCooked(timeCooked) {}
-
-	void checkStir(int timesStirred, int numStirs) {
-		if (timesStirred >= numStirs) {
-			isStirred = true;
-		}
-	}
-
-	void checkCook(int timeCooked, int cookTime) {
-		if (timeCooked >= cookTime) {
-			isCooked = true;
-		}
-	}
-
-	void stir() {
-		timesStirred++;
-	}
-
-	void cook() {
-		timeCooked++;
-	}
 };
 
 #endif

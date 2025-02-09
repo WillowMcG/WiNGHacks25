@@ -18,10 +18,15 @@ public:
         const IngrGiftRatings& giftRatings, const IngrStatus& ingrStatus);
 
     const IngrProperties& getIngrProperties() const;
-    IngrKnowledge getIngrKnowledge() const;
-	IngrGiftRatings getIngrGiftRatings() const;
-	IngrStatus getIngrStatus() const;
-
+    const IngrKnowledge& getIngrKnowledge() const;
+	const IngrGiftRatings& getIngrGiftRatings() const;
+	const IngrStatus& getIngrStatus() const;
+	void checkStir();
+	void checkCook();
+	void stir();
+	void cook();
+	void printProperties();
+	void printKnowledge();
 };
 
 #endif

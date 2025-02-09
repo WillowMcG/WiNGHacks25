@@ -37,15 +37,15 @@ void initializeItems(InventoryManager& inventory_manager) {
 	std::shared_ptr<Item> ingredient = std::make_shared<Ingredient>(1, "Mandrake Root", sprite, 1, properties, knowledge, gift_ratings, status);
 	inventory_manager.items.push_back(ingredient);
 
-	IngrGiftRatings gift_ratings2({ -5, 11, 0 });
-	IngrProperties properties2(7, 3, -2, -20, 5, 20);
-	IngrKnowledge knowledge2(true, true, true, true, true, true);
-	IngrStatus status2(true, true, true, 0, 0);
-	std::shared_ptr<Item> ingredient2 = std::make_shared<Ingredient>(2, "Dragon Scale", sprite, 1, properties2, knowledge2, gift_ratings2, status2);
+	IngrGiftRatings giftRatingsDjorch({ -5, 11, 0 });
+	IngrProperties propertiesDjorch(7, 3, -2, -20, 5, 20);
+	IngrKnowledge knowledgeDjorch(true, true, true, true, true, true);
+	IngrStatus statusDjorch(false, false, false, 0, 0);
+	std::shared_ptr<Item> ingredient2 = std::make_shared<Ingredient>(2, "Djorchertwitz", sprite, 1, propertiesDjorch, knowledgeDjorch, giftRatingsDjorch, statusDjorch);
 	inventory_manager.items.push_back(ingredient2);
 
-	std::unordered_map<std::string, int> ingredients = { { "Mandrake Root", 1 }, { "Dragon Scale", 1 } };
-	std::shared_ptr<Item> potion = std::make_shared<Potion>(3, "Potion of Strength", sprite, 1, properties2, knowledge2, gift_ratings2, status2, ingredients, true, true);
+	std::unordered_map<std::string, int> ingredients = { { "Mandrake Root", 1 }, { "Djorchertwitz", 1 } };
+	std::shared_ptr<Item> potion = std::make_shared<Potion>(3, "Potion of Strength", sprite, 1, properties, knowledge, gift_ratings, status, ingredients, true, true);
 	inventory_manager.items.push_back(potion);
 }
 
@@ -88,8 +88,8 @@ void stirring(InventoryManager& inventory_manager, std::string name) {
 	auto ingredient = std::dynamic_pointer_cast<Ingredient>(item);
 
 	if (ingredient) {
-		ingredient->getIngrStatus().stir();
-		ingredient->getIngrStatus().checkStir(ingredient->getIngrStatus().timesStirred, ingredient->getIngrProperties().numStirs);
+		ingredient->stir();
+		ingredient->checkStir();
 	}
 	else {
 		std::cout << "Item is not an ingredient." << std::endl;
@@ -99,14 +99,33 @@ void stirring(InventoryManager& inventory_manager, std::string name) {
 void cooking(InventoryManager& inventory_manager, std::string name) {
 	auto item = inventory_manager.getItemPtr(name);
 	auto ingredient = std::dynamic_pointer_cast<Ingredient>(item);
+
 	if (ingredient) {
-		ingredient->getIngrStatus().cook();
-		ingredient->getIngrStatus().checkCook(ingredient->getIngrStatus().timeCooked, ingredient->getIngrProperties().cookTime);
+		ingredient->cook();
+		ingredient->checkCook();
 	}
 	else {
 		std::cout << "Item is not an ingredient." << std::endl;
 	}
 }
+
+void stirring(InventoryManager& inventory_manager, InventoryManager& debugPotions, std::vector<std::string> ingredient_names) {
+	for (auto name : ingredient_names) {
+		auto item = inventory_manager.getItemPtr(name);
+		auto ingredient = std::dynamic_pointer_cast<Ingredient>(item);
+
+		if (!ingredient) {
+			std::cout << "Item is not an ingredient." << std::endl;
+			return;
+		}
+
+
+	}
+
+
+
+}
+
 
 void setText(sf::Text & text, float x, float y) {
 	sf::FloatRect textRect = text.getLocalBounds();
@@ -304,7 +323,7 @@ int main() {
 
 	auto ingredient = std::dynamic_pointer_cast<Ingredient>(item);
 	if (ingredient) {
-		ingredient->getIngrKnowledge().printKnowledge();
+		ingredient->printKnowledge();
 	}
 	else {
 		std::cout << "Item is not an ingredient." << std::endl;
@@ -312,7 +331,7 @@ int main() {
 
 	auto potion = std::dynamic_pointer_cast<Potion>(inventory_manager.getItemPtr(3));
 	if (potion) {
-		potion->getIngrProperties().printProperties();
+		potion->printProperties();
 		std::unordered_map<std::string, int> ingredients = potion->getIngredients();
 		for (auto it = ingredients.begin(); it != ingredients.end(); it++) {
 			std::cout << it->first << ": " << it->second << std::endl;
@@ -353,6 +372,27 @@ int main() {
 	std::cout << "Newer Egg quantity: " << inventory_manager.getItemPtr("Egg")->quantity << std::endl;
 	inventory_manager.pickUpItem(debug_inventory.getItemPtr("Egg"), 10);
 	std::cout << "Even newer Egg quantity: " << inventory_manager.getItemPtr("Egg")->quantity << std::endl;
+
+	stats_manager.setHealth(50);
+	std::cout << "Health: " << stats_manager.getHealth() << std::endl;
+
+	auto ingredientDjorch = std::dynamic_pointer_cast<Ingredient>(inventory_manager.getItemPtr("Djorchertwitz"));
+	std::cout << "Djorcherwitz is cooked? " << ingredientDjorch->getIngrStatus().isCooked << std::endl;
+	std::cout << "Djorcherwitz raw healing: " << ingredientDjorch->getIngrProperties().rawHealing << std::endl;
+	eating(inventory_manager, stats_manager, "Djorchertwitz");
+	std::cout << "Health after eating Djorcherwitz: " << stats_manager.getHealth() << std::endl;
+	std::cout << "A Djorcherwitz cooked times: " << ingredientDjorch->getIngrStatus().timeCooked << std::endl;
+
+	for (int i = 0; i < 21; i++) {
+		cooking(inventory_manager, "Djorchertwitz");
+	}
+
+	std::cout << "B Djorcherwitz cooked times: " << ingredientDjorch->getIngrStatus().timeCooked << std::endl;
+
+	std::cout << "Djorcherwitz is cooked now? " << ingredientDjorch->getIngrStatus().isCooked << std::endl;
+	std::cout << "Djorcherwitz cooked healing: " << ingredientDjorch->getIngrProperties().cookedHealing << std::endl;
+	eating(inventory_manager, stats_manager, "Djorchertwitz");
+	std::cout << "Health after eating Djorcherwitz: " << stats_manager.getHealth() << std::endl;
 
 	sf::Font body;
 	body.loadFromFile("files/SummerPixel.ttf"); //Font - can be changed later

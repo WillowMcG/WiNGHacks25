@@ -9,7 +9,7 @@ StatsManager::~StatsManager() {
 }
 
 // Health functions
-int StatsManager::getHealth() {
+int StatsManager::getHealth() const {
 	return health;
 }
 
@@ -49,7 +49,7 @@ void StatsManager::resetHealth() {
 }
 
 // Hunger functions
-int StatsManager::getHunger() {
+int StatsManager::getHunger() const {
 	return hunger;
 }
 
@@ -93,7 +93,7 @@ int StatsManager::getRelationshipLvl(std::string name) {
 	return relationshipLvls.lvls[name];
 }
 
-RelationshipLvls& StatsManager::getRelationshipLvls() {
+const RelationshipLvls& StatsManager::getRelationshipLvls() const {
 	return relationshipLvls;
 }
 
