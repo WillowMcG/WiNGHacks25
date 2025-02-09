@@ -19,6 +19,7 @@ public:
 	const std::unordered_map<std::string, int>& getIngredients() const;
 	bool getKnowIngredients() const;
 	bool getIsComplete() const;
+	bool checkComplete(const IngrProperties& ingrProperties, const IngrStatus& ingrStatus);
 };
 
 #endif
