@@ -18,7 +18,7 @@ bool InventoryManager::inInventory(std::string name) {
 void InventoryManager::print() {
 	for (auto it : items) {
 		std::cout << it.name << std::endl;
-		std::cout << items.size() << std::endl;
+		std::cout << it.quantity << std::endl;
 	}
 }
 
@@ -32,9 +32,7 @@ Item InventoryManager::getItem(int index) {
 }
 
 Item InventoryManager::getItem(std::string name) {
-	std::cout << items.size() << std::endl;
 	for (int i = 0; i < items.size(); i++) {
-		std::cout << "Searching..." << std::endl;
 		if (items[i].name == name) {
 			return items[i];
 		}
@@ -50,8 +48,6 @@ void InventoryManager::pickUpItem(Item item) {
 			return;
 		}
 	}
-
-
 	std::cout << "Picked up new item " << item.name << std::endl;
 	items.push_back(item);
 }
