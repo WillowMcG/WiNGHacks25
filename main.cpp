@@ -1,6 +1,10 @@
 //
 // Created by Jules on 2/7/2025.
 //
+#include <iostream>
+#include "Textures.h"
+#include "Animation.h"
+#include "Textbox.h"
 #include "StatsManager.h"
 #include "InventoryManager.h"
 #include "Item.h"
@@ -11,425 +15,409 @@
 #include "IngrStatus.h"
 #include "Potion.h"
 #include "Cooking.h"
-#include <iostream>
-#include "Textures.h"
-#include "Animation.h"
-
 #include <SFML/Graphics.hpp>
-
-#include <iostream>
+#include <memory>
 #include <random>
-#include <ctime>
 #include <tuple>
 
-void initializeItems(InventoryManager& inventory_manager) {
-	sf::Texture texture;
-	texture.loadFromFile("Cauldron_Icon copy.png");
-	sf::Sprite sprite(texture);
-
-	std::shared_ptr<Item> item = std::make_shared<Item>(0, "Cauldron", sprite, 1);
-	inventory_manager.items.push_back(item);
-
-	IngrGiftRatings gift_ratings({ 1, 1, 1 });
-	IngrProperties properties(1, 1, 1, 1, 1, 1);
-	IngrKnowledge knowledge(true, false, false, false, false, false);
-	IngrStatus status(false, false, false, 0, 0);
-	std::shared_ptr<Item> ingredient = std::make_shared<Ingredient>(1, "Mandrake Root", sprite, 1, properties, knowledge, gift_ratings, status);
-	inventory_manager.items.push_back(ingredient);
-
-	IngrProperties propertiesDjorch(7, 3, -2, -20, 5, 20);
-	IngrKnowledge knowledgeDjorch(true, true, true, true, true, true);
-	IngrGiftRatings giftRatingsDjorch({ -5, 11, 0 });
-	IngrStatus statusDjorch(false, false, false, 0, 0);
-	std::shared_ptr<Item> ingredient2 = std::make_shared<Ingredient>(2, "Djorchertwitz", sprite, 1, propertiesDjorch, knowledgeDjorch, giftRatingsDjorch, statusDjorch);
-	inventory_manager.items.push_back(ingredient2);
-
-	std::unordered_map<std::string, int> ingredients = { { "Mandrake Root", 1 }, { "Djorchertwitz", 1 } };
-	std::shared_ptr<Item> potion = std::make_shared<Potion>(3, "Potion of Strength", sprite, 1, properties, knowledge, gift_ratings, status, ingredients, true, true);
-	inventory_manager.items.push_back(potion);
-}
-
-void initializeDebug(InventoryManager& inventory_manager) {
-	sf::Texture texture;
-	texture.loadFromFile("Cauldron_Icon copy.png");
-	sf::Sprite sprite(texture);
-
-	std::shared_ptr<Item> item = std::make_shared<Item>(0, "Egg", sprite, 1);
-	inventory_manager.items.push_back(item);
-	for (int i = 0; i < inventory_manager.items.size(); i++) {
-		std::cout << inventory_manager.items[i]->name << std::endl;
-	}
-}
-
-void eating(InventoryManager& inventory_manager, StatsManager& stats_manager, std::string name) {
-	auto item = inventory_manager.getItemPtr(name);
-	auto ingredient = std::dynamic_pointer_cast<Ingredient>(item);
-	auto potion = std::dynamic_pointer_cast<Potion>(item);
-	int healAmount = 0;
-	if (ingredient) {
-		if (ingredient->getIngrStatus().isCooked) {
-			healAmount = ingredient->getIngrProperties().cookedHealing;
-		}
-		else if (ingredient->getIngrStatus().isStirred) {
-			healAmount = ingredient->getIngrProperties().stirredHealing;
-		}
-		else {
-			healAmount = ingredient->getIngrProperties().rawHealing;
-		}
-		stats_manager.changeHealth(healAmount);
-	}
-	else {
-		std::cout << "Item is not an ingredient." << std::endl;
-	}
-}
-
-void stirring(InventoryManager& inventory_manager, std::string name) {
-	auto item = inventory_manager.getItemPtr(name);
-	auto ingredient = std::dynamic_pointer_cast<Ingredient>(item);
-
-	if (ingredient) {
-		ingredient->stir();
-		ingredient->checkStir();
-	}
-	else {
-		std::cout << "Item is not an ingredient." << std::endl;
-	}
-}
-
-void cooking(InventoryManager& inventory_manager, std::string name) {
-	auto item = inventory_manager.getItemPtr(name);
-	auto ingredient = std::dynamic_pointer_cast<Ingredient>(item);
-
-	if (ingredient) {
-		ingredient->cook();
-		ingredient->checkCook();
-	}
-	else {
-		std::cout << "Item is not an ingredient." << std::endl;
-	}
-}
-
-void stirring(InventoryManager& inventory_manager, InventoryManager& debugPotions, std::vector<std::string> ingredient_names) {
-	for (auto name : ingredient_names) {
-		auto item = inventory_manager.getItemPtr(name);
-		auto ingredient = std::dynamic_pointer_cast<Ingredient>(item);
-
-		if (!ingredient) {
-			std::cout << "Item is not an ingredient." << std::endl;
-			return;
-		}
-
-
-	}
-
-
-
-}
-
-
-void setText(sf::Text & text, float x, float y) {
-	sf::FloatRect textRect = text.getLocalBounds();
-	text.setOrigin(textRect.left + textRect.width / 2.0f,
-		textRect.top + textRect.height / 2.0f);
-	text.setPosition(sf::Vector2f(x, y));
+void setText(sf::Text &text, float x, float y) {
+    sf::FloatRect textRect = text.getLocalBounds();
+    text.setOrigin(textRect.left + textRect.width/2.0f,
+    textRect.top + textRect.height/2.0f);
+    text.setPosition(sf::Vector2f(x, y));
 }
 
 vector<pair<string, int>> genPlants() {
-	vector<pair<string, int>> plants;
-	int plantNum = 5;
-	int pos = rand() % 200;
-	pair<string, int> plantInfo;
+    vector<pair<string, int>> plants;
+    int plantNum = 5;
+    int pos = rand() % 200;
+    pair<string, int> plantInfo;
 
-	for (int i = 0; i < plantNum; i++) {
-		int plantChoice = rand() % 3;
-		string plantType = (plantChoice == 0) ? "Type 1" :
-			(plantChoice == 1) ? "Type 2" : "Type 3";
+    for (int i = 0; i < plantNum; i++) {
+        int plantChoice = rand() % 3;
+        string plantType = (plantChoice == 0) ? "Type 1" :
+                           (plantChoice == 1) ? "Type 2" : "Type 3";
 
-		plants.push_back({ plantType, pos });
-		pos += 200 + rand() % 300;
-	}
-	return plants;
+        plants.push_back({plantType, pos});
+        pos += 200 + rand() % 300;
+    }
+    return plants;
 }
 
 void texturePlant(sf::Sprite& plant, string type, Textures& textures) {
-	if (type == "Type 1") {
-		plant.setTexture(textures.getPlantTextures().at(0));
-	}
-	else if (type == "Type 2") {
-		plant.setTexture(textures.getPlantTextures().at(1));
-	}
-	else if (type == "Type 3") {
-		plant.setTexture(textures.getPlantTextures().at(2));
-	}
+    if (type == "Type 1") {
+        plant.setTexture(textures.getPlantTextures().at(0));
+    } else if (type == "Type 2") {
+        plant.setTexture(textures.getPlantTextures().at(1));
+    } else if (type == "Type 3") {
+        plant.setTexture(textures.getPlantTextures().at(2));
+    }
 }
 
-int gameLoop(sf::RenderWindow& window, int width, int height, Textures& textures) {
-	Clock clock;
-	double elapsed = clock.restart().asSeconds();
+void initializePlants(InventoryManager& inventory_manager, Textures& textures) {
+    sf::Sprite djorchSprite(textures.getPlantTextures().at(0));
+    sf::Sprite sprite2(textures.getPlantTextures().at(1));
+    sf::Sprite sprite3(textures.getPlantTextures().at(2));
 
-	sf::Sprite background;
-	background.setTexture(textures.getBackgroundTextures().at(0));
-	int backgroundNum = 0;
+    // People: Mushroom Man, Witch, Wolfhound
 
-	vector<pair<string, int>> plants = genPlants();
+    IngrProperties propertiesDjorch(7, 3, -2, -20, 5, 20);
+    IngrKnowledge knowledgeDjorch(false, false, false, false, false, false);
+    IngrGiftRatings giftRatingDjorch({-5, 11, 0});
+    IngrStatus statusDjorch(false, false, false, 0, 0);
+    std::shared_ptr<Ingredient> djorchertwitz = std::make_shared<Ingredient>(0, "Djorchertwitz", djorchSprite, 1, propertiesDjorch, knowledgeDjorch, giftRatingDjorch, statusDjorch);
+    inventory_manager.items.push_back(djorchertwitz);
 
-	sf::Sprite inventoryBackground;
-	inventoryBackground.setTexture(textures.getBackgroundTextures().at(1));
-	inventoryBackground.setOrigin(width / 2, height / 2);
-	inventoryBackground.setPosition(width / 2, height / 2);
+    IngrProperties propertiesType2(8, 12, 15, -10, 8, 15);
+    IngrKnowledge knowledgeType2(false, false, false, false, false, false);
+    IngrGiftRatings giftRatingType2({5, -10, 8});
+    IngrStatus statusType2(false, false, false, 0, 0);
+    std::shared_ptr<Ingredient> type2 = std::make_shared<Ingredient>(0, "Type 2", sprite2, 1, propertiesType2, knowledgeType2, giftRatingType2, statusType2);
+    inventory_manager.items.push_back(type2);
 
-	sf::Sprite character;
-	character.setOrigin(256, 256);
-	character.setPosition(width - width / 8, height - height / 4);
+    IngrProperties propertiesType3(0, 0, 0, 0, 0, 0);
+    IngrKnowledge knowledgeType3(false, false, false, false, false, false);
+    IngrGiftRatings giftRatingType3({0, 0, 0});
+    IngrStatus statusType3(false, false, false, 0, 0);
+    std::shared_ptr<Ingredient> type3 = std::make_shared<Ingredient>(0, "Type 3", sprite3, 1, propertiesType3, knowledgeType3, giftRatingType3, statusType3);
+    inventory_manager.items.push_back(type3);
+}
 
-	int plantHeight = height - height / 4;
+int gameLoop(sf::RenderWindow& window, float width, float height, Textures& textures, sf::Font& body) {
+    InventoryManager inventory_manager;
+    sf::Clock clock;
 
-	sf::Sprite plant1;
-	sf::Sprite plant2;
-	sf::Sprite plant3;
-	sf::Sprite plant4;
-	sf::Sprite plant5;
+    sf::Sprite background;
+    background.setTexture(textures.getBackgroundTextures().at(0));
+    int backgroundNum = 0;
 
-	plant1.setPosition(plants.at(0).second, plantHeight);
-	texturePlant(plant1, plants.at(0).first, textures);
-	plant2.setPosition(plants.at(1).second, plantHeight);
-	texturePlant(plant2, plants.at(1).first, textures);
-	plant3.setPosition(plants.at(2).second, plantHeight);
-	texturePlant(plant3, plants.at(2).first, textures);
-	plant4.setPosition(plants.at(3).second, plantHeight);
-	texturePlant(plant4, plants.at(3).first, textures);
-	plant5.setPosition(plants.at(4).second, plantHeight);
-	texturePlant(plant5, plants.at(4).first, textures);
+    vector<pair<string, int>> plants = genPlants();
 
-	sf::Texture sprite_sheet;
-	Animation animations;
+    sf::Sprite inventoryBackground;
+    inventoryBackground.setTexture(textures.getBackgroundTextures().at(4));
+    inventoryBackground.setOrigin(width/2, height/2);
+    inventoryBackground.setPosition(width/2, height/2);
 
-	if (!(sprite_sheet.loadFromFile("files/images/sprites/sprite_sheet.png")))
-	{
-		cout << "Could Not Load File..." << endl;
-	}
+    sf::Sprite character;
+    character.setOrigin(256, 256);
+    character.setPosition(width-width/8, height-height/4);
 
-	character.setTexture(sprite_sheet);
+    int plantHeight = height-height/4;
 
-	animations.addAnimation("walkLeft", sprite_sheet, { 6, 1 }, { 512, 512 }, { 3,0 }, 8, { 3,0 });
-	animations.setAnimationStartingIndex("walkLeft", { 3,0 });
-	animations.setAnimationEndingIndex("walkLeft", { 5,0 });
-	animations.addAnimation("walkRight", sprite_sheet, { 6,1 }, { 512, 512 }, { 3,0 }, 12, { 0,0 });
-	animations.setAnimationStartingIndex("walkRight", { 0,0 });
-	animations.setAnimationEndingIndex("walkRight", { 2, 0 });
+    sf::Sprite plant1;
+    sf::Sprite plant2;
+    sf::Sprite plant3;
+    sf::Sprite plant4;
+    sf::Sprite plant5;
 
-	bool inventoryOpen = false;
-	bool isMoving = false;
+    plant1.setPosition(plants.at(0).second, plantHeight);
+    texturePlant(plant1, plants.at(0).first, textures);
+    plant1.setScale(2,2);
+    bool p1 = true;
+    plant2.setPosition(plants.at(1).second, plantHeight);
+    plant2.setScale(2,2);
+    texturePlant(plant2, plants.at(1).first, textures);
+    bool p2 = true;
+    plant3.setPosition(plants.at(2).second, plantHeight);
+    plant3.setScale(2,2);
+    texturePlant(plant3, plants.at(2).first, textures);
+    bool p3 = true;
+    plant4.setPosition(plants.at(3).second, plantHeight);
+    plant4.setScale(2,2);
+    texturePlant(plant4, plants.at(3).first, textures);
+    bool p4 = true;
+    plant5.setPosition(plants.at(4).second, plantHeight);
+    texturePlant(plant5, plants.at(4).first, textures);
+    plant5.setScale(2,2);
+    bool p5 = true;
 
-	sf::Event event;
-	while (window.isOpen()) {
-		while (window.pollEvent(event)) {
-			if (event.type == sf::Event::Closed) {
-				window.clear();
-				window.close();
-				return -1;
-			}
-			if (!inventoryOpen) {
+    Textbox harvestPlant(width/2, height/4, body, 40, textures, "Press W to Harvest");
+    harvestPlant.open();
 
-				if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) || sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
-					character.move(-8, 0.f);
-					animations.update("walkLeft", character);
-					isMoving = true;
-				}
-				if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) || sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
-					character.move(8, 0.f);
-					animations.update("walkRight", character);
-					isMoving = true;
-				}
+    Textbox harvest1(width/2, height/4, body, 40, textures, "Type 1 Added to Inventory");
+    Textbox harvest2(width/2, height/4, body, 40, textures, "Type 2 Added to Inventory");
+    Textbox harvest3(width/2, height/4, body, 40, textures, "Type 3 Added to Inventory");
 
-			}
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::E) && !inventoryOpen) {
-				inventoryOpen = true;
-			}
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q) && inventoryOpen) {
-				inventoryOpen = false;
-			}
+    sf::Texture sprite_sheet;
+    Animation animations;
 
-			if (!isMoving) {
-				animations.resetAnimationIndex("walkLeft");
-				animations.resetAnimationIndex("walkRight");
-			}
+    if (!(sprite_sheet.loadFromFile("files/images/sprites/sprite_sheet.png")))
+    {
+        cout << "Could Not Load File..." << endl;
+    }
 
-			if (character.getPosition().x < 0 || character.getPosition().x > 1920) {
-				int newBackground = rand() % 4;
-				while (newBackground == backgroundNum) {
-					newBackground = rand() % 4;
-				}
-				backgroundNum = newBackground;
-				background.setTexture(textures.getBackgroundTextures().at(backgroundNum));
+    character.setTexture(sprite_sheet);
 
-				plants = genPlants();
+    animations.addAnimation("walkLeft", sprite_sheet, {6, 1}, {512, 512}, {3,0}, 8, {3,0});
+    animations.setAnimationStartingIndex("walkLeft", {3,0});
+    animations.setAnimationEndingIndex("walkLeft", {5,0});
+    animations.addAnimation("walkRight", sprite_sheet, {6,1}, {512, 512}, {3,0}, 12, {0,0});
+    animations.setAnimationStartingIndex("walkRight", {0,0});
+    animations.setAnimationEndingIndex("walkRight", {2, 0});
 
-				plant1.setPosition(plants.at(0).second, plantHeight);
-				texturePlant(plant1, plants.at(0).first, textures);
-				plant2.setPosition(plants.at(1).second, plantHeight);
-				texturePlant(plant2, plants.at(1).first, textures);
-				plant3.setPosition(plants.at(2).second, plantHeight);
-				texturePlant(plant3, plants.at(2).first, textures);
-				plant4.setPosition(plants.at(3).second, plantHeight);
-				texturePlant(plant4, plants.at(3).first, textures);
-				plant5.setPosition(plants.at(4).second, plantHeight);
-				texturePlant(plant5, plants.at(4).first, textures);
+    bool inventoryOpen = false;
+    bool isMoving = false;
 
-				if (character.getPosition().x < 0) {
-					character.setPosition(1920, height - height / 4);
-				}
-				else {
-					character.setPosition(0, height - height / 4);
-				}
-			}
+    int elapsed;
 
-			window.clear();
-			window.draw(background);
-			window.draw(plant1);
-			window.draw(plant2);
-			window.draw(plant3);
-			window.draw(plant4);
-			window.draw(plant5);
-			window.draw(character);
-			if (inventoryOpen) {
-				window.draw(inventoryBackground);
-				plants = genPlants();
-			}
-			window.display();
-		}
+    sf::Event event;
+    while (window.isOpen()) {
+        while (window.pollEvent(event)) {
+            if (event.type == sf::Event::Closed) {
+                window.clear();
+                window.close();
+                return -1;
+            }
+            if (!inventoryOpen) {
 
-	}
-	return 0;
+                if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) || sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
+                    character.move(-8, 0.f);
+                    animations.update("walkLeft", character);
+                    isMoving = true;
+                }
+                if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) || sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
+                    character.move(8, 0.f);
+                    animations.update("walkRight", character);
+                    isMoving = true;
+                }
+                if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) || sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
+                    int xpos = character.getPosition().x;
+                    if (xpos > plant1.getPosition().x - 80 && xpos < plant1.getPosition().x + 80 && p1) {
+                        p1 = false;
+                        cout << "Plant 1" << endl;
+                        clock.restart();
+                        if (plants.at(0).first == "Type 1") {
+                            harvest1.open();
+                            harvest2.close();
+                            harvest3.close();
+                            harvestPlant.close();
+                        } else if (plants.at(0).first == "Type 2") {
+                            harvest2.open();
+                            harvest1.close();
+                            harvest3.close();
+                            harvestPlant.close();
+                        } else {
+                            harvest3.open();
+                            harvest1.close();
+                            harvest2.close();
+                            harvestPlant.close();
+                        }
+                    } else if (xpos > plant2.getPosition().x - 80 && xpos < plant2.getPosition().x + 80 && p2) {
+                        p2 = false;
+                        cout << "Plant 2" << endl;
+                        clock.restart();
+                        if (plants.at(1).first == "Type 1") {
+                            harvest1.open();
+                            harvest2.close();
+                            harvest3.close();
+                            harvestPlant.close();
+                        } else if (plants.at(1).first == "Type 2") {
+                            harvest2.open();
+                            harvest1.close();
+                            harvest3.close();
+                            harvestPlant.close();
+                        } else {
+                            harvest3.open();
+                            harvest1.close();
+                            harvest2.close();
+                            harvestPlant.close();
+                        }
+                    } else if (xpos > plant3.getPosition().x - 80 && xpos < plant3.getPosition().x + 80 && p3) {
+                        p3 = false;
+                        cout << "Plant 3" << endl;
+                        clock.restart();
+                        if (plants.at(2).first == "Type 1") {
+                            harvest1.open();
+                            harvest2.close();
+                            harvest3.close();
+                            harvestPlant.close();
+                        } else if (plants.at(2).first == "Type 2") {
+                            harvest2.open();
+                            harvest1.close();
+                            harvest3.close();
+                            harvestPlant.close();
+                        } else {
+                            harvest3.open();
+                            harvest1.close();
+                            harvest2.close();
+                            harvestPlant.close();
+                        }
+                    } else if (xpos > plant4.getPosition().x - 80 && xpos < plant4.getPosition().x + 80 & p4) {
+                        p4 = false;
+                        cout << "Plant 4" << endl;
+                        clock.restart();
+                        if (plants.at(3).first == "Type 1") {
+                            harvest1.open();
+                            harvest2.close();
+                            harvest3.close();
+                            harvestPlant.close();
+                        } else if (plants.at(3).first == "Type 2") {
+                            harvest2.open();
+                            harvest1.close();
+                            harvest3.close();
+                            harvestPlant.close();
+                        } else {
+                            harvest3.open();
+                            harvest1.close();
+                            harvest2.close();
+                            harvestPlant.close();
+                        }
+                    } else if (xpos > plant5.getPosition().x - 80 && xpos < plant5.getPosition().x + 80 && p5) {
+                        p5 = false;
+                        cout << "Plant 5" << endl;
+                        clock.restart();
+                        if (plants.at(4).first == "Type 1") {
+                            harvest1.open();
+                            harvest2.close();
+                            harvest3.close();
+                            harvestPlant.close();
+                        } else if (plants.at(4).first == "Type 2") {
+                            harvest2.open();
+                            harvest1.close();
+                            harvest3.close();
+                            harvestPlant.close();
+                        } else {
+                            harvest3.open();
+                            harvest1.close();
+                            harvest2.close();
+                            harvestPlant.close();
+                        }
+                    }
+                }
+
+            }
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::E) && !inventoryOpen) {
+                inventoryOpen = true;
+            }
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q) && inventoryOpen) {
+                inventoryOpen = false;
+            }
+
+            if (!isMoving) {
+                animations.resetAnimationIndex("walkLeft");
+                animations.resetAnimationIndex("walkRight");
+            }
+
+            if (character.getPosition().x < 0 || character.getPosition().x > 1920) {
+                int newBackground = rand() % 4;
+                while (newBackground == backgroundNum) {
+                    newBackground = rand() % 4;
+                }
+
+                backgroundNum = newBackground;
+                background.setTexture(textures.getBackgroundTextures().at(backgroundNum));
+                harvestPlant.close();
+
+                plants = genPlants();
+
+                plant1.setPosition(plants.at(0).second, plantHeight);
+                texturePlant(plant1, plants.at(0).first, textures);
+                p1 = true;
+                plant2.setPosition(plants.at(1).second, plantHeight);
+                texturePlant(plant2, plants.at(1).first, textures);
+                p2 = true;
+                plant3.setPosition(plants.at(2).second, plantHeight);
+                texturePlant(plant3, plants.at(2).first, textures);
+                p3 = true;
+                plant4.setPosition(plants.at(3).second, plantHeight);
+                texturePlant(plant4, plants.at(3).first, textures);
+                p4 = true;
+                plant5.setPosition(plants.at(4).second, plantHeight);
+                texturePlant(plant5, plants.at(4).first, textures);
+                p5 = true;
+
+                if (character.getPosition().x < 0) {
+                    character.setPosition(1920, height-height/4);
+                } else {
+                    character.setPosition(0, height-height/4);
+                }
+            }
+
+            window.clear();
+            window.draw(background);
+            if (p1) {
+                window.draw(plant1);
+            }
+            if (p2) {
+                window.draw(plant2);
+            }
+            if (p3) {
+                window.draw(plant3);
+            }
+            if (p4) {
+                window.draw(plant4);
+            }
+            if (p5) {
+                window.draw(plant5);
+            }
+            window.draw(character);
+            if (harvestPlant.checkOpen() && elapsed <= 5) {
+                harvestPlant.drawTextbox(window);
+            } else {
+                harvestPlant.close();
+            }
+            if (harvest1.checkOpen() && elapsed <= 5) {
+                harvest1.drawTextbox(window);
+            } else {
+                harvest1.close();
+            }
+            if (harvest2.checkOpen() && elapsed <= 5) {
+                harvest2.drawTextbox(window);
+            } else {
+                harvest2.close();
+            }
+            if (harvest3.checkOpen() && elapsed <= 5) {
+                harvest3.drawTextbox(window);
+            } else {
+                harvest3.close();
+            }
+            if (inventoryOpen) {
+                window.draw(inventoryBackground);
+            }
+            window.display();
+        }
+
+    }
+    return 0;
 }
 
 int main() {
+    sf::Font body;
+    body.loadFromFile("files/SummerPixel.ttf"); //Font - can be changed later
 
-	InventoryManager debug_inventory;
-	initializeDebug(debug_inventory);
+    Textures textures;
+    textures.loadTextures();
 
-	StatsManager stats_manager;
-	std::cout << stats_manager.getHealth() << std::endl;
-	stats_manager.printRelationshipLvls();
+    int width = 1920;
+    int height = 1080;
+    sf::RenderWindow window(sf::VideoMode(width, height), "Plant Game");
+    sf::Sprite background;
 
+    sf::Text start;
+    start.setString("- Press [Enter] To Start -");
+    start.setFont(body);
+    start.setCharacterSize(40);
+    setText(start, width/2, height/2);
 
-	InventoryManager inventory_manager;
-	initializeItems(inventory_manager);
-	for (int i = 0; i < inventory_manager.items.size(); i++) {
-		std::cout << inventory_manager.items[i]->name << std::endl;
-	}
+    int run = 0; //is game running?
 
-	auto item = inventory_manager.getItemPtr(1);
+    while(window.isOpen()) {
+        sf::Event event;
+        while(window.pollEvent(event)) {
+            if(event.type == sf::Event::Closed) {
+                window.close();
+            }
+            if (event.type == sf::Event::KeyPressed) {
+                if (event.key.code == sf::Keyboard::Enter) {
+                    run = gameLoop(window, width, height, textures, body);
+                }
+            }
+        }
 
-	auto ingredient = std::dynamic_pointer_cast<Ingredient>(item);
-	if (ingredient) {
-		ingredient->printKnowledge();
-	}
-	else {
-		std::cout << "Item is not an ingredient." << std::endl;
-	}
-
-	auto potion = std::dynamic_pointer_cast<Potion>(inventory_manager.getItemPtr(3));
-	if (potion) {
-		potion->printProperties();
-		std::unordered_map<std::string, int> ingredients = potion->getIngredients();
-		for (auto it = ingredients.begin(); it != ingredients.end(); it++) {
-			std::cout << it->first << ": " << it->second << std::endl;
-		}
-	}
-	else {
-		std::cout << "Item is not a potion." << std::endl;
-	}
-
-	std::cout << "Before eating: " << stats_manager.getHealth() << std::endl;
-
-	eating(inventory_manager, stats_manager, "Mandrake Root");
-	std::cout << "After eating: " << stats_manager.getHealth() << std::endl;
-
-	eating(inventory_manager, stats_manager, "Potion of Strength");
-	std::cout << "After drinking: " << stats_manager.getHealth() << std::endl;
-
-	std::cout << "Egg is in debug: " << debug_inventory.inInventory(debug_inventory.getItem("Egg")) << std::endl;
-	for (int i = 0; i < debug_inventory.items.size(); i++) {
-		std::cout << debug_inventory.items[i]->name << std::endl;
-	}
-
-	std::cout << "In inventory:" <<
-		inventory_manager.inInventory(debug_inventory.getItem("Egg")) << std::endl;
-	for (int i = 0; i < inventory_manager.items.size(); i++) {
-		std::cout << inventory_manager.items[i]->name << std::endl;
-	}
-
-	inventory_manager.pickUpItem(debug_inventory.getItemPtr("Egg"));
-	std::cout << "In inventory:" <<
-		inventory_manager.inInventory(debug_inventory.getItem("Egg")) << std::endl;
-	for (int i = 0; i < inventory_manager.items.size(); i++) {
-		std::cout << inventory_manager.items[i]->name << std::endl;
-	}
-
-	std::cout << "Egg quantity: " << inventory_manager.getItemPtr("Egg")->quantity << std::endl;
-	inventory_manager.pickUpItem(debug_inventory.getItemPtr("Egg"));
-	std::cout << "Newer Egg quantity: " << inventory_manager.getItemPtr("Egg")->quantity << std::endl;
-	inventory_manager.pickUpItem(debug_inventory.getItemPtr("Egg"), 10);
-	std::cout << "Even newer Egg quantity: " << inventory_manager.getItemPtr("Egg")->quantity << std::endl;
-
-	stats_manager.setHealth(50);
-	std::cout << "Health: " << stats_manager.getHealth() << std::endl;
-
-	auto ingredientDjorch = std::dynamic_pointer_cast<Ingredient>(inventory_manager.getItemPtr("Djorchertwitz"));
-	std::cout << "Djorcherwitz is cooked? " << ingredientDjorch->getIngrStatus().isCooked << std::endl;
-	std::cout << "Djorcherwitz raw healing: " << ingredientDjorch->getIngrProperties().rawHealing << std::endl;
-	eating(inventory_manager, stats_manager, "Djorchertwitz");
-	std::cout << "Health after eating Djorcherwitz: " << stats_manager.getHealth() << std::endl;
-	std::cout << "A Djorcherwitz cooked times: " << ingredientDjorch->getIngrStatus().timeCooked << std::endl;
-
-	for (int i = 0; i < 21; i++) {
-		cooking(inventory_manager, "Djorchertwitz");
-	}
-
-	std::cout << "B Djorcherwitz cooked times: " << ingredientDjorch->getIngrStatus().timeCooked << std::endl;
-
-	std::cout << "Djorcherwitz is cooked now? " << ingredientDjorch->getIngrStatus().isCooked << std::endl;
-	std::cout << "Djorcherwitz cooked healing: " << ingredientDjorch->getIngrProperties().cookedHealing << std::endl;
-	eating(inventory_manager, stats_manager, "Djorchertwitz");
-	std::cout << "Health after eating Djorcherwitz: " << stats_manager.getHealth() << std::endl;
-
-	sf::Font body;
-	body.loadFromFile("files/SummerPixel.ttf"); //Font - can be changed later
-
-	Textures textures;
-	textures.loadTextures();
-
-	int width = 1920;
-	int height = 1080;
-	sf::RenderWindow window(sf::VideoMode(width, height), "Plant Game");
-	sf::Sprite background;
-
-	sf::Text start;
-	start.setString("- Press [Enter] To Start -");
-	start.setFont(body);
-	start.setCharacterSize(40);
-	setText(start, width / 2, height / 2);
-
-	int run = 0; //is game running?
-
-	while (window.isOpen()) {
-		sf::Event event;
-		while (window.pollEvent(event)) {
-			if (event.type == sf::Event::Closed) {
-				window.close();
-			}
-			if (event.type == sf::Event::KeyPressed) {
-				if (event.key.code == sf::Keyboard::Enter) {
-					run = gameLoop(window, width, height, textures);
-				}
-			}
-		}
-
-		window.clear();
-		window.draw(background);
-		window.draw(start);
-		window.display();
-	}
-	return 0;
+        window.clear();
+        window.draw(background);
+        window.draw(start);
+        window.display();
+    }
+    return 0;
 }

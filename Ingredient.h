@@ -9,16 +9,16 @@
 
 class Ingredient : public Item {
 public:
-    IngrProperties ingrProperties;
-    IngrKnowledge ingrKnowledge;
-    IngrGiftRatings ingrGiftRatings;
+	IngrProperties ingrProperties;
+	IngrKnowledge ingrKnowledge;
+	IngrGiftRatings ingrGiftRatings;
 	IngrStatus ingrStatus;
 
-    Ingredient(int index, std::string name, sf::Sprite sprite, int quantity, const IngrProperties& properties, const IngrKnowledge& ingrKnowledge,
+  Ingredient(int index, std::string name, sf::Sprite sprite, int quantity, const IngrProperties& properties, const IngrKnowledge& ingrKnowledge,
         const IngrGiftRatings& giftRatings, const IngrStatus& ingrStatus);
 
-    const IngrProperties& getIngrProperties() const;
-    const IngrKnowledge& getIngrKnowledge() const;
+  const IngrProperties& getIngrProperties() const;
+  const IngrKnowledge& getIngrKnowledge() const;
 	const IngrGiftRatings& getIngrGiftRatings() const;
 	const IngrStatus& getIngrStatus() const;
 	void checkStir();

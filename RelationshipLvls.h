@@ -4,6 +4,7 @@
 #include <iostream>
 #include <unordered_map>
 #include <string>
+#include <vector>
 
 struct RelationshipLvls {
 	std::unordered_map<std::string, int> lvls;

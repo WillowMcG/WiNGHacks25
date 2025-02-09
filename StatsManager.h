@@ -38,4 +38,3 @@ public:
 	void printRelationshipLvl(std::string name);
 	void printRelationshipLvls();
 };
-

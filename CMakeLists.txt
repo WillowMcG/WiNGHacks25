@@ -11,5 +11,6 @@ project(WiNGHacks25)
 set(SFML_DIR "C:/SFML/lib/cmake/SFML")
 
 find_package(SFML 2.5.1 COMPONENTS system window graphics audio REQUIRED)
-add_executable(WiNGHacks25 main.cpp Textures.cpp Animation.cpp)
+add_executable(WiNGHacks25 main.cpp Textures.cpp Animation.cpp Cooking.cpp Ingredient.cpp InventoryManager.cpp Item.cpp
+        Potion.cpp StatsManager.cpp Textbox.cpp)
 target_link_libraries(WiNGHacks25 sfml-system sfml-window sfml-graphics sfml-audio)

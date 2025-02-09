@@ -3,16 +3,16 @@
 #include <iostream>
 
 struct IngrKnowledge {
-    bool knowRawHealing;
+	bool knowRawHealing;
 	bool knowStirredHealing;
-    bool knowCookedHealing;
+	bool knowCookedHealing;
 	bool knowRuinedHealing;
-    bool knowNumStirs;
-    bool knowCookTime;
+  bool knowNumStirs;
+  bool knowCookTime;
 
-    IngrKnowledge()
+  IngrKnowledge()
         : knowRawHealing(false), knowStirredHealing(false), knowCookedHealing(false), knowRuinedHealing(false), knowNumStirs(false),
-		knowCookTime(false) {}
+	knowCookTime(false) {}
 
 	IngrKnowledge(bool knowRawHealing, bool knowStirredHealing, bool knowCookedHealing, bool knowRuinedHealing, bool knowNumMixes, bool knowCookTime)
 		: knowRawHealing(knowRawHealing), knowStirredHealing(knowStirredHealing), knowCookedHealing(knowCookedHealing),
