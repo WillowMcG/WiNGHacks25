@@ -33,6 +33,7 @@ class Textures {
   sf::Texture forest3;
   sf::Texture forest4;
   sf::Texture inventoryTexture;
+  sf::Texture infoBackground;
 
 public:
   Textures();

@@ -35,8 +35,8 @@ vector<pair<string, int>> genPlants() {
 
     for (int i = 0; i < plantNum; i++) {
         int plantChoice = rand() % 3;
-        string plantType = (plantChoice == 0) ? "Type 1" :
-                           (plantChoice == 1) ? "Type 2" : "Type 3";
+        string plantType = (plantChoice == 0) ? "Djorchertwitz" :
+                           (plantChoice == 1) ? "Hygogix" : "Spindlewort";
 
         plants.push_back({plantType, pos});
         pos += 200 + rand() % 300;
@@ -45,19 +45,25 @@ vector<pair<string, int>> genPlants() {
 }
 
 void texturePlant(sf::Sprite& plant, string type, Textures& textures) {
-    if (type == "Type 1") {
+    if (type == "Djorchertwitz") {
         plant.setTexture(textures.getPlantTextures().at(0));
-    } else if (type == "Type 2") {
+    } else if (type == "Hygogix") {
         plant.setTexture(textures.getPlantTextures().at(1));
-    } else if (type == "Type 3") {
+    } else if (type == "Spindlewort") {
         plant.setTexture(textures.getPlantTextures().at(2));
     }
 }
 
-void initializePlants(InventoryManager& inventory_manager, Textures& textures) {
-    sf::Sprite djorchSprite(textures.getPlantTextures().at(0));
-    sf::Sprite sprite2(textures.getPlantTextures().at(1));
-    sf::Sprite sprite3(textures.getPlantTextures().at(2));
+void initializePlants(InventoryManager& inventoryManager) {
+    sf::Texture djorchTexture;
+    djorchTexture.loadFromFile("files/images/sprites/Djorchertwitz.png");
+    sf::Sprite djorchSprite(djorchTexture);
+    sf::Texture hygogixTexture;
+    hygogixTexture.loadFromFile("files/images/sprites/Hygogix.png");
+    sf::Sprite hygogixSprite(hygogixTexture);
+    sf::Texture spindlewortTexture;
+    spindlewortTexture.loadFromFile("files/images/sprites/Spindlewort.png");
+    sf::Sprite spindlewortSprite(spindlewortTexture);
 
     // People: Mushroom Man, Witch, Wolfhound
 
@@ -65,27 +71,98 @@ void initializePlants(InventoryManager& inventory_manager, Textures& textures) {
     IngrKnowledge knowledgeDjorch(false, false, false, false, false, false);
     IngrGiftRatings giftRatingDjorch({-5, 11, 0});
     IngrStatus statusDjorch(false, false, false, 0, 0);
-    std::shared_ptr<Ingredient> djorchertwitz = std::make_shared<Ingredient>(0, "Djorchertwitz", djorchSprite, 1, propertiesDjorch, knowledgeDjorch, giftRatingDjorch, statusDjorch);
-    inventory_manager.items.push_back(djorchertwitz);
+    Ingredient djorchertwitz = Ingredient(0, "Djorchertwitz", djorchSprite, 1, propertiesDjorch, knowledgeDjorch, giftRatingDjorch, statusDjorch);
+    inventoryManager.items.push_back(djorchertwitz);
 
-    IngrProperties propertiesType2(8, 12, 15, -10, 8, 15);
-    IngrKnowledge knowledgeType2(false, false, false, false, false, false);
-    IngrGiftRatings giftRatingType2({5, -10, 8});
-    IngrStatus statusType2(false, false, false, 0, 0);
-    std::shared_ptr<Ingredient> type2 = std::make_shared<Ingredient>(0, "Type 2", sprite2, 1, propertiesType2, knowledgeType2, giftRatingType2, statusType2);
-    inventory_manager.items.push_back(type2);
+    IngrProperties propertiesHygogix(8, 12, 15, -10, 8, 15);
+    IngrKnowledge knowledgeHygogix(false, false, false, false, false, false);
+    IngrGiftRatings giftRatingHygogix({5, -10, 8});
+    IngrStatus statusHygogix(false, false, false, 0, 0);
+    Ingredient hygogix = Ingredient(0, "Hygogix", hygogixSprite, 1, propertiesHygogix, knowledgeHygogix, giftRatingHygogix, statusHygogix);
+    inventoryManager.items.push_back(hygogix);
 
-    IngrProperties propertiesType3(0, 0, 0, 0, 0, 0);
-    IngrKnowledge knowledgeType3(false, false, false, false, false, false);
-    IngrGiftRatings giftRatingType3({0, 0, 0});
-    IngrStatus statusType3(false, false, false, 0, 0);
-    std::shared_ptr<Ingredient> type3 = std::make_shared<Ingredient>(0, "Type 3", sprite3, 1, propertiesType3, knowledgeType3, giftRatingType3, statusType3);
-    inventory_manager.items.push_back(type3);
+    IngrProperties propertiesSpindlewort(0, 0, 0, 0, 0, 0);
+    IngrKnowledge knowledgeSpindlewort(false, false, false, false, false, false);
+    IngrGiftRatings giftRatingSpindlewort({0, 0, 0});
+    IngrStatus statusSpindlewort(false, false, false, 0, 0);
+    Ingredient spindlewort = Ingredient(0, "Spindlewort", spindlewortSprite, 1, propertiesSpindlewort, knowledgeSpindlewort, giftRatingSpindlewort, statusSpindlewort);
+    inventoryManager.items.push_back(spindlewort);
 }
 
+void initializeInventory(InventoryManager& inventoryManager) {
+    sf::Texture cauldronTexture;
+    cauldronTexture.loadFromFile("files/images/sprites/Cauldron_Icon.png");
+
+    sf::Sprite cauldronSprite(cauldronTexture);
+    Item cauldron(0, "Cauldron", cauldronSprite, 1);
+    inventoryManager.items.push_back(cauldron);
+}
+
+// void displayInfo(sf::RenderWindow& window, float width, float height, sf::Font& body, const Item& item, Textures& textures) {
+//     if (item.name == "") {
+//         return;
+//     }
+//
+//     sf::Sprite background;
+//     background.setTexture(textures.getBackgroundTextures().at(5));
+//     background.setOrigin(250,250);
+//     background.setPosition(width/2, height/2);
+//
+//     sf::Text itemName;
+//     itemName.setFont(body);
+//     itemName.setCharacterSize(72);
+//     itemName.setStyle(sf::Text::Bold);
+//     itemName.setFillColor(sf::Color::Black);
+//     setText(itemName, width/2, height/2-200);
+//
+//     sf::Text line1;
+//     line1.setFont(body);
+//     line1.setCharacterSize(40);
+//     line1.setFillColor(sf::Color::Black);
+//
+//     sf::Text line2;
+//     line2.setFont(body);
+//     line2.setCharacterSize(40);
+//     line2.setFillColor(sf::Color::Black);
+//
+//     sf::Text line3;
+//     line3.setFont(body);
+//     line3.setCharacterSize(40);
+//     line3.setFillColor(sf::Color::Black);
+//
+//     if (item.name == "Djorchertwitz") {
+//         itemName.setString("Djorchertwitz");
+//         line1.setString("Is this mushroom cool? Morel less...");
+//         line2.setString("");
+//         line3.setString("");
+//     } else if (item.name == "Hygogix") {
+//         itemName.setString("Hygogix");
+//         line1.setString("");
+//         line2.setString("");
+//         line3.setString("");
+//     } else if (item.name == "Spindlewort") {
+//         itemName.setString("Spindlewort");
+//         line1.setString("");
+//         line2.setString("");
+//         line3.setString("");
+//     } else if (item.name == "Cauldron") {
+//         itemName.setString("Cauldron");
+//         line1.setString("");
+//         line2.setString("");
+//         line3.setString("");
+//     }
+//
+//     window.draw(background);
+//     window.draw(itemName);
+// }
+
 int gameLoop(sf::RenderWindow& window, float width, float height, Textures& textures, sf::Font& body) {
-    InventoryManager inventory_manager;
+    InventoryManager plantDebug;
+    initializePlants(plantDebug);
     sf::Clock clock;
+
+    InventoryManager playerInventory;
+    initializeInventory(playerInventory);
 
     sf::Sprite background;
     background.setTexture(textures.getBackgroundTextures().at(0));
@@ -93,8 +170,7 @@ int gameLoop(sf::RenderWindow& window, float width, float height, Textures& text
 
     vector<pair<string, int>> plants = genPlants();
 
-    sf::Sprite inventoryBackground;
-    inventoryBackground.setTexture(textures.getBackgroundTextures().at(4));
+    sf::Sprite inventoryBackground(textures.getBackgroundTextures().at(4));
     inventoryBackground.setOrigin(width/2, height/2);
     inventoryBackground.setPosition(width/2, height/2);
 
@@ -112,34 +188,41 @@ int gameLoop(sf::RenderWindow& window, float width, float height, Textures& text
 
     plant1.setPosition(plants.at(0).second, plantHeight);
     texturePlant(plant1, plants.at(0).first, textures);
-    plant1.setScale(2,2);
     bool p1 = true;
     plant2.setPosition(plants.at(1).second, plantHeight);
-    plant2.setScale(2,2);
     texturePlant(plant2, plants.at(1).first, textures);
     bool p2 = true;
     plant3.setPosition(plants.at(2).second, plantHeight);
-    plant3.setScale(2,2);
     texturePlant(plant3, plants.at(2).first, textures);
     bool p3 = true;
     plant4.setPosition(plants.at(3).second, plantHeight);
-    plant4.setScale(2,2);
     texturePlant(plant4, plants.at(3).first, textures);
     bool p4 = true;
     plant5.setPosition(plants.at(4).second, plantHeight);
     texturePlant(plant5, plants.at(4).first, textures);
-    plant5.setScale(2,2);
     bool p5 = true;
 
     Textbox harvestPlant(width/2, height/4, body, 40, textures, "Press W to Harvest");
     harvestPlant.open();
 
-    Textbox harvest1(width/2, height/4, body, 40, textures, "Type 1 Added to Inventory");
-    Textbox harvest2(width/2, height/4, body, 40, textures, "Type 2 Added to Inventory");
-    Textbox harvest3(width/2, height/4, body, 40, textures, "Type 3 Added to Inventory");
+    sf::Texture cookingTexture;
+    cookingTexture.loadFromFile("files/images/backgrounds/Cooking_Background.png");
+    sf::Sprite cookingBackground(cookingTexture);
+
+    Textbox harvestDjorch(width/2, height/4, body, 40, textures, "Djorchertwitz Added to Inventory");
+    Textbox harvestHygogix(width/2, height/4, body, 40, textures, "Hygogix Added to Inventory");
+    Textbox harvestSpindlewort(width/2, height/4, body, 40, textures, "Spindlewort Added to Inventory");
 
     sf::Texture sprite_sheet;
     Animation animations;
+
+    sf::Texture stir;
+    stir.loadFromFile("files/images/backgrounds/stirring (3).png");
+    sf::Sprite stirSprite(stir);
+    animations.addAnimation("stirring", stir, {2, 2}, {500, 500}, {0,0}, 8, {0,0});
+
+    stirSprite.setOrigin(128, 128);
+    stirSprite.setPosition(width/2-170, height/2-210);
 
     if (!(sprite_sheet.loadFromFile("files/images/sprites/sprite_sheet.png")))
     {
@@ -156,9 +239,11 @@ int gameLoop(sf::RenderWindow& window, float width, float height, Textures& text
     animations.setAnimationEndingIndex("walkRight", {2, 0});
 
     bool inventoryOpen = false;
+    bool cookingOpen = false;
     bool isMoving = false;
+    bool lock_click;
 
-    int elapsed;
+    int elapsed=0;
 
     sf::Event event;
     while (window.isOpen()) {
@@ -168,7 +253,7 @@ int gameLoop(sf::RenderWindow& window, float width, float height, Textures& text
                 window.close();
                 return -1;
             }
-            if (!inventoryOpen) {
+            if (!inventoryOpen && !cookingOpen) {
 
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) || sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
                     character.move(-8, 0.f);
@@ -180,117 +265,189 @@ int gameLoop(sf::RenderWindow& window, float width, float height, Textures& text
                     animations.update("walkRight", character);
                     isMoving = true;
                 }
-                if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) || sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
+                if ((sf::Keyboard::isKeyPressed(sf::Keyboard::W) || sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) && !inventoryOpen) {
                     int xpos = character.getPosition().x;
                     if (xpos > plant1.getPosition().x - 80 && xpos < plant1.getPosition().x + 80 && p1) {
                         p1 = false;
-                        cout << "Plant 1" << endl;
                         clock.restart();
-                        if (plants.at(0).first == "Type 1") {
-                            harvest1.open();
-                            harvest2.close();
-                            harvest3.close();
+                        if (plants.at(0).first == "Djorchertwitz") {
+                            playerInventory.pickUpItem(plantDebug.getItem("Djorchertwitz"));
+                            harvestDjorch.open();
+                            harvestHygogix.close();
+                            harvestSpindlewort.close();
                             harvestPlant.close();
-                        } else if (plants.at(0).first == "Type 2") {
-                            harvest2.open();
-                            harvest1.close();
-                            harvest3.close();
+                        } else if (plants.at(0).first == "Hygogix") {
+                            playerInventory.pickUpItem(plantDebug.getItem("Hygogix"));
+                            harvestHygogix.open();
+                            harvestDjorch.close();
+                            harvestSpindlewort.close();
                             harvestPlant.close();
                         } else {
-                            harvest3.open();
-                            harvest1.close();
-                            harvest2.close();
+                            playerInventory.pickUpItem(plantDebug.getItem("Spindlewort"));
+                            harvestSpindlewort.open();
+                            harvestDjorch.close();
+                            harvestHygogix.close();
                             harvestPlant.close();
                         }
                     } else if (xpos > plant2.getPosition().x - 80 && xpos < plant2.getPosition().x + 80 && p2) {
                         p2 = false;
-                        cout << "Plant 2" << endl;
                         clock.restart();
-                        if (plants.at(1).first == "Type 1") {
-                            harvest1.open();
-                            harvest2.close();
-                            harvest3.close();
+                        if (plants.at(1).first == "Djorchertwitz") {
+                            playerInventory.pickUpItem(plantDebug.getItem("Djorchertwitz"));
+                            harvestDjorch.open();
+                            harvestHygogix.close();
+                            harvestSpindlewort.close();
                             harvestPlant.close();
-                        } else if (plants.at(1).first == "Type 2") {
-                            harvest2.open();
-                            harvest1.close();
-                            harvest3.close();
+                        } else if (plants.at(1).first == "Hygogix") {
+                            playerInventory.pickUpItem(plantDebug.getItem("Djorchertwitz"));
+                            harvestHygogix.open();
+                            harvestDjorch.close();
+                            harvestSpindlewort.close();
                             harvestPlant.close();
                         } else {
-                            harvest3.open();
-                            harvest1.close();
-                            harvest2.close();
+                            playerInventory.pickUpItem(plantDebug.getItem("Spindlewort"));
+                            harvestSpindlewort.open();
+                            harvestDjorch.close();
+                            harvestHygogix.close();
                             harvestPlant.close();
                         }
                     } else if (xpos > plant3.getPosition().x - 80 && xpos < plant3.getPosition().x + 80 && p3) {
                         p3 = false;
-                        cout << "Plant 3" << endl;
                         clock.restart();
-                        if (plants.at(2).first == "Type 1") {
-                            harvest1.open();
-                            harvest2.close();
-                            harvest3.close();
+                        if (plants.at(2).first == "Djorchertwitz") {
+                            playerInventory.pickUpItem(plantDebug.getItem("Djorchertwitz"));
+                            harvestDjorch.open();
+                            harvestHygogix.close();
+                            harvestSpindlewort.close();
                             harvestPlant.close();
-                        } else if (plants.at(2).first == "Type 2") {
-                            harvest2.open();
-                            harvest1.close();
-                            harvest3.close();
+                        } else if (plants.at(2).first == "Hygogix") {
+                            playerInventory.pickUpItem(plantDebug.getItem("Djorchertwitz"));
+                            harvestHygogix.open();
+                            harvestDjorch.close();
+                            harvestSpindlewort.close();
                             harvestPlant.close();
                         } else {
-                            harvest3.open();
-                            harvest1.close();
-                            harvest2.close();
+                            playerInventory.pickUpItem(plantDebug.getItem("Spindlewort"));
+                            harvestSpindlewort.open();
+                            harvestDjorch.close();
+                            harvestHygogix.close();
                             harvestPlant.close();
                         }
                     } else if (xpos > plant4.getPosition().x - 80 && xpos < plant4.getPosition().x + 80 & p4) {
                         p4 = false;
-                        cout << "Plant 4" << endl;
                         clock.restart();
-                        if (plants.at(3).first == "Type 1") {
-                            harvest1.open();
-                            harvest2.close();
-                            harvest3.close();
+                        if (plants.at(3).first == "Djorchertwitz") {
+                            playerInventory.pickUpItem(plantDebug.getItem("Djorchertwitz"));
+                            harvestDjorch.open();
+                            harvestHygogix.close();
+                            harvestSpindlewort.close();
                             harvestPlant.close();
-                        } else if (plants.at(3).first == "Type 2") {
-                            harvest2.open();
-                            harvest1.close();
-                            harvest3.close();
+                        } else if (plants.at(3).first == "Hygogix") {
+                            playerInventory.pickUpItem(plantDebug.getItem("Hygogix"));
+                            harvestHygogix.open();
+                            harvestDjorch.close();
+                            harvestSpindlewort.close();
                             harvestPlant.close();
                         } else {
-                            harvest3.open();
-                            harvest1.close();
-                            harvest2.close();
+                            playerInventory.pickUpItem(plantDebug.getItem("Spindlewort"));
+                            harvestSpindlewort.open();
+                            harvestDjorch.close();
+                            harvestHygogix.close();
                             harvestPlant.close();
                         }
                     } else if (xpos > plant5.getPosition().x - 80 && xpos < plant5.getPosition().x + 80 && p5) {
                         p5 = false;
-                        cout << "Plant 5" << endl;
                         clock.restart();
-                        if (plants.at(4).first == "Type 1") {
-                            harvest1.open();
-                            harvest2.close();
-                            harvest3.close();
+                        if (plants.at(4).first == "Djorchertwitz") {
+                            playerInventory.pickUpItem(plantDebug.getItem("Djorchertwitz"));
+                            harvestDjorch.open();
+                            harvestHygogix.close();
+                            harvestSpindlewort.close();
                             harvestPlant.close();
-                        } else if (plants.at(4).first == "Type 2") {
-                            harvest2.open();
-                            harvest1.close();
-                            harvest3.close();
+                        } else if (plants.at(4).first == "Hygogix") {
+                            playerInventory.pickUpItem(plantDebug.getItem("Hygogix"));
+                            harvestHygogix.open();
+                            harvestDjorch.close();
+                            harvestSpindlewort.close();
                             harvestPlant.close();
                         } else {
-                            harvest3.open();
-                            harvest1.close();
-                            harvest2.close();
+                            playerInventory.pickUpItem(plantDebug.getItem("Spindlewort"));
+                            harvestSpindlewort.open();
+                            harvestDjorch.close();
+                            harvestHygogix.close();
                             harvestPlant.close();
                         }
                     }
                 }
 
+            } else if (inventoryOpen && !cookingOpen) {
+                if (event.type == sf::Event::MouseButtonPressed) {
+                    if (event.mouseButton.button == sf::Mouse::Left && lock_click != true) {
+                        lock_click = true;
+                    }
+                    if (event.mouseButton.button == sf::Mouse::Right && lock_click!= true) {
+                        lock_click = true;
+                    }
+                }
+                if (event.type == sf::Event::MouseButtonReleased) {
+                    if (event.mouseButton.button == sf::Mouse::Left) {
+                        sf::Vector2i pos = sf::Mouse::getPosition(window);
+                        cout << pos.x << ", " << pos.y << endl;
+                        if (pos.y > 75 && pos.y < 285) {
+                            if (pos.x > 420 && pos.x < 568) {
+                                cookingOpen = true;
+                            }
+                        //     } else if (pos.x > 690 && pos.x < 930) {
+                        //         if (playerInventory.getNumItems() >= 2) {
+                        //             index = 1;
+                        //             infoOpen = true;
+                        //         }
+                        //     } else if (pos.x > 960 && pos.x < 1120) {
+                        //         if (playerInventory.getNumItems() >= 3) {
+                        //             index = 2;
+                        //             infoOpen = true;
+                        //         }
+                        //     } else if (pos.x > 1230 && pos.x < 1470) {
+                        //         if (playerInventory.getNumItems() >= 4) {
+                        //             index = 3;
+                        //             infoOpen = true;
+                        //         }
+                        // } else if (pos.y > 315 && pos.y < 525) {
+                        //     if (pos.x > 420 && pos.x < 568) {
+                        //         if (playerInventory.getNumItems() >= 5) {
+                        //             index = 4;
+                        //             infoOpen = true;
+                        //         }
+                        //     } else if (pos.x > 690 && pos.x < 930) {
+                        //         if (playerInventory.getNumItems() >= 6) {
+                        //             index = 5;
+                        //             infoOpen = true;
+                        //         }
+                        //     } else if (pos.x > 960 && pos.x < 1120) {
+                        //         if (playerInventory.getNumItems() >= 7) {
+                        //             index = 6;
+                        //             infoOpen = true;
+                        //         }
+                        //     } else if (pos.x > 1230 && pos.x < 1470) {
+                        //         if (playerInventory.getNumItems() >= 8) {
+                        //             index = 7;
+                        //             infoOpen = true;
+                        //         }
+                        //     }
+                        }
+                    }
+                }
             }
+
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::E) && !inventoryOpen) {
                 inventoryOpen = true;
+                playerInventory.print();
             }
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q) && inventoryOpen) {
                 inventoryOpen = false;
+            }
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q) && cookingOpen) {
+                cookingOpen = false;
             }
 
             if (!isMoving) {
@@ -356,24 +513,30 @@ int gameLoop(sf::RenderWindow& window, float width, float height, Textures& text
             } else {
                 harvestPlant.close();
             }
-            if (harvest1.checkOpen() && elapsed <= 5) {
-                harvest1.drawTextbox(window);
+            if (harvestDjorch.checkOpen() && elapsed <= 5) {
+                harvestDjorch.drawTextbox(window);
             } else {
-                harvest1.close();
+                harvestDjorch.close();
             }
-            if (harvest2.checkOpen() && elapsed <= 5) {
-                harvest2.drawTextbox(window);
+            if (harvestHygogix.checkOpen() && elapsed <= 5) {
+                harvestHygogix.drawTextbox(window);
             } else {
-                harvest2.close();
+                harvestHygogix.close();
             }
-            if (harvest3.checkOpen() && elapsed <= 5) {
-                harvest3.drawTextbox(window);
+            if (harvestSpindlewort.checkOpen() && elapsed <= 5) {
+                harvestSpindlewort.drawTextbox(window);
             } else {
-                harvest3.close();
+                harvestSpindlewort.close();
             }
             if (inventoryOpen) {
                 window.draw(inventoryBackground);
+                playerInventory.drawInventory(window, body, width, height, textures);
             }
+                if (cookingOpen) {
+                    window.draw(cookingBackground);
+                    animations.update("stirring", stirSprite);
+                    window.draw(stirSprite);
+                }
             window.display();
         }
 

@@ -8,9 +8,9 @@ Textures::Textures() {
 }
 
 void Textures::loadTextures() {
-  plant1.loadFromFile("files/images/sprites/plants_64_7.png");
-  plant2.loadFromFile("files/images/sprites/plants_64_8.png");
-  plant3.loadFromFile("files/images/sprites/plants_64_14.png");
+  plant1.loadFromFile("files/images/sprites/Djorchertwitz.png");
+  plant2.loadFromFile("files/images/sprites/Hygogix.png");
+  plant3.loadFromFile("files/images/sprites/Spindlewort.png");
   plantTextures.push_back(plant1);
   plantTextures.push_back(plant2);
   plantTextures.push_back(plant3);
@@ -25,37 +25,21 @@ void Textures::loadTextures() {
   forest3.loadFromFile("files/images/backgrounds/forest3.png");
   forest4.loadFromFile("files/images/backgrounds/forest4.png");
   inventoryTexture.loadFromFile("files/images/backgrounds/Inventory.png");
+  infoBackground.loadFromFile("files/images/backgrounds/InfoBackground.png");
   backgroundTextures.push_back(forest1);
   backgroundTextures.push_back(forest2);
   backgroundTextures.push_back(forest3);
   backgroundTextures.push_back(forest4);
   backgroundTextures.push_back(inventoryTexture);
-
-  characterSL.loadFromFile("files/images/sprites/StandL.png");
-  characterSR.loadFromFile("files/images/sprites/StandR.png");
-  characterWL1.loadFromFile("files/images/sprites/WalkL1.png");
-  characterWL2.loadFromFile("files/images/sprites/WalkL2.png");
-  characterWR1.loadFromFile("files/images/sprites/WalkR1.png");
-  characterWR2.loadFromFile("files/images/sprites/WalkR2.png");
-  walkCycle.push_back(characterSL);
-  walkCycle.push_back(characterWL1);
-  walkCycle.push_back(characterWL2);
-  walkCycle.push_back(characterSR);
-  walkCycle.push_back(characterWR1);
-  walkCycle.push_back(characterWR2);
+  backgroundTextures.push_back(infoBackground);
 }
 
 vector<sf::Texture> &Textures::getPlantTextures() {
   return plantTextures;
 }
 
-
 vector<sf::Texture>& Textures::getItemTextures() {
   return itemTextures;
-}
-
-vector<sf::Texture>& Textures::getWalkCycle() {
-  return walkCycle;
 }
 
 vector<sf::Texture>& Textures::getBackgroundTextures() {
